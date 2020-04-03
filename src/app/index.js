@@ -174,23 +174,25 @@ const INITIAL_STATE = [
 
 const App = () => {
   const styles = useStyles()
-  const [age, setAge] = useState('SC')
+  const [state, setState] = useState('')
   const [city, setCity] = useState('')
   const [clients, setClients] = useState(INITIAL_STATE)
 
   const handleChange = useCallback((event) => {
-    setAge(event.target.value)
+    setState(event.target.value)
   }, [])
 
-  const handleChange2 = useCallback((event) => {
+  const handleCityChange = useCallback((event) => {
     setCity(event.target.value)
   }, [])
 
-  const stateCities = useMemo(() => clients.find((client) => client.state === age), [
-    age,
-    clients,
-  ])
-  console.log('App -> stateCities', stateCities)
+  const stateCities = useMemo(() => {
+    const array = clients.map((client) =>
+      client.state === state ? client.city : null
+    )
+    return array.filter((item, pos) => array.indexOf(item) === pos)
+  }, [state, clients])
+  console.log('App -> stateCities', stateCities.length)
 
   // useEffect(() => {
   //   Tabletop.init({
@@ -211,22 +213,35 @@ const App = () => {
       alignItems="center"
       className={styles.container}
     >
-      <Typography
-        className={styles.title}
-        component="h1"
-        color="primary"
-        variant="h2"
+      <Grid
+        className={styles.select}
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
       >
-        Salvador da Páscoa
-      </Typography>
-      <Grid container className={styles.select} justify="center" alignItems="center">
+        <Typography
+          className={styles.title}
+          component="h1"
+          color="#fff"
+          variant="h2"
+        >
+          Procure o ovo mais perto de você
+        </Typography>
         <FormControl className={styles.formControl}>
-          <InputLabel htmlFor="age-native-simple">Estado</InputLabel>
+          <InputLabel className={styles.label} htmlFor="state-native-simple">
+            Selecione o seu estado
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
+            value={state}
             onChange={handleChange}
+            className={styles.dropdown}
+            classes={{
+              icon: styles.icon,
+            }}
+            placeholder="Selecione um estado"
           >
             {BRAZILIAN_STATES.map((state) => (
               <MenuItem key={state} value={state}>
@@ -235,26 +250,42 @@ const App = () => {
             ))}
           </Select>
         </FormControl>
-        <FormControl className={styles.formControl}>
-          <InputLabel htmlFor="age-native-simple">Cidade</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={city}
-            onChange={handleChange2}
-          >
-            {clients.map(
-              (client) =>
-                client.state === age && (
-                  <MenuItem key={client.id} value={client.city}>
-                    {client.city}
-                  </MenuItem>
-                )
-            )}
-          </Select>
-        </FormControl>
+        {state !== '' && stateCities.length > 0 && (
+          <FormControl className={styles.formControl}>
+            <InputLabel className={styles.label} htmlFor="state-native-simple">
+              Selecione a sua Cidade
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={city}
+              onChange={handleCityChange}
+              className={styles.dropdown}
+              classes={{
+                icon: styles.icon,
+              }}
+              placeholder="Selecione um estado"
+            >
+              {stateCities.map((client) => (
+                <MenuItem key={client} value={client}>
+                  {client}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
       </Grid>
       <Grid className={styles.cards}>
+        {stateCities.length === 0 && (
+          <Typography
+            className={styles.title}
+            component="h1"
+            color="primary"
+            variant="h2"
+          >
+            Salvador da Páscoa
+          </Typography>
+        )}
         {clients.map(
           (client) =>
             client.city === city && <MainCard key={client.id} client={client} />

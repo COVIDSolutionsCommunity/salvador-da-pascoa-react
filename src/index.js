@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './app'
-import * as serviceWorker from './serviceWorker'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { Router } from '@reach/router'
+import * as serviceWorker from './serviceWorker'
+import App from './app'
+import Header from './header'
 
 const theme = createMuiTheme({
   palette: {
@@ -118,7 +120,11 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <Router>
+        <Header path="/">
+          <App path="/" />
+        </Header>
+      </Router>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
