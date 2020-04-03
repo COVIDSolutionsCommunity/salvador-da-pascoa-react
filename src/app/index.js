@@ -182,10 +182,7 @@ const App = () => {
 
   const stateCities = useMemo(() => {
     const array = clients.map((client) =>
-      console.log(client.state, 'oi', state, client.state === state) ||
-      client.state === state
-        ? client.city
-        : null
+      client.state === state ? client.city : null
     )
     return array.filter((item, pos) => array.indexOf(item) === pos)
   }, [state, clients])
@@ -194,20 +191,14 @@ const App = () => {
     Tabletop.init({
       key: '1CYuCMQ35yXrPX6Pjjq_7CS6AXOjAN-2BbjMq8uWcP04',
       callback: (data, tabletop) => {
-        setClients(data)
+        setClients(data.filter((info) => info.accepted === 'TRUE'))
       },
       simpleSheet: true,
     })
   }, [])
 
   return (
-    <Grid
-      container
-      direction="column"
-      justify="center"
-      alignItems="center"
-      className={styles.container}
-    >
+    <Grid container direction="column" justify="center" alignItems="center">
       <Grid
         className={styles.select}
         container
@@ -270,11 +261,21 @@ const App = () => {
           </FormControl>
         )}
       </Grid>
-      {state !== '' && stateCities[0] !== null && (
-        <Typography component="h1" color="primary" variant="h2">
-          Total de x Coelhinhos encontrados
-        </Typography>
-      )}
+      {state !== '' &&
+        stateCities[0] !== null &&
+        stateCities.find((selected) => selected === city) && (
+          <Typography
+            className={styles.total}
+            component="h1"
+            color="primary"
+            variant="h2"
+          >
+            Total de{' '}
+            {stateCities.find((selected) => selected === city) &&
+              clients.map((client) => client.city === city).length}{' '}
+            Coelhinhos encontrados
+          </Typography>
+        )}
       <Grid className={styles.cards}>
         {state !== '' && stateCities[0] === null && (
           <Typography

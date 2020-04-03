@@ -32,7 +32,7 @@ const Header = ({ children, location }) => {
       alignItems="center"
       className={styles.container}
     >
-      <AppBar color="#fff" position="static">
+      <AppBar color="secondary" position="static">
         <Toolbar>
           {location.pathname !== '/' && (
             <IconButton

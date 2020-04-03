@@ -1,9 +1,6 @@
 import { makeStyles } from '@material-ui/styles'
 
 export default makeStyles((theme) => ({
-  container: {
-    // paddingTop: 16,
-  },
   title: {
     textAlign: 'center',
     fontFamily: 'Indie Flower',
@@ -37,12 +34,21 @@ export default makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
+  total: { fontFamily: 'Indie Flower' },
   cards: {
     display: 'grid',
     gridTemplateRows: 'auto',
     gridTemplateColumns: 'repeat(3, auto)',
     gridColumnGap: '16px',
     gridRowGap: '16px',
+    margin: theme.spacing(2),
+
+    [theme.breakpoints.down('md')]: {
+      gridTemplateColumns: 'repeat(2, auto)',
+    },
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: 'repeat(1, auto)',
+    },
   },
   icon: {
     color: 'white',

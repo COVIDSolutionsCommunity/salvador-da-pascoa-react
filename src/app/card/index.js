@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import Grid from '@material-ui/core/Grid'
+import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -7,10 +6,13 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
+import { makeStyles } from '@material-ui/styles'
 
-import useStyles from './styles'
-
-// mudar o open para up da photo
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 345,
+  },
+}))
 
 const MainCard = ({ client }) => {
   const styles = useStyles()
