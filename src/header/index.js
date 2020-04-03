@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Header = ({ children, location }) => {
-  console.log('Header -> location', location)
   const styles = useStyles()
 
   return (

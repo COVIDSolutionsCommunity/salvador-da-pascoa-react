@@ -187,6 +187,12 @@ const App = () => {
     return array.filter((item, pos) => array.indexOf(item) === pos)
   }, [state, clients])
 
+  const hasSelected = useMemo(
+    () => stateCities.find((selected) => selected === city),
+    [stateCities, city]
+  )
+  console.log('App -> hasSelected', hasSelected)
+
   useEffect(() => {
     Tabletop.init({
       key: '1CYuCMQ35yXrPX6Pjjq_7CS6AXOjAN-2BbjMq8uWcP04',
@@ -212,7 +218,7 @@ const App = () => {
           color="secondary"
           variant="h2"
         >
-          Procure o ovo mais perto de você
+          Procure o chocolate mais perto de você
         </Typography>
         <FormControl className={styles.formControl}>
           <InputLabel className={styles.label} htmlFor="state-native-simple">
@@ -287,6 +293,10 @@ const App = () => {
             Infelizmente não temos nenhum coelhinho registrado perto de você :(
           </Typography>
         )}
+
+        {hasSelected === undefined &&
+          state === '' &&
+          clients.map((client) => <MainCard key={client.id} client={client} />)}
 
         {stateCities.find((selected) => selected === city) &&
           clients.map(
