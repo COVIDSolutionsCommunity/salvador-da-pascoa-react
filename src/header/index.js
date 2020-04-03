@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
+import Link from '@material-ui/core/Link'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import { makeStyles } from '@material-ui/core/styles'
@@ -44,10 +44,17 @@ const Header = ({ children, location }) => {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" className={styles.title}>
+          <Typography color="primary" variant="h6" className={styles.title}>
             Salvador da Páscoa
           </Typography>
-          <Button color="white">Registrar</Button>
+          <Link
+            href="https://forms.gle/G3KSh6u2WEtRzDwf9"
+            el="noreferrer"
+            target="_blank"
+            color="primary"
+          >
+            REGISTRAR
+          </Link>
         </Toolbar>
       </AppBar>
       {children}

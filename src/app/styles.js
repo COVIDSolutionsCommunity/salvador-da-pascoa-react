@@ -6,7 +6,6 @@ export default makeStyles((theme) => ({
   },
   title: {
     textAlign: 'center',
-    color: '#fff',
     fontFamily: 'Indie Flower',
     fontSize: '32px',
   },

@@ -167,6 +167,7 @@ const INITIAL_STATE = [
     howToReceive: 'Delivery',
     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
     obs: 'Trabalho fazem anos com delivery',
+    approved: 'FALSE',
   },
 ]
 
@@ -223,7 +224,7 @@ const App = () => {
         <Typography
           className={styles.title}
           component="h1"
-          color="#fff"
+          color="secondary"
           variant="h2"
         >
           Procure o ovo mais perto de você
@@ -250,7 +251,7 @@ const App = () => {
             ))}
           </Select>
         </FormControl>
-        {state !== '' && stateCities.length > 0 && (
+        {state !== '' && stateCities.length > 1 && (
           <FormControl className={styles.formControl}>
             <InputLabel className={styles.label} htmlFor="state-native-simple">
               Selecione a sua Cidade
@@ -276,20 +277,21 @@ const App = () => {
         )}
       </Grid>
       <Grid className={styles.cards}>
-        {stateCities.length === 0 && (
+        {state !== '' && stateCities.length === 1 && (
           <Typography
             className={styles.title}
             component="h1"
             color="primary"
             variant="h2"
           >
-            Salvador da Páscoa
+            Infelizmente não temos nenhum coelhinho registrado perto de você :(
           </Typography>
         )}
-        {clients.map(
-          (client) =>
-            client.city === city && <MainCard key={client.id} client={client} />
-        )}
+        {stateCities.find((selected) => selected === city) &&
+          clients.map(
+            (client) =>
+              client.city === city && <MainCard key={client.id} client={client} />
+          )}
       </Grid>
     </Grid>
   )
