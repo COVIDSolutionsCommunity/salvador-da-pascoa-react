@@ -6,13 +6,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
-import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
-
 import MainCard from './card'
 
 import useStyles from './styles'
@@ -47,129 +40,129 @@ const BRAZILIAN_STATES = [
   'TO',
 ]
 
-const INITIAL_STATE = [
-  {
-    id: 1,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 2,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 3,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    phoneNumber: '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 4,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 5,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 6,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Chapecó',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-    approved: 'FALSE',
-  },
-]
+// const INITIAL_STATE = [
+//   {
+//     id: 1,
+//     ddata: '03/04/2020 12:28:27',
+//     name: 'marirlandia',
+//     email: 'marinastavares6@gmail.com',
+//     state: 'SC',
+//     city: 'Florianópolis',
+//     neighborhood: 'cebtor',
+//     delivery: 'Telefone, Uber Eats',
+//     'phoneNumberr ': '+5548984140707',
+//     whatsapp: '5548984140707',
+//     site: 'chocolate.com',
+//     instagram: '@chocolate',
+//     ifood: '',
+//     uberEats: '',
+//     rappi: '',
+//     howToReceive: 'Delivery',
+//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+//     obs: 'Trabalho fazem anos com delivery',
+//   },
+//   {
+//     id: 2,
+//     ddata: '03/04/2020 12:28:27',
+//     name: 'marirlandia',
+//     email: 'marinastavares6@gmail.com',
+//     state: 'SC',
+//     city: 'Florianópolis',
+//     neighborhood: 'cebtor',
+//     delivery: 'Telefone, Uber Eats',
+//     'phoneNumberr ': '+5548984140707',
+//     whatsapp: '5548984140707',
+//     site: 'chocolate.com',
+//     instagram: '@chocolate',
+//     ifood: '',
+//     uberEats: '',
+//     rappi: '',
+//     howToReceive: 'Delivery',
+//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+//     obs: 'Trabalho fazem anos com delivery',
+//   },
+//   {
+//     id: 3,
+//     ddata: '03/04/2020 12:28:27',
+//     name: 'marirlandia',
+//     email: 'marinastavares6@gmail.com',
+//     state: 'SC',
+//     city: 'Florianópolis',
+//     neighborhood: 'cebtor',
+//     delivery: 'Telefone, Uber Eats',
+//     phoneNumber: '+5548984140707',
+//     whatsapp: '5548984140707',
+//     site: 'chocolate.com',
+//     instagram: '@chocolate',
+//     ifood: '',
+//     uberEats: '',
+//     rappi: '',
+//     howToReceive: 'Delivery',
+//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+//     obs: 'Trabalho fazem anos com delivery',
+//   },
+//   {
+//     id: 4,
+//     ddata: '03/04/2020 12:28:27',
+//     name: 'marirlandia',
+//     email: 'marinastavares6@gmail.com',
+//     state: 'SC',
+//     city: 'Florianópolis',
+//     neighborhood: 'cebtor',
+//     delivery: 'Telefone, Uber Eats',
+//     'phoneNumberr ': '+5548984140707',
+//     whatsapp: '5548984140707',
+//     site: 'chocolate.com',
+//     instagram: '@chocolate',
+//     ifood: '',
+//     uberEats: '',
+//     rappi: '',
+//     howToReceive: 'Delivery',
+//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+//     obs: 'Trabalho fazem anos com delivery',
+//   },
+//   {
+//     id: 5,
+//     ddata: '03/04/2020 12:28:27',
+//     name: 'marirlandia',
+//     email: 'marinastavares6@gmail.com',
+//     state: 'SC',
+//     city: 'Florianópolis',
+//     neighborhood: 'cebtor',
+//     delivery: 'Telefone, Uber Eats',
+//     'phoneNumberr ': '+5548984140707',
+//     whatsapp: '5548984140707',
+//     site: 'chocolate.com',
+//     instagram: '@chocolate',
+//     ifood: '',
+//     uberEats: '',
+//     rappi: '',
+//     howToReceive: 'Delivery',
+//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+//     obs: 'Trabalho fazem anos com delivery',
+//   },
+//   {
+//     id: 6,
+//     ddata: '03/04/2020 12:28:27',
+//     name: 'marirlandia',
+//     email: 'marinastavares6@gmail.com',
+//     state: 'SC',
+//     city: 'Chapecó',
+//     neighborhood: 'cebtor',
+//     delivery: 'Telefone, Uber Eats',
+//     'phoneNumberr ': '+5548984140707',
+//     whatsapp: '5548984140707',
+//     site: 'chocolate.com',
+//     instagram: '@chocolate',
+//     ifood: '',
+//     uberEats: '',
+//     rappi: '',
+//     howToReceive: 'Delivery',
+//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+//     obs: 'Trabalho fazem anos com delivery',
+//     approved: 'FALSE',
+//   },
+// ]
 
 // mudar o open para up da photo
 
@@ -177,7 +170,7 @@ const App = () => {
   const styles = useStyles()
   const [state, setState] = useState('')
   const [city, setCity] = useState('')
-  const [clients, setClients] = useState(INITIAL_STATE)
+  const [clients, setClients] = useState([])
 
   const handleChange = useCallback((event) => {
     setState(event.target.value)
@@ -189,22 +182,23 @@ const App = () => {
 
   const stateCities = useMemo(() => {
     const array = clients.map((client) =>
-      client.state === state ? client.city : null
+      console.log(client.state, 'oi', state, client.state === state) ||
+      client.state === state
+        ? client.city
+        : null
     )
     return array.filter((item, pos) => array.indexOf(item) === pos)
   }, [state, clients])
-  console.log('App -> stateCities', stateCities.length)
 
-  // useEffect(() => {
-  //   Tabletop.init({
-  //     key: '1CYuCMQ35yXrPX6Pjjq_7CS6AXOjAN-2BbjMq8uWcP04',
-  //     callback: (data, tabletop) => {
-  //       console.log('App -> data', data)
-  //       setClients(data)
-  //     },
-  //     simpleSheet: true,
-  //   })
-  // }, [])
+  useEffect(() => {
+    Tabletop.init({
+      key: '1CYuCMQ35yXrPX6Pjjq_7CS6AXOjAN-2BbjMq8uWcP04',
+      callback: (data, tabletop) => {
+        setClients(data)
+      },
+      simpleSheet: true,
+    })
+  }, [])
 
   return (
     <Grid
@@ -251,7 +245,7 @@ const App = () => {
             ))}
           </Select>
         </FormControl>
-        {state !== '' && stateCities.length > 1 && (
+        {state !== '' && stateCities[0] !== null && (
           <FormControl className={styles.formControl}>
             <InputLabel className={styles.label} htmlFor="state-native-simple">
               Selecione a sua Cidade
@@ -276,8 +270,13 @@ const App = () => {
           </FormControl>
         )}
       </Grid>
+      {state !== '' && stateCities[0] !== null && (
+        <Typography component="h1" color="primary" variant="h2">
+          Total de x Coelhinhos encontrados
+        </Typography>
+      )}
       <Grid className={styles.cards}>
-        {state !== '' && stateCities.length === 1 && (
+        {state !== '' && stateCities[0] === null && (
           <Typography
             className={styles.title}
             component="h1"
@@ -287,6 +286,7 @@ const App = () => {
             Infelizmente não temos nenhum coelhinho registrado perto de você :(
           </Typography>
         )}
+
         {stateCities.find((selected) => selected === city) &&
           clients.map(
             (client) =>

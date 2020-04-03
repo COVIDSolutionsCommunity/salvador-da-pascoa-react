@@ -22,7 +22,7 @@ const MainCard = ({ client }) => {
           component="img"
           alt="Contemplative Reptile"
           height="140"
-          image={client.photo}
+          image={client.photo.replace('open', 'uc')}
           title="Contemplative Reptile"
         />
         <CardContent>
