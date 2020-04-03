@@ -13,6 +13,8 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 
+import MainCard from './card'
+
 import useStyles from './styles'
 
 const BRAZILIAN_STATES = [
@@ -47,6 +49,7 @@ const BRAZILIAN_STATES = [
 
 const INITIAL_STATE = [
   {
+    id: 1,
     ddata: '03/04/2020 12:28:27',
     name: 'marirlandia',
     email: 'marinastavares6@gmail.com',
@@ -66,6 +69,7 @@ const INITIAL_STATE = [
     obs: 'Trabalho fazem anos com delivery',
   },
   {
+    id: 2,
     ddata: '03/04/2020 12:28:27',
     name: 'marirlandia',
     email: 'marinastavares6@gmail.com',
@@ -85,6 +89,7 @@ const INITIAL_STATE = [
     obs: 'Trabalho fazem anos com delivery',
   },
   {
+    id: 3,
     ddata: '03/04/2020 12:28:27',
     name: 'marirlandia',
     email: 'marinastavares6@gmail.com',
@@ -104,6 +109,7 @@ const INITIAL_STATE = [
     obs: 'Trabalho fazem anos com delivery',
   },
   {
+    id: 4,
     ddata: '03/04/2020 12:28:27',
     name: 'marirlandia',
     email: 'marinastavares6@gmail.com',
@@ -123,6 +129,7 @@ const INITIAL_STATE = [
     obs: 'Trabalho fazem anos com delivery',
   },
   {
+    id: 5,
     ddata: '03/04/2020 12:28:27',
     name: 'marirlandia',
     email: 'marinastavares6@gmail.com',
@@ -142,6 +149,7 @@ const INITIAL_STATE = [
     obs: 'Trabalho fazem anos com delivery',
   },
   {
+    id: 6,
     ddata: '03/04/2020 12:28:27',
     name: 'marirlandia',
     email: 'marinastavares6@gmail.com',
@@ -221,7 +229,9 @@ const App = () => {
             onChange={handleChange}
           >
             {BRAZILIAN_STATES.map((state) => (
-              <MenuItem value={state}>{state}</MenuItem>
+              <MenuItem key={state} value={state}>
+                {state}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -236,7 +246,7 @@ const App = () => {
             {clients.map(
               (client) =>
                 client.state === age && (
-                  <MenuItem key={client.name} value={client.city}>
+                  <MenuItem key={client.id} value={client.city}>
                     {client.city}
                   </MenuItem>
                 )
@@ -247,35 +257,7 @@ const App = () => {
       <Grid className={styles.cards}>
         {clients.map(
           (client) =>
-            client.city === city && (
-              <Card key={client.name} className={styles.root}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="140"
-                    image={client.photo}
-                    title="Contemplative Reptile"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {client.name}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      {client.obs}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button size="small" color="primary">
-                    Entrar em contato
-                  </Button>
-                  <Button size="small" color="primary">
-                    Saber mais
-                  </Button>
-                </CardActions>
-              </Card>
-            )
+            client.city === city && <MainCard key={client.id} client={client} />
         )}
       </Grid>
     </Grid>
