@@ -8,6 +8,8 @@ import { Router } from '@reach/router'
 import * as serviceWorker from './serviceWorker'
 import App from './app'
 import Header from './header'
+import Faq from './faq'
+import AboutUs from './about-us'
 
 const theme = createMuiTheme({
   palette: {
@@ -19,22 +21,6 @@ const theme = createMuiTheme({
     },
     custom: {
       warmGrey: '#909090',
-      greyishBrown: '#525252',
-      fadedGreen: '#72b26c',
-      dustyTeal: '#4d878e',
-      midBlue2: '#2e64aa',
-      warmGrey2: '#8f8f8f',
-      wildSand: '#f5f5f5',
-      cobalt: '#204d99',
-      darkIndo: '#0f2450',
-      dustyGrey: '#969696',
-      fern: '#72B26C',
-      smalt: '#4D878E',
-      azure: '#2E64AA',
-      fadedRed: '#dd485b',
-      paleGrey: '#ecf3f5',
-      greyish: '#b8b8b8',
-      midBlue: '#265bb2',
       red: '#ff0000',
     },
     background: {
@@ -123,6 +109,9 @@ ReactDOM.render(
       <Router>
         <Header path="/">
           <App path="/" />
+          <App path="/:companyName" />
+          <Faq path="/faq" />
+          <AboutUs path="/sobre-nos" />
         </Header>
       </Router>
     </ThemeProvider>
