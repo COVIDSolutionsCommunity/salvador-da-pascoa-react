@@ -9,6 +9,9 @@ import ArrowBack from '@material-ui/icons/ArrowBack'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link as RouterLink } from '@reach/router'
 import Tabletop from 'tabletop'
+import classnames from 'classnames'
+
+import logo from '../assets/logo.png'
 
 import ClientContext from '../context'
 
@@ -34,137 +37,23 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
   },
   link: {
-    marginRight: theme.spacing(2),
+    fontFamily: 'Baloo Chettan',
+    marginLeft: theme.spacing(3),
+    fontWeight: '500',
+    color: theme.palette.secondary.main,
+  },
+  selected: {
+    color: theme.palette.custom.mandy,
   },
   children: {
     gridArea: 'children',
     marginBottom: '84px',
   },
+  img: {
+    height: '64px',
+    marginRight: 'auto',
+  },
 }))
-
-const INITIAL_STATE = [
-  {
-    id: 1,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 2,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 3,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    phoneNumber: '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 4,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 5,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Florianópolis',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-  },
-  {
-    id: 6,
-    ddata: '03/04/2020 12:28:27',
-    name: 'marirlandia',
-    email: 'marinastavares6@gmail.com',
-    state: 'SC',
-    city: 'Chapecó',
-    neighborhood: 'cebtor',
-    delivery: 'Telefone, Uber Eats',
-    'phoneNumberr ': '+5548984140707',
-    whatsapp: '5548984140707',
-    site: 'chocolate.com',
-    instagram: '@chocolate',
-    ifood: '',
-    uberEats: '',
-    rappi: '',
-    howToReceive: 'Delivery',
-    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-    obs: 'Trabalho fazem anos com delivery',
-    approved: 'FALSE',
-  },
-]
 
 const Header = ({ children, location }) => {
   const styles = useStyles()
@@ -183,7 +72,7 @@ const Header = ({ children, location }) => {
 
   return (
     <ClientContext.Provider value={clients}>
-      <AppBar className={styles.header} color="secondary" position="static">
+      <AppBar className={styles.header} color="primary" position="static">
         <Toolbar>
           {location.pathname !== '/' && (
             <IconButton
@@ -197,20 +86,30 @@ const Header = ({ children, location }) => {
               <ArrowBack color="primary" />
             </IconButton>
           )}
-          <Typography color="primary" variant="h6" className={styles.title}>
-            Salvador da Páscoa
-          </Typography>
+          <img alt="site logo" className={styles.img} src={logo} />
+          <Link
+            color="primary"
+            className={classnames(styles.link, {
+              [styles.selected]: location.pathname === '/',
+            })}
+            component={RouterLink}
+            to="/"
+          >
+            HOME
+          </Link>
           <Link
             color="primary"
             className={styles.link}
             component={RouterLink}
             to="/sobre-nos"
           >
-            SOBRE NÓS
+            SOBRE
           </Link>
           <Link
             color="primary"
-            className={styles.link}
+            className={classnames(styles.link, {
+              [styles.selected]: location.pathname === '/faq',
+            })}
             component={RouterLink}
             to="/faq"
           >
@@ -221,6 +120,7 @@ const Header = ({ children, location }) => {
             el="noreferrer"
             target="_blank"
             color="primary"
+            className={styles.link}
           >
             REGISTRAR
           </Link>

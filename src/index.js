@@ -14,7 +14,7 @@ import AboutUs from './about-us'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#E55C58',
+      main: '#EF5454',
     },
     secondary: {
       main: '#fff',
