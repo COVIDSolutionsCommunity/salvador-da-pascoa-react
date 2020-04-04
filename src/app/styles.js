@@ -38,16 +38,16 @@ export default makeStyles((theme) => ({
   cards: {
     display: 'grid',
     gridTemplateRows: 'auto',
-    gridTemplateColumns: 'repeat(3, auto)',
+    gridTemplateColumns: 'repeat(3, 1fr)',
     gridColumnGap: '16px',
     gridRowGap: '16px',
     margin: theme.spacing(2),
 
     [theme.breakpoints.down('md')]: {
-      gridTemplateColumns: 'repeat(2, auto)',
+      gridTemplateColumns: 'repeat(2, 1fr)',
     },
     [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'repeat(1, auto)',
+      gridTemplateColumns: 'repeat(1, 1fr)',
     },
   },
   icon: {
