@@ -14,14 +14,15 @@ import AboutUs from './about-us'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#EFCEC5',
+      main: '#E55C58',
     },
     secondary: {
       main: '#fff',
     },
     custom: {
-      warmGrey: '#909090',
-      red: '#ff0000',
+      mandy: '#F09B88',
+      tacao: '#ECB187',
+      brownRust: '#BA6D45',
     },
     background: {
       default: 'white',

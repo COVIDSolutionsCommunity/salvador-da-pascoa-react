@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, useMemo, useContext } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import Tabletop from 'tabletop'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
+
 import MainCard from './card'
+import ClientContext from '../context'
 
 import useStyles from './styles'
 
@@ -40,137 +41,11 @@ const BRAZILIAN_STATES = [
   'TO',
 ]
 
-// const INITIAL_STATE = [
-//   {
-//     id: 1,
-//     ddata: '03/04/2020 12:28:27',
-//     name: 'marirlandia',
-//     email: 'marinastavares6@gmail.com',
-//     state: 'SC',
-//     city: 'Florianópolis',
-//     neighborhood: 'cebtor',
-//     delivery: 'Telefone, Uber Eats',
-//     'phoneNumberr ': '+5548984140707',
-//     whatsapp: '5548984140707',
-//     site: 'chocolate.com',
-//     instagram: '@chocolate',
-//     ifood: '',
-//     uberEats: '',
-//     rappi: '',
-//     howToReceive: 'Delivery',
-//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-//     obs: 'Trabalho fazem anos com delivery',
-//   },
-//   {
-//     id: 2,
-//     ddata: '03/04/2020 12:28:27',
-//     name: 'marirlandia',
-//     email: 'marinastavares6@gmail.com',
-//     state: 'SC',
-//     city: 'Florianópolis',
-//     neighborhood: 'cebtor',
-//     delivery: 'Telefone, Uber Eats',
-//     'phoneNumberr ': '+5548984140707',
-//     whatsapp: '5548984140707',
-//     site: 'chocolate.com',
-//     instagram: '@chocolate',
-//     ifood: '',
-//     uberEats: '',
-//     rappi: '',
-//     howToReceive: 'Delivery',
-//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-//     obs: 'Trabalho fazem anos com delivery',
-//   },
-//   {
-//     id: 3,
-//     ddata: '03/04/2020 12:28:27',
-//     name: 'marirlandia',
-//     email: 'marinastavares6@gmail.com',
-//     state: 'SC',
-//     city: 'Florianópolis',
-//     neighborhood: 'cebtor',
-//     delivery: 'Telefone, Uber Eats',
-//     phoneNumber: '+5548984140707',
-//     whatsapp: '5548984140707',
-//     site: 'chocolate.com',
-//     instagram: '@chocolate',
-//     ifood: '',
-//     uberEats: '',
-//     rappi: '',
-//     howToReceive: 'Delivery',
-//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-//     obs: 'Trabalho fazem anos com delivery',
-//   },
-//   {
-//     id: 4,
-//     ddata: '03/04/2020 12:28:27',
-//     name: 'marirlandia',
-//     email: 'marinastavares6@gmail.com',
-//     state: 'SC',
-//     city: 'Florianópolis',
-//     neighborhood: 'cebtor',
-//     delivery: 'Telefone, Uber Eats',
-//     'phoneNumberr ': '+5548984140707',
-//     whatsapp: '5548984140707',
-//     site: 'chocolate.com',
-//     instagram: '@chocolate',
-//     ifood: '',
-//     uberEats: '',
-//     rappi: '',
-//     howToReceive: 'Delivery',
-//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-//     obs: 'Trabalho fazem anos com delivery',
-//   },
-//   {
-//     id: 5,
-//     ddata: '03/04/2020 12:28:27',
-//     name: 'marirlandia',
-//     email: 'marinastavares6@gmail.com',
-//     state: 'SC',
-//     city: 'Florianópolis',
-//     neighborhood: 'cebtor',
-//     delivery: 'Telefone, Uber Eats',
-//     'phoneNumberr ': '+5548984140707',
-//     whatsapp: '5548984140707',
-//     site: 'chocolate.com',
-//     instagram: '@chocolate',
-//     ifood: '',
-//     uberEats: '',
-//     rappi: '',
-//     howToReceive: 'Delivery',
-//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-//     obs: 'Trabalho fazem anos com delivery',
-//   },
-//   {
-//     id: 6,
-//     ddata: '03/04/2020 12:28:27',
-//     name: 'marirlandia',
-//     email: 'marinastavares6@gmail.com',
-//     state: 'SC',
-//     city: 'Chapecó',
-//     neighborhood: 'cebtor',
-//     delivery: 'Telefone, Uber Eats',
-//     'phoneNumberr ': '+5548984140707',
-//     whatsapp: '5548984140707',
-//     site: 'chocolate.com',
-//     instagram: '@chocolate',
-//     ifood: '',
-//     uberEats: '',
-//     rappi: '',
-//     howToReceive: 'Delivery',
-//     photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
-//     obs: 'Trabalho fazem anos com delivery',
-//     approved: 'FALSE',
-//   },
-// ]
-
-// mudar o open para up da photo
-
 const App = () => {
   const styles = useStyles()
   const [state, setState] = useState('')
   const [city, setCity] = useState('')
-  const [clients, setClients] = useState([])
+  const clients = useContext(ClientContext)
 
   const handleChange = useCallback((event) => {
     setState(event.target.value)
@@ -191,17 +66,6 @@ const App = () => {
     () => stateCities.find((selected) => selected === city),
     [stateCities, city]
   )
-  console.log('App -> hasSelected', hasSelected)
-
-  useEffect(() => {
-    Tabletop.init({
-      key: '1CYuCMQ35yXrPX6Pjjq_7CS6AXOjAN-2BbjMq8uWcP04',
-      callback: (data, tabletop) => {
-        setClients(data.filter((info) => info.accepted === 'TRUE'))
-      },
-      simpleSheet: true,
-    })
-  }, [])
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">

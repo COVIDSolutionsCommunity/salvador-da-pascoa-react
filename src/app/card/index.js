@@ -7,10 +7,29 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/styles'
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import Grid from '@material-ui/core/Grid'
+import InstagramIcon from '@material-ui/icons/Instagram'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import { Link as RouterLink } from '@reach/router'
+import Link from '@material-ui/core/Link'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+  },
+  icon: {
+    height: 12,
+    width: 12,
+    color: theme.palette.primary.main,
+    marginRight: theme.spacing(1),
+  },
+  name: {
+    color: theme.palette.custom.brownRust,
+  },
+  description: {
+    color: theme.palette.custom.brownRust,
+    fontWeight: '100',
   },
 }))
 
@@ -19,7 +38,7 @@ const MainCard = ({ client }) => {
 
   return (
     <Card key={client.id} className={styles.root}>
-      <CardActionArea>
+      <CardActionArea component={RouterLink} to={`/${client.instagram}`}>
         <CardMedia
           component="img"
           alt="Contemplative Reptile"
@@ -28,16 +47,47 @@ const MainCard = ({ client }) => {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {client.name}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {client.obs}
-          </Typography>
+          <Grid container spacing={1}>
+            <Grid container item direction="row" justify="start" alignItems="center">
+              <StorefrontIcon item className={styles.icon} />
+              <Typography className={styles.name} variant="h5" component="h2">
+                {client.name}
+              </Typography>
+            </Grid>
+            <Grid container item direction="row" justify="start" alignItems="center">
+              <InstagramIcon item className={styles.icon} />
+              <Typography className={styles.name} variant="h5" component="h2">
+                {client.instagram}
+              </Typography>
+            </Grid>
+            {client.obs && (
+              <Grid
+                container
+                item
+                direction="row"
+                justify="start"
+                alignItems="center"
+              >
+                <AccountCircleIcon item className={styles.icon} />
+                <Typography
+                  className={styles.description}
+                  variant="h5"
+                  component="h2"
+                >
+                  {client.obs}
+                </Typography>
+              </Grid>
+            )}
+          </Grid>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          component={Link}
+          href={`tel:${client.phoneNumber}`}
+        >
           Entrar em contato
         </Button>
         <Button size="small" color="primary">

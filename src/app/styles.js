@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
   },
   select: {
     marginBottom: '30px',
-    backgroundColor: '#EFCEC5',
+    backgroundColor: theme.palette.primary.main,
     padding: '30px',
     width: '100vw',
   },

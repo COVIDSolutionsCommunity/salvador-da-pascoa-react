@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -8,6 +8,9 @@ import IconButton from '@material-ui/core/IconButton'
 import ArrowBack from '@material-ui/icons/ArrowBack'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link as RouterLink } from '@reach/router'
+import Tabletop from 'tabletop'
+
+import ClientContext from '../context'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -39,11 +42,147 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+const INITIAL_STATE = [
+  {
+    id: 1,
+    ddata: '03/04/2020 12:28:27',
+    name: 'marirlandia',
+    email: 'marinastavares6@gmail.com',
+    state: 'SC',
+    city: 'Florianópolis',
+    neighborhood: 'cebtor',
+    delivery: 'Telefone, Uber Eats',
+    'phoneNumberr ': '+5548984140707',
+    whatsapp: '5548984140707',
+    site: 'chocolate.com',
+    instagram: '@chocolate',
+    ifood: '',
+    uberEats: '',
+    rappi: '',
+    howToReceive: 'Delivery',
+    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+    obs: 'Trabalho fazem anos com delivery',
+  },
+  {
+    id: 2,
+    ddata: '03/04/2020 12:28:27',
+    name: 'marirlandia',
+    email: 'marinastavares6@gmail.com',
+    state: 'SC',
+    city: 'Florianópolis',
+    neighborhood: 'cebtor',
+    delivery: 'Telefone, Uber Eats',
+    'phoneNumberr ': '+5548984140707',
+    whatsapp: '5548984140707',
+    site: 'chocolate.com',
+    instagram: '@chocolate',
+    ifood: '',
+    uberEats: '',
+    rappi: '',
+    howToReceive: 'Delivery',
+    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+    obs: 'Trabalho fazem anos com delivery',
+  },
+  {
+    id: 3,
+    ddata: '03/04/2020 12:28:27',
+    name: 'marirlandia',
+    email: 'marinastavares6@gmail.com',
+    state: 'SC',
+    city: 'Florianópolis',
+    neighborhood: 'cebtor',
+    delivery: 'Telefone, Uber Eats',
+    phoneNumber: '+5548984140707',
+    whatsapp: '5548984140707',
+    site: 'chocolate.com',
+    instagram: '@chocolate',
+    ifood: '',
+    uberEats: '',
+    rappi: '',
+    howToReceive: 'Delivery',
+    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+    obs: 'Trabalho fazem anos com delivery',
+  },
+  {
+    id: 4,
+    ddata: '03/04/2020 12:28:27',
+    name: 'marirlandia',
+    email: 'marinastavares6@gmail.com',
+    state: 'SC',
+    city: 'Florianópolis',
+    neighborhood: 'cebtor',
+    delivery: 'Telefone, Uber Eats',
+    'phoneNumberr ': '+5548984140707',
+    whatsapp: '5548984140707',
+    site: 'chocolate.com',
+    instagram: '@chocolate',
+    ifood: '',
+    uberEats: '',
+    rappi: '',
+    howToReceive: 'Delivery',
+    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+    obs: 'Trabalho fazem anos com delivery',
+  },
+  {
+    id: 5,
+    ddata: '03/04/2020 12:28:27',
+    name: 'marirlandia',
+    email: 'marinastavares6@gmail.com',
+    state: 'SC',
+    city: 'Florianópolis',
+    neighborhood: 'cebtor',
+    delivery: 'Telefone, Uber Eats',
+    'phoneNumberr ': '+5548984140707',
+    whatsapp: '5548984140707',
+    site: 'chocolate.com',
+    instagram: '@chocolate',
+    ifood: '',
+    uberEats: '',
+    rappi: '',
+    howToReceive: 'Delivery',
+    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+    obs: 'Trabalho fazem anos com delivery',
+  },
+  {
+    id: 6,
+    ddata: '03/04/2020 12:28:27',
+    name: 'marirlandia',
+    email: 'marinastavares6@gmail.com',
+    state: 'SC',
+    city: 'Chapecó',
+    neighborhood: 'cebtor',
+    delivery: 'Telefone, Uber Eats',
+    'phoneNumberr ': '+5548984140707',
+    whatsapp: '5548984140707',
+    site: 'chocolate.com',
+    instagram: '@chocolate',
+    ifood: '',
+    uberEats: '',
+    rappi: '',
+    howToReceive: 'Delivery',
+    photo: 'https://drive.google.com/uc?id=18ADNmJyMZARQhJZbFwSxHa9vIW7XIp9s',
+    obs: 'Trabalho fazem anos com delivery',
+    approved: 'FALSE',
+  },
+]
+
 const Header = ({ children, location }) => {
   const styles = useStyles()
+  const [clients, setClients] = useState([])
+  console.log('Header -> clients', clients)
+
+  useEffect(() => {
+    Tabletop.init({
+      key: '1CYuCMQ35yXrPX6Pjjq_7CS6AXOjAN-2BbjMq8uWcP04',
+      callback: (data, tabletop) => {
+        setClients(data.filter((info) => info.accepted === 'TRUE'))
+      },
+      simpleSheet: true,
+    })
+  }, [])
 
   return (
-    <Grid container>
+    <ClientContext.Provider value={clients}>
       <AppBar className={styles.header} color="secondary" position="static">
         <Toolbar>
           {location.pathname !== '/' && (
@@ -90,7 +229,7 @@ const Header = ({ children, location }) => {
       <Grid container item xs={12} className={styles.children}>
         {children}
       </Grid>
-      <Grid
+      {/* <Grid
         container
         direction="column"
         justify="center"
@@ -110,8 +249,8 @@ const Header = ({ children, location }) => {
         >
           @salvadordapascoa
         </Link>
-      </Grid>
-    </Grid>
+      </Grid> */}
+    </ClientContext.Provider>
   )
 }
 
