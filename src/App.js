@@ -11,7 +11,7 @@ const App = () => {
           Site em construção
           <br />
           <a class="App-link" href="https://instagram.com/salvadordapascoa">
-            @salvadoradapascoa
+            @salvadordapascoa
           </a>
         </p>
       </header>
