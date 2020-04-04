@@ -1,5 +1,4 @@
-import React, {
-   useMemo, useContext } from 'react'
+import React, { useMemo, useContext } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
@@ -7,18 +6,15 @@ import ClientContext from '../../context'
 
 import useStyles from './styles'
 
-const Client = ({ instagram }) => {
+const Client = ({ companyName }) => {
   const styles = useStyles()
   const clients = useContext(ClientContext)
 
-  const stateCities = useMemo(() => {
-    const array = clients.map((client) =>
-      client.state === state ? client.city : null
-    )
-    return array.filter((item, pos) => array.indexOf(item) === pos)
-  }, [state, clients])
-
+  const currentClient = useMemo(
+    () => clients.find((client) => client.instagram === companyName),
+    [clients, companyName]
   )
+  console.log('Client -> currentClient', currentClient)
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
@@ -35,7 +31,7 @@ const Client = ({ instagram }) => {
           color="secondary"
           variant="h2"
         >
-          Procure o chocolate mais perto de você
+          {currentClient.name}
         </Typography>
       </Grid>
     </Grid>

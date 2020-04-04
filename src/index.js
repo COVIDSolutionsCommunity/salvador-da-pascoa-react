@@ -5,8 +5,10 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { Router } from '@reach/router'
+
 import * as serviceWorker from './serviceWorker'
 import App from './views/app'
+import Client from './views/client'
 import Header from './views/header'
 import Faq from './views/faq'
 import AboutUs from './views/about-us'
@@ -110,7 +112,7 @@ ReactDOM.render(
       <Router>
         <Header path="/">
           <App path="/" />
-          <App path="/:companyName" />
+          <Client path="/:companyName" />
           <Faq path="/faq" />
           <AboutUs path="/sobre-nos" />
         </Header>

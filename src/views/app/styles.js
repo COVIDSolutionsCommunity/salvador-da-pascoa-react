@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   title: {
     textAlign: 'center',
     margin: '0 auto',
-    fontFamily: 'Indie Flower',
+    fontFamily: 'Baloo Chettan',
     fontSize: '32px',
   },
   select: {
