@@ -5,14 +5,17 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
+import ArrowBack from '@material-ui/icons/ArrowBack'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link as RouterLink } from '@reach/router'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+  container: {
+    display: 'grid',
+    gridTemplateRows: '80px 1fr 80px',
   },
+  header: {},
+  root: {},
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -20,16 +23,19 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   footer: {
+    gridRow: '3',
     padding: theme.spacing(2),
     backgroundColor: theme.palette.primary.main,
-    color: theme.palette.secondary.main,
-    justifySelf: 'end',
-    width: '100%',
-    position: 'absolute',
+    display: 'table-row',
+    position: 'sticky',
     bottom: 0,
   },
   link: {
     marginRight: theme.spacing(2),
+  },
+  children: {
+    gridArea: 'children',
+    marginBottom: '84px',
   },
 }))
 
@@ -37,14 +43,8 @@ const Header = ({ children, location }) => {
   const styles = useStyles()
 
   return (
-    <Grid
-      container
-      direction="column"
-      justify="center"
-      alignItems="center"
-      className={styles.container}
-    >
-      <AppBar color="secondary" position="static">
+    <Grid container>
+      <AppBar className={styles.header} color="secondary" position="static">
         <Toolbar>
           {location.pathname !== '/' && (
             <IconButton
@@ -52,13 +52,23 @@ const Header = ({ children, location }) => {
               className={styles.menuButton}
               color="inherit"
               aria-label="menu"
+              component={RouterLink}
+              to="/"
             >
-              <MenuIcon />
+              <ArrowBack color="primary" />
             </IconButton>
           )}
           <Typography color="primary" variant="h6" className={styles.title}>
             Salvador da Páscoa
           </Typography>
+          <Link
+            color="primary"
+            className={styles.link}
+            component={RouterLink}
+            to="/sobre-nos"
+          >
+            SOBRE NÓS
+          </Link>
           <Link
             color="primary"
             className={styles.link}
@@ -77,13 +87,17 @@ const Header = ({ children, location }) => {
           </Link>
         </Toolbar>
       </AppBar>
-      {children}
+      <Grid container item xs={12} className={styles.children}>
+        {children}
+      </Grid>
       <Grid
         container
         direction="column"
         justify="center"
         alignItems="center"
         className={styles.footer}
+        item
+        xs={12}
       >
         <Typography color="secondary" variant="h6" className={styles.title}>
           #vaiterpascoasim

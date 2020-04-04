@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles'
 export default makeStyles((theme) => ({
   title: {
     textAlign: 'center',
+    margin: '0 auto',
     fontFamily: 'Indie Flower',
     fontSize: '32px',
   },
@@ -11,6 +12,9 @@ export default makeStyles((theme) => ({
     backgroundColor: '#EFCEC5',
     padding: '30px',
     width: '100vw',
+  },
+  null: {
+    height: '100vh',
   },
   dropdown: {
     color: '#fff',

@@ -282,18 +282,19 @@ const App = () => {
             Coelhinhos encontrados
           </Typography>
         )}
-      <Grid className={styles.cards}>
-        {state !== '' && stateCities[0] === null && (
+      {state !== '' && stateCities[0] === null && (
+        <Grid className={styles.null}>
           <Typography
             className={styles.title}
             component="h1"
             color="primary"
             variant="h2"
           >
-            Infelizmente não temos nenhum coelhinho registrado perto de você :(
+            Infelizmente não temos nenhum coelhinho registrado perto de você : (
           </Typography>
-        )}
-
+        </Grid>
+      )}
+      <Grid className={styles.cards}>
         {hasSelected === undefined &&
           state === '' &&
           clients.map((client) => <MainCard key={client.id} client={client} />)}
