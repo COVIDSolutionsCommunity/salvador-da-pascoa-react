@@ -6,10 +6,10 @@ import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { Router } from '@reach/router'
 import * as serviceWorker from './serviceWorker'
-import App from './app'
-import Header from './header'
-import Faq from './faq'
-import AboutUs from './about-us'
+import App from './views/app'
+import Header from './views/header'
+import Faq from './views/faq'
+import AboutUs from './views/about-us'
 
 const theme = createMuiTheme({
   palette: {

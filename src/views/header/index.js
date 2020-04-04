@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import IconButton from '@material-ui/core/IconButton'
 import ArrowBack from '@material-ui/icons/ArrowBack'
@@ -11,9 +10,9 @@ import { Link as RouterLink } from '@reach/router'
 import Tabletop from 'tabletop'
 import classnames from 'classnames'
 
-import logo from '../assets/logo.png'
+import logo from '../../assets/logo.png'
 
-import ClientContext from '../context'
+import ClientContext from '../../context'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -129,27 +128,6 @@ const Header = ({ children, location }) => {
       <Grid container item xs={12} className={styles.children}>
         {children}
       </Grid>
-      {/* <Grid
-        container
-        direction="column"
-        justify="center"
-        alignItems="center"
-        className={styles.footer}
-        item
-        xs={12}
-      >
-        <Typography color="secondary" variant="h6" className={styles.title}>
-          #vaiterpascoasim
-        </Typography>
-        <Link
-          href="https://instagram.com/salvadordapascoa"
-          el="noreferrer"
-          target="_blank"
-          color="secondary"
-        >
-          @salvadordapascoa
-        </Link>
-      </Grid> */}
     </ClientContext.Provider>
   )
 }
