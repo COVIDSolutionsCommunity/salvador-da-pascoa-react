@@ -38,7 +38,7 @@ export default makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
-  total: { fontFamily: 'Baloo Chettan' },
+  total: { fontFamily: 'Indie Flower' },
   cards: {
     display: 'grid',
     gridTemplateRows: 'auto',
