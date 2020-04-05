@@ -3,8 +3,6 @@ import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Link from '@material-ui/core/Link'
-import IconButton from '@material-ui/core/IconButton'
-import ArrowBack from '@material-ui/icons/ArrowBack'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link as RouterLink } from '@reach/router'
 import Tabletop from 'tabletop'
@@ -73,18 +71,6 @@ const Header = ({ children, location }) => {
     <ClientContext.Provider value={clients}>
       <AppBar className={styles.header} color="primary" position="static">
         <Toolbar>
-          {location.pathname !== '/' && (
-            <IconButton
-              edge="start"
-              className={styles.menuButton}
-              color="inherit"
-              aria-label="menu"
-              component={RouterLink}
-              to="/"
-            >
-              <ArrowBack color="primary" />
-            </IconButton>
-          )}
           <img alt="site logo" className={styles.img} src={logo} />
           <Link
             color="primary"
@@ -98,9 +84,11 @@ const Header = ({ children, location }) => {
           </Link>
           <Link
             color="primary"
-            className={styles.link}
+            className={classnames(styles.link, {
+              [styles.selected]: location.pathname === '/sobre',
+            })}
             component={RouterLink}
-            to="/sobre-nos"
+            to="/sobre"
           >
             SOBRE
           </Link>
@@ -121,7 +109,7 @@ const Header = ({ children, location }) => {
             color="primary"
             className={styles.link}
           >
-            REGISTRAR
+            CADASTRAR
           </Link>
         </Toolbar>
       </AppBar>

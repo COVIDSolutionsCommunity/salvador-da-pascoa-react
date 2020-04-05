@@ -84,52 +84,54 @@ const App = () => {
         >
           Procure o chocolate mais perto de você
         </Typography>
-        <FormControl className={styles.formControl}>
-          <InputLabel className={styles.label} htmlFor="state-native-simple">
-            Selecione o seu estado
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={state}
-            onChange={handleChange}
-            className={styles.dropdown}
-            classes={{
-              icon: styles.icon,
-            }}
-            placeholder="Selecione um estado"
-          >
-            {BRAZILIAN_STATES.map((state) => (
-              <MenuItem key={state} value={state}>
-                {state}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {state !== '' && stateCities[0] !== null && (
+        <Grid container justify="center">
           <FormControl className={styles.formControl}>
             <InputLabel className={styles.label} htmlFor="state-native-simple">
-              Selecione a sua Cidade
+              Selecione o seu estado
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={city}
-              onChange={handleCityChange}
+              value={state}
+              onChange={handleChange}
               className={styles.dropdown}
               classes={{
                 icon: styles.icon,
               }}
               placeholder="Selecione um estado"
             >
-              {stateCities.map((client) => (
-                <MenuItem key={client} value={client}>
-                  {client}
+              {BRAZILIAN_STATES.map((state) => (
+                <MenuItem key={state} value={state}>
+                  {state}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-        )}
+          {state !== '' && stateCities[0] !== null && (
+            <FormControl className={styles.formControl}>
+              <InputLabel className={styles.label} htmlFor="state-native-simple">
+                Selecione a sua Cidade
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={city}
+                onChange={handleCityChange}
+                className={styles.dropdown}
+                classes={{
+                  icon: styles.icon,
+                }}
+                placeholder="Selecione um estado"
+              >
+                {stateCities.map((client) => (
+                  <MenuItem key={client} value={client}>
+                    {client}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+        </Grid>
       </Grid>
       {state !== '' &&
         stateCities[0] !== null &&

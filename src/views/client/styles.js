@@ -1,60 +1,93 @@
 import { makeStyles } from '@material-ui/styles'
 
 export default makeStyles((theme) => ({
-  title: {
-    textAlign: 'center',
-    margin: '0 auto',
-    fontFamily: 'Indie Flower',
-    fontSize: '32px',
-  },
-  select: {
-    marginBottom: '30px',
-    backgroundColor: theme.palette.custom.mandy,
-    padding: '30px',
+  container: {
+    display: 'flex',
+    alignItems: 'center',
     width: '100vw',
   },
-  null: {
-    height: '100vh',
+  content: {
+    margin: '0 auto',
   },
-  dropdown: {
-    color: '#fff',
-    '&:before': {
-      borderColor: '#fff',
+  card: {
+    display: 'flex',
+    direction: 'row',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
     },
-    '&:after': {
-      borderColor: '#fff',
-    },
-  },
-  label: {
-    color: 'white',
-  },
-  formControl: {
-    margin: theme.spacing(2),
-    minWidth: 320,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
   },
   root: {
-    maxWidth: 345,
-  },
-  total: { fontFamily: 'Indie Flower' },
-  cards: {
-    display: 'grid',
-    gridTemplateRows: 'auto',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gridColumnGap: '16px',
-    gridRowGap: '16px',
-    margin: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '800px',
 
     [theme.breakpoints.down('md')]: {
-      gridTemplateColumns: 'repeat(2, 1fr)',
+      maxWidth: '600px',
     },
     [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'repeat(1, 1fr)',
+      maxWidth: '400px',
     },
   },
+  size: {
+    maxHeight: '400px',
+    maxWidth: '300px',
+
+    [theme.breakpoints.down('md')]: {
+      maxHeight: '300px',
+      maxWidth: '200px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: '100%',
+      maxWidth: '100%',
+    },
+  },
+  info: {
+    padding: theme.spacing(2),
+  },
+  type: {
+    color: theme.palette.custom.mandy,
+    fontSize: '14px',
+  },
   icon: {
-    color: 'white',
+    color: theme.palette.custom.mandy,
+    marginRight: theme.spacing(2),
+    height: '24px',
+    width: '24px',
+  },
+  mainIcon: {
+    color: theme.palette.custom.mandy,
+    height: '32px',
+    width: '32px',
+    marginRight: theme.spacing(1),
+  },
+  description: {
+    fontSize: '14px',
+    fontWeight: '300',
+    color: theme.palette.custom.brownRust,
+  },
+  title: { fontSize: '14px', color: theme.palette.custom.brownRust },
+  delivery: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  name: {
+    fontSize: '24px',
+    color: theme.palette.custom.brownRust,
+    fontFamily: 'Baloo Chettan',
+  },
+  image: {
+    maxHeight: '500px',
+    maxWidth: '500px',
+
+    [theme.breakpoints.down('md')]: {
+      maxHeight: '300px',
+      maxWidth: '200px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: '100%',
+      maxWidth: '100%',
+    },
   },
 }))

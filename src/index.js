@@ -22,7 +22,7 @@ const theme = createMuiTheme({
       main: '#fff',
     },
     custom: {
-      mandy: '#F09B88',
+      mandy: '#F79C84',
       tacao: '#ECB187',
       brownRust: '#BA6D45',
     },
@@ -32,8 +32,9 @@ const theme = createMuiTheme({
   },
   typography: {
     h1: {
-      fontSize: '4.8px',
+      fontSize: '32px',
       fontWeight: 'bold',
+      fontFamily: 'Baloo Chettan',
     },
     h2: {
       fontSize: '20px',
@@ -52,6 +53,7 @@ const theme = createMuiTheme({
       fontSize: '12px',
       fontWeight: 'bold',
       lineHeight: '1.33',
+      color: '#BA6D45',
     },
     subtitle1: {
       fontSize: '16px',

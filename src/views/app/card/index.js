@@ -35,16 +35,16 @@ const useStyles = makeStyles((theme) => ({
 
 const MainCard = ({ client }) => {
   const styles = useStyles()
+  // const photos = client.photo.split(',')
 
   return (
     <Card key={client.id} className={styles.root}>
       <CardActionArea component={RouterLink} to={`/${client.instagram}`}>
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
+          alt="Foto da marca"
           height="140"
           image={client.photo.replace('open', 'uc')}
-          title="Contemplative Reptile"
         />
         <CardContent>
           <Grid container spacing={1}>
@@ -90,7 +90,12 @@ const MainCard = ({ client }) => {
         >
           Entrar em contato
         </Button>
-        <Button size="small" color="primary">
+        <Button
+          component={RouterLink}
+          to={`/${client.instagram}`}
+          size="small"
+          color="primary"
+        >
           Saber mais
         </Button>
       </CardActions>
