@@ -18,6 +18,9 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: '100%',
+    },
   },
   icon: {
     height: 12,
@@ -36,6 +39,12 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 75,
     margin: 'auto 150px 0',
+  },
+  obg: {
+    maxHeight: '28px',
+  },
+  margin: {
+    marginBottom: 'auto',
   },
 }))
 
@@ -82,6 +91,7 @@ const MainCard = ({ client }) => {
                 direction="row"
                 justify="start"
                 alignItems="center"
+                className={styles.obs}
               >
                 <AccountCircleIcon item className={styles.icon} />
                 <Typography
@@ -96,24 +106,26 @@ const MainCard = ({ client }) => {
           </Grid>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button
-          size="small"
-          color="primary"
-          component={Link}
-          href={`tel:${client.phoneNumber}`}
-        >
-          Entrar em contato
-        </Button>
-        <Button
-          component={RouterLink}
-          to={`/${client.instagram}`}
-          size="small"
-          color="primary"
-        >
-          Saber mais
-        </Button>
-      </CardActions>
+      <Grid className={styles.margin}>
+        <CardActions>
+          <Button
+            size="small"
+            color="primary"
+            component={Link}
+            href={`tel:${client.phoneNumber}`}
+          >
+            Entrar em contato
+          </Button>
+          <Button
+            component={RouterLink}
+            to={`/${client.instagram}`}
+            size="small"
+            color="primary"
+          >
+            Saber mais
+          </Button>
+        </CardActions>
+      </Grid>
     </Card>
   )
 }

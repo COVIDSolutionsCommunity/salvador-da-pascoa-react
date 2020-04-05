@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Link from '@material-ui/core/Link'
 
 import MainCard from './card'
 import ClientContext from '../../context'
@@ -73,6 +74,7 @@ const App = () => {
     () => selectedState.filter((client) => client.city === city),
     [city, selectedState]
   )
+  console.log('App -> selectedCity', selectedCity)
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
@@ -140,7 +142,7 @@ const App = () => {
           )}
         </Grid>
       </Grid>
-      {selectedCity.length > 1 && (
+      {selectedCity.length > 0 && (
         <Typography
           className={styles.total}
           component="h1"
@@ -166,7 +168,7 @@ const App = () => {
       )}
       {clients && (
         <Grid className={styles.cards}>
-          {selectedCity.length > 1
+          {selectedCity.length > 0
             ? selectedCity.map((client) => (
                 <MainCard key={client.id} client={client} />
               ))
@@ -180,6 +182,13 @@ const App = () => {
         produtores e comércios exporem seus chocolates. Não somos responsáveis pelas
         encomendas, pagamentos, entregas e produtos, que devem ser combinadas com
         cada vendedor.
+        <br />
+        <Link href="https://www.instagram.com/salvadordapascos">
+          Acesse nosso instagram @salvadordapasopa <br />
+        </Link>
+        <Link href="mailto:salvadordapascoa2020@gmail.com">
+          salvadordapascoa2020@gmail.com{' '}
+        </Link>
       </Typography>
     </Grid>
   )

@@ -298,23 +298,30 @@ const Client = ({ companyName }) => {
                 ))}
               </Typography>
             </Card>
-            <Card className={styles.photos}>
-              <Typography className={styles.name}>Produtos:</Typography>
-              <br />
-              <Grid container justify="center" direction="column">
-                {currentClient.allPhotos.split(',').map((photo) => (
-                  <>
-                    <img
-                      key={photo}
-                      src={photo.replace('open', 'uc')}
-                      alt="cardapio"
-                      className={styles.image}
-                    />
-                    <br />
-                  </>
-                ))}
-              </Grid>
-            </Card>
+            {currentClient.allPhotos && (
+              <Card className={styles.photos}>
+                <Typography className={styles.name}>Produtos:</Typography>
+                <br />
+                <Grid
+                  container
+                  justify="center"
+                  direction="column"
+                  alignItems="center"
+                >
+                  {currentClient.allPhotos.split(',').map((photo) => (
+                    <>
+                      <img
+                        key={photo}
+                        src={photo.replace('open', 'uc')}
+                        alt="cardapio"
+                        className={styles.image}
+                      />
+                      <br />
+                    </>
+                  ))}
+                </Grid>
+              </Card>
+            )}
           </Card>
         </Grid>
       )}

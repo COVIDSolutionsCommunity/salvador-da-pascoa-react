@@ -41,14 +41,15 @@ export default makeStyles((theme) => ({
   total: { fontFamily: 'Baloo Chettan' },
   cards: {
     display: 'grid',
-    gridTemplateRows: 'auto',
     gridTemplateColumns: 'repeat(3, 1fr)',
+    gridTemplateRows: 'auto',
     gridColumnGap: '16px',
     gridRowGap: '16px',
     margin: theme.spacing(2),
 
     [theme.breakpoints.down('md')]: {
       gridTemplateColumns: 'repeat(2, 1fr)',
+      gridTemplateRows: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'repeat(1, 1fr)',
