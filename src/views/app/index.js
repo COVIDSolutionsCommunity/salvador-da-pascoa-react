@@ -151,7 +151,7 @@ const App = () => {
       )}
       {clients.length === 0 && (
         <Typography className={styles.obs}>
-          Ainda não temos nenhum coelinho registrado na nossa plataforma :(
+          Ainda não temos nenhum coelhinho registrado na nossa plataforma :(
         </Typography>
       )}
       {state !== '' && stateCities[0] === null && (
@@ -177,7 +177,7 @@ const App = () => {
             ))}
       </Grid>
       <Typography className={styles.obs}>
-        O Salvador da Pascoa é uma plataforma sem fins lucrativos para pequenos
+        O Salvador da Páscoa é uma plataforma sem fins lucrativos para pequenos
         produtores e comércios exporem seus chocolates. Não somos responsáveis pelas
         encomendas, pagamentos, entregas e produtos, que devem ser combinadas com
         cada vendedor.

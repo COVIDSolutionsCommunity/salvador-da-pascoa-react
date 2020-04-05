@@ -25,7 +25,7 @@ const group = [
     id: 2,
     name: 'Martina Hotzel',
     description: 'Designer',
-    linkedin: 'www.linkedin.com/in/martinahotzel',
+    linkedin: 'https://www.linkedin.com/in/martinahotzel',
     photo: Martina,
   },
   {
@@ -49,7 +49,6 @@ const group = [
     name: 'Maurici Meneghetti de Souza',
     description: 'Programador apaixonado',
     linkedin: 'http://linkedin.com/in/maurici-meneghetti-de-souza-2a73ab161',
-    github: 'https://www.github.com/marinastavares',
     photo: maurici,
   },
 ]
@@ -77,8 +76,8 @@ const AboutUs = () => {
         do ano e estão tendo dificuldades para anunciar e vender seus produtos por
         causa da crise atual.
         <br /> Ao mesmo tempo, queremos trazer o espirito de união para as famílias e
-        amigos que passarão essa pascoa distante, mas não querem deixar de mandar uma
-        lembrança doce mesmo de longe. <br /> O salvador da pascoa foi idealizado por
+        amigos que passarão essa páscoa distante, mas não querem deixar de mandar uma
+        lembrança doce mesmo de longe. <br /> O salvador da páscoa foi idealizado por
         um grupo de voluntários que se juntaram através da plataforma{' '}
         <Link
           target="_blanck"
@@ -114,7 +113,7 @@ const AboutUs = () => {
                   target="_blanck"
                   rel="noreferer"
                   color="primary"
-                  href={person.linkedin}
+                  href={person.github}
                 >
                   <GitHubIcon className={styles.icon} />
                 </Link>

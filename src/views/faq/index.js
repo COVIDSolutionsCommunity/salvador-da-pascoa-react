@@ -32,7 +32,7 @@ const Faq = () => {
           {' '}
           Vocês cuidam da entrega dos meus produtos?
         </Typography>
-        Não, essa parte é de responsabilidade sua, nos apenas servimos como uma
+        Não, essa parte é de responsabilidade sua, nós apenas servimos como uma
         vitrine para que as pessoas consigam achar mais facilmente seus produtos.{' '}
         <Typography component="h2" variant="h2">
           Como posso pagar pelo meu pedido ?
