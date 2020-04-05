@@ -146,18 +146,29 @@ const App = () => {
           color="primary"
           variant="h2"
         >
-          Total de {selectedCity.lengt} Coelhinhos encontrados
+          Total de {selectedCity.length} Coelhinhos encontrados
+        </Typography>
+      )}
+      {clients.length === 0 && (
+        <Typography
+          className={styles.total}
+          component="h1"
+          color="primary"
+          variant="h2"
+        >
+          Ainda não temos nenhum coelinho registrado na nossa plataforma <br /> :(
         </Typography>
       )}
       {state !== '' && stateCities[0] === null && (
         <Grid className={styles.null}>
           <Typography
             className={styles.title}
-            component="h1"
+            component="h2"
             color="primary"
             variant="h2"
           >
-            Infelizmente não temos nenhum coelhinho registrado perto de você : (
+            Infelizmente não temos nenhum coelhinho registrado perto de você <br />{' '}
+            :(
           </Typography>
         </Grid>
       )}
@@ -170,6 +181,12 @@ const App = () => {
               <MainCard key={client.id} client={client} />
             ))}
       </Grid>
+      <Typography className={styles.obs}>
+        O Salvador da Pascoa é uma plataforma sem fins lucrativos para pequenos
+        produtores e comércios exporem seus chocolates. Não somos responsáveis pelas
+        encomendas, pagamentos, entregas e produtos, que devem ser combinadas com
+        cada vendedor.
+      </Typography>
     </Grid>
   )
 }

@@ -48,6 +48,9 @@ export default makeStyles((theme) => ({
     color: theme.palette.custom.mandy,
     fontSize: '14px',
   },
+  loading: {
+    margin: '-50px auto 0',
+  },
   icon: {
     color: theme.palette.custom.mandy,
     marginRight: theme.spacing(2),
@@ -97,5 +100,9 @@ export default makeStyles((theme) => ({
       maxHeight: '100%',
       maxWidth: '100%',
     },
+  },
+  photos: {
+    display: 'flex',
+    direction: 'column',
   },
 }))

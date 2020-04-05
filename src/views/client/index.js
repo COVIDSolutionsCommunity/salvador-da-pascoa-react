@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, useCallback } from 'react'
+import React, { useMemo, useContext, useCallback, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
@@ -12,6 +12,7 @@ import PlaceIcon from '@material-ui/icons/Place'
 import PhoneIcon from '@material-ui/icons/Phone'
 import WhatsAppIcon from '@material-ui/icons/WhatsApp'
 import LanguageIcon from '@material-ui/icons/Language'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import ClientContext from '../../context'
 import ifood from '../../assets/ifood.svg'
@@ -23,23 +24,28 @@ import useStyles from './styles'
 const Client = ({ companyName }) => {
   const styles = useStyles()
   const clients = useContext(ClientContext)
+  const [isPictureLoading, setLoadingImage] = useState(true)
 
   const currentClient = useMemo(
     () => clients.find((client) => client.instagram === companyName),
     [clients, companyName]
   )
-  console.log('Client -> currentClient', currentClient)
 
   const wayofAsking = useMemo(
     () => currentClient && currentClient.delivery.split(','),
     [currentClient]
   )
-  console.log('Client -> wayofAsking', wayofAsking)
 
   const wayOfDelivery = useMemo(
     () => currentClient && currentClient.howToReceive.split(','),
     [currentClient]
   )
+
+  const handleLoadingImage = useCallback((event) => {
+    if (event.type === 'load') {
+      setLoadingImage(false)
+    }
+  }, [])
 
   const setLinks = useCallback(
     (type) => {
@@ -169,7 +175,6 @@ const Client = ({ companyName }) => {
 
   return (
     <Grid className={styles.container}>
-      {/* <Loading /> */}
       {currentClient && (
         <Grid className={styles.content}>
           <Card className={styles.root}>
@@ -177,10 +182,11 @@ const Client = ({ companyName }) => {
               <CardMedia
                 component="img"
                 image={currentClient.photo.split(',')[0].replace('open', 'uc')}
-                title="Contemplative Reptile"
+                title={`Imagem principal ${currentClient.companyName}`}
                 className={styles.size}
-                // width="100%"
+                onLoad={handleLoadingImage}
               />
+              {isPictureLoading && <CircularProgress className={styles.loading} />}
               <Grid className={styles.info}>
                 <Grid container spacing={1}>
                   <Grid
@@ -282,17 +288,22 @@ const Client = ({ companyName }) => {
                 ))}
               </Typography>
             </Card>
-            <Card className={styles.delivery}>
+            <Card className={styles.photos}>
               <Typography className={styles.name}>Cardápio:</Typography>
               <br />
-              {currentClient.allPhotos.split(',').map((photo) => (
-                <img
-                  key={photo}
-                  src={photo}
-                  alt="cardapio"
-                  className={styles.image}
-                />
-              ))}
+              <Grid container justify="center" direction="column">
+                {currentClient.allPhotos.split(',').map((photo) => (
+                  <>
+                    <img
+                      key={photo}
+                      src={photo.replace('open', 'uc')}
+                      alt="cardapio"
+                      className={styles.image}
+                    />
+                    <br />
+                  </>
+                ))}
+              </Grid>
             </Card>
           </Card>
         </Grid>

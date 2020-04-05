@@ -1,6 +1,6 @@
 {
   "name": "salvador-da-pascoa-react",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.8",
@@ -13,6 +13,7 @@
     "commitizen": "^4.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-ga": "^2.7.0",
     "react-scripts": "3.4.1",
     "tabletop": "^1.6.2"
   },

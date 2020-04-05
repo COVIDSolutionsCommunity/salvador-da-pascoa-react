@@ -65,13 +65,11 @@ const useStyles = makeStyles((theme) => ({
 const Header = ({ children, location }) => {
   const styles = useStyles()
   const [clients, setClients] = useState([])
-  console.log('Header -> clients', clients)
 
   useEffect(() => {
     Tabletop.init({
-      key: '1CYuCMQ35yXrPX6Pjjq_7CS6AXOjAN-2BbjMq8uWcP04',
+      key: '1tpn6dgeXt2NvAj37Z5PHVEsEV7D6LBd3HuRLDNk0u94',
       callback: (data, tabletop) => {
-        console.log('Header -> data', data)
         setClients(data.filter((info) => info.accepted === 'TRUE'))
       },
       simpleSheet: true,

@@ -57,4 +57,12 @@ export default makeStyles((theme) => ({
   icon: {
     color: 'white',
   },
+  obs: {
+    fontWeight: 'normal',
+    fontSize: '16px',
+    margin: '50px 20px',
+    textAlign: 'center',
+    fontFamily: 'Baloo Chettan',
+    color: theme.palette.custom.brownRust,
+  },
 }))

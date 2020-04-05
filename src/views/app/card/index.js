@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -13,6 +13,7 @@ import InstagramIcon from '@material-ui/icons/Instagram'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { Link as RouterLink } from '@reach/router'
 import Link from '@material-ui/core/Link'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,11 +32,23 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.custom.brownRust,
     fontWeight: '100',
   },
+  loading: {
+    position: 'absolute',
+    top: 75,
+    margin: 'auto 150px 0',
+  },
 }))
 
 const MainCard = ({ client }) => {
   const styles = useStyles()
   const photos = client.photo.split(',')
+  const [isPictureLoading, setLoadingImage] = useState(true)
+
+  const handleLoadingImage = useCallback((event) => {
+    if (event.type === 'load') {
+      setLoadingImage(false)
+    }
+  }, [])
 
   return (
     <Card key={client.id} className={styles.root}>
@@ -45,7 +58,9 @@ const MainCard = ({ client }) => {
           alt="Foto da marca"
           height="140"
           image={photos[0].replace('open', 'uc')}
+          onLoad={handleLoadingImage}
         />
+        {isPictureLoading && <CircularProgress className={styles.loading} />}
         <CardContent>
           <Grid container spacing={1}>
             <Grid container item direction="row" justify="start" alignItems="center">

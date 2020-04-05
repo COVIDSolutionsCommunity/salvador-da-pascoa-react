@@ -9,6 +9,7 @@ import paula from '../../assets/paula.png'
 import Martina from '../../assets/Martina.png'
 import matheus from '../../assets/matheus.png'
 import marina from '../../assets/marina.png'
+import maurici from '../../assets/maurici.png'
 
 import useStyles from './styles'
 
@@ -43,6 +44,14 @@ const group = [
     github: 'https://www.github.com/marinastavares',
     photo: marina,
   },
+  {
+    id: 5,
+    name: 'Maurici Meneghetti de Souza',
+    description: 'Programador apaixonado',
+    linkedin: 'http://linkedin.com/in/maurici-meneghetti-de-souza-2a73ab161',
+    github: 'https://www.github.com/marinastavares',
+    photo: maurici,
+  },
 ]
 
 const AboutUs = () => {
@@ -58,6 +67,9 @@ const AboutUs = () => {
     >
       <Typography component="h1" color="primary" variant="h1">
         Sobre nós
+      </Typography>
+      <Typography component="h2" variant="h2">
+        #vaiterpáscoasim
       </Typography>
       <Typography className={styles.description} component="p" color="primary">
         Fizemos esse projeto pensando em dar uma ajuda para todos confeiteiros,
