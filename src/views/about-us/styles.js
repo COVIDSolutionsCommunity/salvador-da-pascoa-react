@@ -3,6 +3,9 @@ import { makeStyles } from '@material-ui/styles'
 export default makeStyles((theme) => ({
   container: {
     padding: '20px 250px',
+    [theme.breakpoints.down('md')]: {
+      padding: '20px 10px',
+    },
   },
   description: {
     textAlign: 'justify',
@@ -14,7 +17,7 @@ export default makeStyles((theme) => ({
     display: 'grid',
     gridTemplateRows: 'min-content min-content auto min-content',
     gridTemplateColumns: '200px',
-    gridGap: theme.spacing(1),
+    gridGap: theme.spacing(2),
     alignItems: 'start',
     justifyItems: 'center',
     margin: theme.spacing(2),

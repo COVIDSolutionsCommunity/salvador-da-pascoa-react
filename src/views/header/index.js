@@ -9,6 +9,7 @@ import Tabletop from 'tabletop'
 import classnames from 'classnames'
 
 import logo from '../../assets/logo.png'
+import redondo from '../../assets/redondo.png'
 
 import ClientContext from '../../context'
 
@@ -46,6 +47,15 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     height: '64px',
+    [theme.breakpoints.down(600)]: {
+      display: 'none',
+    },
+  },
+  imgMobile: {
+    height: '64px',
+    [theme.breakpoints.up(601)]: {
+      display: 'none',
+    },
   },
   image: {
     marginRight: 'auto',
@@ -61,6 +71,7 @@ const Header = ({ children, location }) => {
     Tabletop.init({
       key: '1CYuCMQ35yXrPX6Pjjq_7CS6AXOjAN-2BbjMq8uWcP04',
       callback: (data, tabletop) => {
+        console.log('Header -> data', data)
         setClients(data.filter((info) => info.accepted === 'TRUE'))
       },
       simpleSheet: true,
@@ -73,6 +84,7 @@ const Header = ({ children, location }) => {
         <Toolbar>
           <Link className={styles.image} component={RouterLink} to="/">
             <img alt="site logo" className={styles.img} src={logo} />
+            <img alt="site logo" className={styles.imgMobile} src={redondo} />
           </Link>
           <Link
             color="primary"

@@ -16,8 +16,7 @@ const group = [
   {
     id: 1,
     name: 'Paula Fortkamp Frigo',
-    description:
-      'Gastrônoma, Food Designer e bem louca por tudo o que envolve comida.',
+    description: 'Gastrônoma e Food Designer.',
     linkedin: 'https://www.linkedin.com/in/paula-fortkamp-frigo/',
     photo: paula,
   },
@@ -39,8 +38,7 @@ const group = [
   {
     id: 4,
     name: 'Marina Silva Tavares',
-    description:
-      'Desenvolvedora e estudante de Engenharia de Controle e Automação nas horas vagas',
+    description: 'Frontend dev',
     linkedin: 'https://www.linkedin.com/in/marinastavares/',
     github: 'https://www.github.com/marinastavares',
     photo: marina,
@@ -84,8 +82,8 @@ const AboutUs = () => {
       </Typography>
       <Grid container justify="center" spacing={1}>
         {group.map((person) => (
-          <Grid className={styles.contact}>
-            <img alt="Photo de Perfil" className={styles.img} src={person.photo} />
+          <Grid key={person.id} className={styles.contact}>
+            <img alt="Perfil" className={styles.img} src={person.photo} />
             <Typography className={styles.name} color="primary">
               {person.name}
             </Typography>

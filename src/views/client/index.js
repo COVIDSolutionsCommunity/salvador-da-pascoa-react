@@ -187,7 +187,7 @@ const Client = ({ companyName }) => {
                     container
                     item
                     direction="row"
-                    justify="start"
+                    justify="flex-start"
                     alignItems="center"
                   >
                     <StorefrontIcon item className={styles.mainIcon} />
@@ -199,7 +199,7 @@ const Client = ({ companyName }) => {
                     container
                     item
                     direction="row"
-                    justify="start"
+                    justify="flex-start"
                     alignItems="center"
                   >
                     <PlaceIcon item className={styles.icon} />
@@ -213,7 +213,7 @@ const Client = ({ companyName }) => {
                       container
                       item
                       direction="row"
-                      justify="start"
+                      justify="flex-start"
                       alignItems="center"
                     >
                       <AccountCircleIcon item className={styles.icon} />
@@ -226,7 +226,7 @@ const Client = ({ companyName }) => {
                     container
                     item
                     direction="row"
-                    justify="start"
+                    justify="flex-start"
                     alignItems="center"
                   >
                     <InstagramIcon item className={styles.icon} />
@@ -244,7 +244,7 @@ const Client = ({ companyName }) => {
                     container
                     item
                     direction="row"
-                    justify="start"
+                    justify="flex-start"
                     alignItems="center"
                   >
                     <WhatsAppIcon item className={styles.icon} />

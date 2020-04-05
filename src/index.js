@@ -38,7 +38,10 @@ const theme = createMuiTheme({
     },
     h2: {
       fontSize: '20px',
-      fontWeight: 'bold',
+      fontWeight: '500',
+      fontFamily: 'Baloo Chettan',
+      color: '#F79C84',
+      margin: '10px 0',
     },
     h3: {
       fontSize: '16px',

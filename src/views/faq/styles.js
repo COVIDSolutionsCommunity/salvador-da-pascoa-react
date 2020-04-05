@@ -2,13 +2,15 @@ import { makeStyles } from '@material-ui/styles'
 
 export default makeStyles((theme) => ({
   container: {
-    margin: theme.spacing(3),
-    height: '100vh',
+    padding: '20px 250px',
+    [theme.breakpoints.down('md')]: {
+      padding: '20px 20px',
+    },
   },
-  title: {
-    textAlign: 'left',
-    margin: '0 auto',
-    fontFamily: 'Indie Flower',
-    fontSize: '32px',
+  description: {
+    textAlign: 'justify',
+    color: theme.palette.custom.brownRust,
+    lineHeight: '1.5',
+    margin: theme.spacing(3),
   },
 }))
