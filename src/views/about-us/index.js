@@ -1,8 +1,51 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import Link from '@material-ui/core/Link'
+import LinkedInIcon from '@material-ui/icons/LinkedIn'
+import GitHubIcon from '@material-ui/icons/GitHub'
+
+import paula from '../../assets/paula.png'
+import Martina from '../../assets/Martina.png'
+import matheus from '../../assets/matheus.png'
+import marina from '../../assets/marina.png'
 
 import useStyles from './styles'
+
+const group = [
+  {
+    id: 1,
+    name: 'Paula Fortkamp Frigo',
+    description:
+      'Gastrônoma, Food Designer e bem louca por tudo o que envolve comida.',
+    linkedin: 'https://www.linkedin.com/in/paula-fortkamp-frigo/',
+    photo: paula,
+  },
+  {
+    id: 2,
+    name: 'Martina Hotzel',
+    description: 'Designer',
+    linkedin: 'www.linkedin.com/in/martinahotzel',
+    photo: Martina,
+  },
+  {
+    id: 3,
+    name: 'Matheus Ribak',
+    description: 'Programador',
+    linkedin: 'https://www.linkedin.com/in/matheusribak/',
+    github: 'https://www.github.com/matheusribak/',
+    photo: matheus,
+  },
+  {
+    id: 4,
+    name: 'Marina Silva Tavares',
+    description:
+      'Desenvolvedora e estudante de Engenharia de Controle e Automação nas horas vagas',
+    linkedin: 'https://www.linkedin.com/in/marinastavares/',
+    github: 'https://www.github.com/marinastavares',
+    photo: marina,
+  },
+]
 
 const AboutUs = () => {
   const styles = useStyles()
@@ -12,17 +55,64 @@ const AboutUs = () => {
       container
       className={styles.container}
       direction="column"
-      justify="start"
+      justify="center"
       alignItems="center"
     >
-      <Typography
-        className={styles.title}
-        component="h1"
-        color="primary"
-        variant="h2"
-      >
+      <Typography component="h1" color="primary" variant="h1">
         Sobre nós
       </Typography>
+      <Typography className={styles.description} component="p" color="primary">
+        Fizemos esse projeto pensando em dar uma ajuda para todos confeiteiros,
+        pequenos comércios e empreendedores que conseguem uma renda extra nessa época
+        do ano e estão tendo dificuldades para anunciar e vender seus produtos por
+        causa da crise atual.
+        <br /> Ao mesmo tempo, queremos trazer o espirito de união para as famílias e
+        amigos que passarão essa pascoa distante, mas não querem deixar de mandar uma
+        lembrança doce mesmo de longe. <br /> O salvador da pascoa foi idealizado por
+        um grupo de voluntários que se juntaram através da plataforma{' '}
+        <Link
+          target="_blanck"
+          rel="noreferer"
+          color="primary"
+          href="https://www.covidsolutions.com.br"
+        >
+          covidsolutions.com.br
+        </Link>
+        , que une pessoas para resolver problemas que estão surgindo em decorrência
+        da pandemia.
+        <br />O grupo é formado por:
+      </Typography>
+      <Grid container justify="center" spacing={1}>
+        {group.map((person) => (
+          <Grid className={styles.contact}>
+            <img alt="Photo de Perfil" className={styles.img} src={person.photo} />
+            <Typography className={styles.name} color="primary">
+              {person.name}
+            </Typography>
+            <Typography className={styles.about}>{person.description}</Typography>
+            <Grid container spacing={2} justify="center" alignItems="center">
+              <Link
+                target="_blanck"
+                rel="noreferer"
+                color="primary"
+                href={person.linkedin}
+              >
+                <LinkedInIcon className={styles.icon} />
+              </Link>
+              {person.github && (
+                <Link
+                  target="_blanck"
+                  rel="noreferer"
+                  color="primary"
+                  href={person.linkedin}
+                >
+                  <GitHubIcon className={styles.icon} />
+                </Link>
+              )}
+            </Grid>
+          </Grid>
+        ))}
+      </Grid>
     </Grid>
   )
 }
