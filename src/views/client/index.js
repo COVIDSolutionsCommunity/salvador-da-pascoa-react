@@ -30,11 +30,13 @@ const Client = ({ companyName }) => {
     () => clients.find((client) => client.instagram === companyName),
     [clients, companyName]
   )
+  console.log('Client -> currentClient', currentClient)
 
   const wayofAsking = useMemo(
     () => currentClient && currentClient.delivery.split(','),
     [currentClient]
   )
+  console.log('Client -> wayofAsking', wayofAsking)
 
   const wayOfDelivery = useMemo(
     () => currentClient && currentClient.howToReceive.split(','),
@@ -101,72 +103,80 @@ const Client = ({ companyName }) => {
           )
         case ' Ifood':
           return (
-            <Button
-              href={currentClient[type.replace(' ', '')]}
-              target="_blanck"
-              rel="noreferer"
-              color="primary"
-              variant="outlined"
-              size="small"
-              component={Link}
-              className={styles.button}
-            >
-              <img alt="icone ifood" src={ifood} className={styles.buttonIcon} />
-              Ifood
-            </Button>
+            currentClient[type.replace(' ', '')] && (
+              <Button
+                href={currentClient[type.replace(' ', '')]}
+                target="_blanck"
+                rel="noreferer"
+                color="primary"
+                variant="outlined"
+                size="small"
+                component={Link}
+                className={styles.button}
+              >
+                <img alt="icone ifood" src={ifood} className={styles.buttonIcon} />
+                Ifood
+              </Button>
+            )
           )
         case ' Uber Eats':
           return (
-            <Button
-              href={currentClient[type.replace(' ', '')]}
-              target="_blanck"
-              rel="noreferer"
-              color="primary"
-              variant="outlined"
-              size="small"
-              component={Link}
-              className={styles.button}
-            >
-              <img
-                alt="icone uber eats"
-                src={uberEats}
-                className={styles.buttonIcon}
-              />
-              Uber Eats
-            </Button>
+            currentClient[type.replace(' ', '')] && (
+              <Button
+                href={currentClient[type.replace(' ', '')]}
+                target="_blanck"
+                rel="noreferer"
+                color="primary"
+                variant="outlined"
+                size="small"
+                component={Link}
+                className={styles.button}
+              >
+                <img
+                  alt="icone uber eats"
+                  src={uberEats}
+                  className={styles.buttonIcon}
+                />
+                Uber Eats
+              </Button>
+            )
           )
         case ' Rappi':
           return (
-            <Button
-              href={currentClient[type.replace(' ', '')]}
-              target="_blanck"
-              rel="noreferer"
-              color="primary"
-              variant="outlined"
-              size="small"
-              component={Link}
-              className={styles.button}
-            >
-              <img alt="icone rappi" src={rappi} className={styles.buttonIcon} />
-              Rappi
-            </Button>
+            currentClient[type.replace(' ', '')] && (
+              <Button
+                href={currentClient[type.replace(' ', '')]}
+                target="_blanck"
+                rel="noreferer"
+                color="primary"
+                variant="outlined"
+                size="small"
+                component={Link}
+                className={styles.button}
+              >
+                <img alt="icone rappi" src={rappi} className={styles.buttonIcon} />
+                Rappi
+              </Button>
+            )
           )
         default:
           return (
-            <Button
-              href={currentClient[type.replace(' ', '')]}
-              color="primary"
-              variant="outlined"
-              size="small"
-              component={Link}
-              target="_blanck"
-              rel="noreferer"
-              className={styles.button}
-            >
-              <LanguageIcon className={styles.buttonIcon} />
+            currentClient[type.replace(' ', '')] && (
+              <Button
+                href={currentClient[type.replace(' ', '')]}
+                color="primary"
+                variant="outlined"
+                size="small"
+                component={Link}
+                target="_blanck"
+                rel="noreferer"
+                className={styles.button}
+              >
+                <LanguageIcon className={styles.buttonIcon} />
 
-              {type}
-            </Button>
+                {type}
+              </Button>
+            )
           )
       }
     },
