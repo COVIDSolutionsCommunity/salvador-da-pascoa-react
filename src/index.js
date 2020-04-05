@@ -5,7 +5,6 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { Router } from '@reach/router'
-import ReactGA from 'react-ga'
 
 import * as serviceWorker from './serviceWorker'
 import App from './views/app'
@@ -110,9 +109,6 @@ const theme = createMuiTheme({
     },
   },
 })
-
-const trackingId = 'UA-162871245-1'
-ReactGA.initialize(trackingId)
 
 ReactDOM.render(
   <React.StrictMode>

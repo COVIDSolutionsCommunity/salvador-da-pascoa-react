@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useContext } from 'react'
+import React, { useState, useCallback, useMemo, useContext, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Link from '@material-ui/core/Link'
+import ReactGA from 'react-ga'
 
 import MainCard from './card'
 import ClientContext from '../../context'
@@ -67,21 +68,23 @@ const App = () => {
       .filter((item, pos) => array.indexOf(item) === pos)
       .filter((item) => item !== null)
   }, [state, clients])
-  console.log('stateCities -> stateCities', stateCities)
 
   const selectedState = useMemo(
     () =>
       state === '' ? clients : clients.filter((client) => client.state === state),
     [state, clients]
   )
-  console.log('App -> selectedState', selectedState)
 
   const selectedCity = useMemo(
     () => selectedState.filter((client) => client.city === city),
     [city, selectedState]
   )
-  console.log('App -> selectedCity', selectedCity)
-  console.log('App -> stateCities[0]', stateCities[0])
+
+  useEffect(() => {
+    const trackingId = 'UA-162871245-1'
+    ReactGA.initialize(trackingId)
+    ReactGA.pageview('/homepage')
+  }, [])
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">

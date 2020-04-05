@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
@@ -10,6 +10,7 @@ import Martina from '../../assets/Martina.png'
 import matheus from '../../assets/matheus.png'
 import marina from '../../assets/marina.png'
 import maurici from '../../assets/maurici.png'
+import ReactGA from 'react-ga'
 
 import useStyles from './styles'
 
@@ -52,6 +53,10 @@ const group = [
     photo: maurici,
   },
 ]
+
+useEffect(() => {
+  ReactGA.pageview('/sobre')
+}, [])
 
 const AboutUs = () => {
   const styles = useStyles()
