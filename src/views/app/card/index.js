@@ -18,9 +18,6 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
-    [theme.breakpoints.down('sm')]: {
-      maxHeight: '100%',
-    },
   },
   icon: {
     height: 12,
