@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import MainCard from './card'
 import ClientContext from '../../context'
@@ -149,11 +150,7 @@ const App = () => {
           Total de {selectedCity.length} Coelhinhos encontrados
         </Typography>
       )}
-      {clients.length === 0 && (
-        <Typography className={styles.obs}>
-          Ainda não temos nenhum coelhinho registrado na nossa plataforma :(
-        </Typography>
-      )}
+      {clients.length === 0 && <CircularProgress />}
       {state !== '' && stateCities[0] === null && (
         <Grid className={styles.null}>
           <Typography
@@ -167,15 +164,17 @@ const App = () => {
           </Typography>
         </Grid>
       )}
-      <Grid className={styles.cards}>
-        {selectedCity.length > 1
-          ? selectedCity.map((client) => (
-              <MainCard key={client.id} client={client} />
-            ))
-          : selectedState.map((client) => (
-              <MainCard key={client.id} client={client} />
-            ))}
-      </Grid>
+      {clients && (
+        <Grid className={styles.cards}>
+          {selectedCity.length > 1
+            ? selectedCity.map((client) => (
+                <MainCard key={client.id} client={client} />
+              ))
+            : selectedState.map((client) => (
+                <MainCard key={client.id} client={client} />
+              ))}
+        </Grid>
+      )}
       <Typography className={styles.obs}>
         O Salvador da Páscoa é uma plataforma sem fins lucrativos para pequenos
         produtores e comércios exporem seus chocolates. Não somos responsáveis pelas

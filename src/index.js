@@ -111,7 +111,7 @@ const theme = createMuiTheme({
   },
 })
 
-const trackingId = 'UA-162871245'
+const trackingId = 'UA-162871245-1'
 ReactGA.initialize(trackingId)
 
 ReactDOM.render(
