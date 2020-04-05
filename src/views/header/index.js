@@ -17,8 +17,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'grid',
     gridTemplateRows: '80px 1fr 80px',
   },
-  header: {},
-  root: {},
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -48,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
   },
   img: {
     height: '64px',
+  },
+  image: {
     marginRight: 'auto',
   },
 }))
@@ -69,9 +69,11 @@ const Header = ({ children, location }) => {
 
   return (
     <ClientContext.Provider value={clients}>
-      <AppBar className={styles.header} color="primary" position="static">
+      <AppBar color="primary" position="static">
         <Toolbar>
-          <img alt="site logo" className={styles.img} src={logo} />
+          <Link className={styles.image} component={RouterLink} to="/">
+            <img alt="site logo" className={styles.img} src={logo} />
+          </Link>
           <Link
             color="primary"
             className={classnames(styles.link, {

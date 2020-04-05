@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MainCard = ({ client }) => {
   const styles = useStyles()
-  // const photos = client.photo.split(',')
+  const photos = client.photo.split(',')
 
   return (
     <Card key={client.id} className={styles.root}>
@@ -44,7 +44,7 @@ const MainCard = ({ client }) => {
           component="img"
           alt="Foto da marca"
           height="140"
-          image={client.photo.replace('open', 'uc')}
+          image={photos[0].replace('open', 'uc')}
         />
         <CardContent>
           <Grid container spacing={1}>

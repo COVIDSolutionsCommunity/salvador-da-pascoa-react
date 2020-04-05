@@ -62,9 +62,15 @@ const App = () => {
     return array.filter((item, pos) => array.indexOf(item) === pos)
   }, [state, clients])
 
-  const hasSelected = useMemo(
-    () => stateCities.find((selected) => selected === city),
-    [stateCities, city]
+  const selectedState = useMemo(
+    () =>
+      state === '' ? clients : clients.filter((client) => client.state === state),
+    [state, clients]
+  )
+
+  const selectedCity = useMemo(
+    () => selectedState.filter((client) => client.city === city),
+    [city, selectedState]
   )
 
   return (
@@ -133,21 +139,16 @@ const App = () => {
           )}
         </Grid>
       </Grid>
-      {state !== '' &&
-        stateCities[0] !== null &&
-        stateCities.find((selected) => selected === city) && (
-          <Typography
-            className={styles.total}
-            component="h1"
-            color="primary"
-            variant="h2"
-          >
-            Total de{' '}
-            {stateCities.find((selected) => selected === city) &&
-              clients.map((client) => client.city === city).length}{' '}
-            Coelhinhos encontrados
-          </Typography>
-        )}
+      {selectedCity.length > 1 && (
+        <Typography
+          className={styles.total}
+          component="h1"
+          color="primary"
+          variant="h2"
+        >
+          Total de {selectedCity.lengt} Coelhinhos encontrados
+        </Typography>
+      )}
       {state !== '' && stateCities[0] === null && (
         <Grid className={styles.null}>
           <Typography
@@ -161,15 +162,13 @@ const App = () => {
         </Grid>
       )}
       <Grid className={styles.cards}>
-        {hasSelected === undefined &&
-          state === '' &&
-          clients.map((client) => <MainCard key={client.id} client={client} />)}
-
-        {stateCities.find((selected) => selected === city) &&
-          clients.map(
-            (client) =>
-              client.city === city && <MainCard key={client.id} client={client} />
-          )}
+        {selectedCity.length > 1
+          ? selectedCity.map((client) => (
+              <MainCard key={client.id} client={client} />
+            ))
+          : selectedState.map((client) => (
+              <MainCard key={client.id} client={client} />
+            ))}
       </Grid>
     </Grid>
   )

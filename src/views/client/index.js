@@ -2,9 +2,6 @@ import React, { useMemo, useContext, useCallback } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import InstagramIcon from '@material-ui/icons/Instagram'
@@ -14,10 +11,12 @@ import Link from '@material-ui/core/Link'
 import PlaceIcon from '@material-ui/icons/Place'
 import PhoneIcon from '@material-ui/icons/Phone'
 import WhatsAppIcon from '@material-ui/icons/WhatsApp'
+import LanguageIcon from '@material-ui/icons/Language'
 
 import ClientContext from '../../context'
-
-import Loading from './loading'
+import ifood from '../../assets/ifood.svg'
+import uberEats from '../../assets/uberEats.svg'
+import rappi from '../../assets/rappi.svg'
 
 import useStyles from './styles'
 
@@ -35,6 +34,7 @@ const Client = ({ companyName }) => {
     () => currentClient && currentClient.delivery.split(','),
     [currentClient]
   )
+  console.log('Client -> wayofAsking', wayofAsking)
 
   const wayOfDelivery = useMemo(
     () => currentClient && currentClient.howToReceive.split(','),
@@ -46,53 +46,125 @@ const Client = ({ companyName }) => {
       switch (type) {
         case 'Telefone':
           return (
-            <Link href={`tel:${currentClient.phoneNumber}`} className={styles.title}>
-              {' '}
+            <Button
+              color="primary"
+              variant="outlined"
+              size="small"
+              component={Link}
+              href={`tel:${currentClient.phoneNumber}`}
+              className={styles.button}
+            >
+              <PhoneIcon className={styles.buttonIcon} />
               Telefone
-            </Link>
+            </Button>
           )
-        case 'Whatsapp':
+        case ' Whatsapp':
           return (
-            <Link
+            <Button
               href={`whatsapp:${currentClient.phoneNumber}`}
               target="_blanck"
               rel="noreferer"
-              className={styles.title}
+              color="primary"
+              variant="outlined"
+              size="small"
+              component={Link}
+              className={styles.button}
             >
-              {' '}
+              <WhatsAppIcon color="primary" className={styles.buttonIcon} />
               Whatsapp
-            </Link>
+            </Button>
           )
         case ' DM no Instagram':
           return (
-            <Link
+            <Button
               href={`https://www.instagram.com/${currentClient.instagram.replace(
                 '@',
                 ''
               )}`}
               target="_blanck"
               rel="noreferer"
-              className={styles.title}
+              color="primary"
+              variant="outlined"
+              size="small"
+              component={Link}
+              className={styles.button}
             >
-              {' '}
+              <InstagramIcon className={styles.buttonIcon} />
               Instagram
-            </Link>
+            </Button>
+          )
+        case ' Ifood':
+          return (
+            <Button
+              href={currentClient[type.replace(' ', '')]}
+              target="_blanck"
+              rel="noreferer"
+              color="primary"
+              variant="outlined"
+              size="small"
+              component={Link}
+              className={styles.button}
+            >
+              <img alt="icone ifood" src={ifood} className={styles.buttonIcon} />
+              Ifood
+            </Button>
+          )
+        case ' Uber Eats':
+          return (
+            <Button
+              href={currentClient[type.replace(' ', '')]}
+              target="_blanck"
+              rel="noreferer"
+              color="primary"
+              variant="outlined"
+              size="small"
+              component={Link}
+              className={styles.button}
+            >
+              <img
+                alt="icone uber eats"
+                src={uberEats}
+                className={styles.buttonIcon}
+              />
+              Uber Eats
+            </Button>
+          )
+        case ' Rappi':
+          return (
+            <Button
+              href={currentClient[type.replace(' ', '')]}
+              target="_blanck"
+              rel="noreferer"
+              color="primary"
+              variant="outlined"
+              size="small"
+              component={Link}
+              className={styles.button}
+            >
+              <img alt="icone rappi" src={rappi} className={styles.buttonIcon} />
+              Rappi
+            </Button>
           )
         default:
           return (
-            <Link
+            <Button
               href={currentClient[type.replace(' ', '')]}
-              className={styles.title}
+              color="primary"
+              variant="outlined"
+              size="small"
+              component={Link}
               target="_blanck"
               rel="noreferer"
+              className={styles.button}
             >
-              {' '}
+              <LanguageIcon className={styles.buttonIcon} />
+
               {type}
-            </Link>
+            </Button>
           )
       }
     },
-    [currentClient, styles.title]
+    [currentClient, styles.button, styles.buttonIcon]
   )
 
   return (
@@ -188,7 +260,8 @@ const Client = ({ companyName }) => {
             </Grid>
             <Card className={styles.delivery}>
               <Typography className={styles.type} variant="h5" component="h2">
-                Como pedir: {wayofAsking.map((delivery) => setLinks(delivery))}
+                Clique para pedir: <br />
+                {wayofAsking.map((delivery) => setLinks(delivery))}
               </Typography>
             </Card>
             <Card className={styles.delivery}>
@@ -196,16 +269,22 @@ const Client = ({ companyName }) => {
                 Formas de entrega:{' '}
               </Typography>
               <Typography className={styles.title} variant="h5" component="h2">
-                {wayOfDelivery.map((delivery, index) =>
-                  console.log(index, wayOfDelivery.length) ||
-                  index + 1 === wayOfDelivery.length
-                    ? delivery + '.'
-                    : delivery + ', '
-                )}
+                {wayOfDelivery.map((delivery) => (
+                  <Button
+                    href={currentClient[delivery.replace(' ', '')]}
+                    color="primary"
+                    variant="outlined"
+                    size="small"
+                    className={styles.button}
+                  >
+                    {delivery}
+                  </Button>
+                ))}
               </Typography>
             </Card>
             <Card className={styles.delivery}>
               <Typography className={styles.name}>Cardápio:</Typography>
+              <br />
               {currentClient.allPhotos.split(',').map((photo) => (
                 <img
                   key={photo}

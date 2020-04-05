@@ -54,6 +54,14 @@ export default makeStyles((theme) => ({
     height: '24px',
     width: '24px',
   },
+  buttonIcon: {
+    marginRight: theme.spacing(1),
+    height: '24px',
+    width: '24px',
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
   mainIcon: {
     color: theme.palette.custom.mandy,
     height: '32px',

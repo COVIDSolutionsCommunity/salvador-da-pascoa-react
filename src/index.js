@@ -116,7 +116,7 @@ ReactDOM.render(
           <App path="/" />
           <Client path="/:companyName" />
           <Faq path="/faq" />
-          <AboutUs path="/sobre-nos" />
+          <AboutUs path="/sobre" />
         </Header>
       </Router>
     </ThemeProvider>
