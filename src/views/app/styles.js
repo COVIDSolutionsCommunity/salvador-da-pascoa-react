@@ -38,6 +38,11 @@ export default makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
+  bunny: {
+    height: '100px',
+    width: '100px',
+    margin: '20px auto',
+  },
   total: { fontFamily: 'Baloo Chettan' },
   cards: {
     display: 'grid',

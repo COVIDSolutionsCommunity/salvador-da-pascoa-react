@@ -10,6 +10,7 @@ import Link from '@material-ui/core/Link'
 
 import MainCard from './card'
 import ClientContext from '../../context'
+import sadBunny from '../../assets/sadBunny.png'
 
 import useStyles from './styles'
 
@@ -46,6 +47,7 @@ const BRAZILIAN_STATES = [
 const App = () => {
   const styles = useStyles()
   const [state, setState] = useState('')
+  console.log('App -> state', state)
   const [city, setCity] = useState('')
   const clients = useContext(ClientContext)
 
@@ -61,20 +63,25 @@ const App = () => {
     const array = clients.map((client) =>
       client.state === state ? client.city : null
     )
-    return array.filter((item, pos) => array.indexOf(item) === pos)
+    return array
+      .filter((item, pos) => array.indexOf(item) === pos)
+      .filter((item) => item !== null)
   }, [state, clients])
+  console.log('stateCities -> stateCities', stateCities)
 
   const selectedState = useMemo(
     () =>
       state === '' ? clients : clients.filter((client) => client.state === state),
     [state, clients]
   )
+  console.log('App -> selectedState', selectedState)
 
   const selectedCity = useMemo(
     () => selectedState.filter((client) => client.city === city),
     [city, selectedState]
   )
   console.log('App -> selectedCity', selectedCity)
+  console.log('App -> stateCities[0]', stateCities[0])
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
@@ -116,7 +123,7 @@ const App = () => {
               ))}
             </Select>
           </FormControl>
-          {state !== '' && stateCities[0] !== null && (
+          {state !== '' && selectedState.length > 1 && (
             <FormControl className={styles.formControl}>
               <InputLabel className={styles.label} htmlFor="state-native-simple">
                 Selecione a sua Cidade
@@ -153,8 +160,14 @@ const App = () => {
         </Typography>
       )}
       {clients.length === 0 && <CircularProgress />}
-      {state !== '' && stateCities[0] === null && (
-        <Grid className={styles.null}>
+      {selectedState.length === 0 && state !== '' && (
+        <Grid
+          container
+          justify="start"
+          alignItems="center"
+          direction="column"
+          className={styles.null}
+        >
           <Typography
             className={styles.title}
             component="h2"
@@ -162,8 +175,8 @@ const App = () => {
             variant="h2"
           >
             Infelizmente não temos nenhum coelhinho registrado perto de você <br />{' '}
-            :(
           </Typography>
+          <img alt="Coelhinho triste" src={sadBunny} className={styles.bunny} />
         </Grid>
       )}
       {clients && (
@@ -184,10 +197,10 @@ const App = () => {
         cada vendedor.
         <br />
         <Link href="https://www.instagram.com/salvadordapascoa">
-          Acesse nosso instagram @salvadordapasopa <br />
+          Acesse nosso instagram @salvadordapascoa <br />
         </Link>
         <Link href="mailto:salvadordapascoa2020@gmail.com">
-          salvadordapascoa2020@gmail.com{' '}
+          salvadordapascoa2020@gmail.com
         </Link>
       </Typography>
     </Grid>
