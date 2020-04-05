@@ -183,7 +183,7 @@ const App = () => {
         encomendas, pagamentos, entregas e produtos, que devem ser combinadas com
         cada vendedor.
         <br />
-        <Link href="https://www.instagram.com/salvadordapascos">
+        <Link href="https://www.instagram.com/salvadordapascoa">
           Acesse nosso instagram @salvadordapasopa <br />
         </Link>
         <Link href="mailto:salvadordapascoa2020@gmail.com">
