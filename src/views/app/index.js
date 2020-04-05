@@ -48,7 +48,6 @@ const BRAZILIAN_STATES = [
 const App = () => {
   const styles = useStyles()
   const [state, setState] = useState('')
-  console.log('App -> state', state)
   const [city, setCity] = useState('')
   const clients = useContext(ClientContext)
 

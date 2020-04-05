@@ -30,13 +30,11 @@ const Client = ({ companyName }) => {
     () => clients.find((client) => client.instagram === companyName),
     [clients, companyName]
   )
-  console.log('Client -> currentClient', currentClient)
 
   const wayofAsking = useMemo(
     () => currentClient && currentClient.delivery.split(','),
     [currentClient]
   )
-  console.log('Client -> wayofAsking', wayofAsking)
 
   const wayOfDelivery = useMemo(
     () => currentClient && currentClient.howToReceive.split(','),
