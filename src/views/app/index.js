@@ -158,7 +158,8 @@ const App = () => {
           color="primary"
           variant="h2"
         >
-          Total de {selectedCity.length} Coelhinhos encontrados
+          Total de {selectedCity.length} Coelhinho{selectedCity.length > 1 && 's'}{' '}
+          encontrados
         </Typography>
       )}
       {clients.length === 0 && <CircularProgress />}
@@ -183,13 +184,15 @@ const App = () => {
       )}
       {clients && (
         <Grid className={styles.cards}>
-          {selectedCity.length > 0
-            ? selectedCity.map((client) => (
-                <MainCard key={client.id} client={client} />
-              ))
-            : selectedState.map((client) => (
-                <MainCard key={client.id} client={client} />
-              ))}
+          {selectedCity.length > 0 &&
+            selectedCity.map((client) => (
+              <MainCard key={client.id} client={client} />
+            ))}
+          {selectedCity.length === 0 &&
+            state !== '' &&
+            selectedState.map((client) => (
+              <MainCard key={client.id} client={client} />
+            ))}
         </Grid>
       )}
       <Typography className={styles.obs}>
