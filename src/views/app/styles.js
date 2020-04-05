@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles'
 export default makeStyles((theme) => ({
   title: {
     textAlign: 'center',
-    margin: '0 auto',
+    margin: '0 30px',
     fontFamily: 'Baloo Chettan',
     fontSize: '32px',
   },

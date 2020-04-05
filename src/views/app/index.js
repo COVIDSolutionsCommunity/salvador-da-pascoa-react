@@ -150,12 +150,7 @@ const App = () => {
         </Typography>
       )}
       {clients.length === 0 && (
-        <Typography
-          className={styles.total}
-          component="h1"
-          color="primary"
-          variant="h2"
-        >
+        <Typography className={styles.obs}>
           Ainda não temos nenhum coelinho registrado na nossa plataforma :(
         </Typography>
       )}
