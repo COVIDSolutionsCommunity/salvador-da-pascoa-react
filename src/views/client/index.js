@@ -253,10 +253,10 @@ const Client = ({ companyName }) => {
                     justify="flex-start"
                     alignItems="center"
                   >
-                    <WhatsAppIcon item className={styles.icon} />
+                    <PhoneIcon item className={styles.icon} />
                     <Link
                       className={styles.title}
-                      href={`whatsapp:${currentClient.phoneNumber}`}
+                      href={`tel:${currentClient.phoneNumber}`}
                     >
                       {currentClient.phoneNumber}
                     </Link>
@@ -281,7 +281,7 @@ const Client = ({ companyName }) => {
                     color="primary"
                     variant="outlined"
                     size="small"
-                    className={styles.button}
+                    className={styles.newButton}
                   >
                     {delivery}
                   </Button>
@@ -289,7 +289,7 @@ const Client = ({ companyName }) => {
               </Typography>
             </Card>
             <Card className={styles.photos}>
-              <Typography className={styles.name}>Cardápio:</Typography>
+              <Typography className={styles.name}>Produtos:</Typography>
               <br />
               <Grid container justify="center" direction="column">
                 {currentClient.allPhotos.split(',').map((photo) => (

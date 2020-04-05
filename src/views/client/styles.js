@@ -65,6 +65,10 @@ export default makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },
+  newButton: {
+    cursor: 'default',
+    margin: theme.spacing(1),
+  },
   mainIcon: {
     color: theme.palette.custom.mandy,
     height: '32px',
@@ -87,6 +91,7 @@ export default makeStyles((theme) => ({
     fontSize: '24px',
     color: theme.palette.custom.brownRust,
     fontFamily: 'Baloo Chettan',
+    margin: theme.spacing(2),
   },
   image: {
     maxHeight: '500px',
@@ -103,6 +108,7 @@ export default makeStyles((theme) => ({
   },
   photos: {
     display: 'flex',
-    direction: 'column',
+    flexDirection: 'column',
+    padding: '0 10px',
   },
 }))
