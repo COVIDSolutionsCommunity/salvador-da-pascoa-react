@@ -156,7 +156,7 @@ const App = () => {
           color="primary"
           variant="h2"
         >
-          Ainda não temos nenhum coelinho registrado na nossa plataforma <br /> :(
+          Ainda não temos nenhum coelinho registrado na nossa plataforma :(
         </Typography>
       )}
       {state !== '' && stateCities[0] === null && (
