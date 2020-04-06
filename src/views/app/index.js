@@ -66,7 +66,6 @@ const App = ({ location }) => {
     return array
       .filter((item, pos) => array.indexOf(item) === pos)
       .filter((item) => item !== null)
-      .map((item) => item.trim())
   }, [state, clients])
 
   const selectedState = useMemo(
