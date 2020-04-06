@@ -49,7 +49,7 @@ const Client = ({ companyName }) => {
 
   const setLinks = useCallback(
     (type) => {
-      switch (type) {
+      switch (type.trim()) {
         case 'Telefone':
           return (
             <Button
@@ -57,17 +57,24 @@ const Client = ({ companyName }) => {
               variant="outlined"
               size="small"
               component={Link}
-              href={`tel:${currentClient.phoneNumber}`}
+              href={`tel:+55${currentClient.phoneNumber
+                .replace('+55', '')
+                .match(/[0-9]/g)
+                .join('')}`}
               className={styles.button}
             >
               <PhoneIcon className={styles.buttonIcon} />
               Telefone
             </Button>
           )
-        case ' Whatsapp':
+        case 'Whatsapp':
           return (
             <Button
-              href={`whatsapp:${currentClient.phoneNumber}`}
+              href={`https://wa.me/55${currentClient.whatsapp
+                .match(/[0-9]/g)
+                .join(
+                  ''
+                )}?text=Oi%20encontrei%20você%20no%20salvadordapascoa.com.br"`}
               target="_blanck"
               rel="noreferer"
               color="primary"
@@ -80,13 +87,12 @@ const Client = ({ companyName }) => {
               Whatsapp
             </Button>
           )
-        case ' DM no Instagram':
+        case 'DM no Instagram':
           return (
             <Button
-              href={`https://www.instagram.com/${currentClient.instagram.replace(
-                '@',
-                ''
-              )}`}
+              href={`https://www.instagram.com/${currentClient.instagram
+                .trim()
+                .replace('@', '')}`}
               target="_blanck"
               rel="noreferer"
               color="primary"
@@ -99,7 +105,7 @@ const Client = ({ companyName }) => {
               Instagram
             </Button>
           )
-        case ' Ifood':
+        case 'Ifood':
           return (
             currentClient[type.replace(' ', '')] && (
               <Button
@@ -117,9 +123,9 @@ const Client = ({ companyName }) => {
               </Button>
             )
           )
-        case ' Uber Eats':
+        case 'Uber Eats':
           return (
-            currentClient[type.replace(' ', '')] && (
+            currentClient[type.trim()] && (
               <Button
                 href={currentClient[type.replace(' ', '')]}
                 target="_blanck"
@@ -139,9 +145,9 @@ const Client = ({ companyName }) => {
               </Button>
             )
           )
-        case ' Rappi':
+        case 'Rappi':
           return (
-            currentClient[type.replace(' ', '')] && (
+            currentClient[type.trim()] && (
               <Button
                 href={currentClient[type.replace(' ', '')]}
                 target="_blanck"
@@ -245,10 +251,9 @@ const Client = ({ companyName }) => {
                   >
                     <InstagramIcon item className={styles.icon} />
                     <Link
-                      href={`https://www.instagram.com/${currentClient.instagram.replace(
-                        '@',
-                        ''
-                      )}`}
+                      href={`https://www.instagram.com/${currentClient.instagram
+                        .replace('@', '')
+                        .trim()}`}
                       className={styles.title}
                     >
                       {currentClient.instagram}

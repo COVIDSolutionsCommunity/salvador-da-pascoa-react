@@ -57,12 +57,19 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  icon: {
+    height: '32px',
+    width: '32px',
+    marginBottom: '16px',
+    color: '#fff',
+  },
   image: {
     marginRight: 'auto',
   },
 }))
 
 const Header = ({ children, location }) => {
+  console.log('Header -> location', location)
   const styles = useStyles()
   const [clients, setClients] = useState([])
 
@@ -80,7 +87,17 @@ const Header = ({ children, location }) => {
     <ClientContext.Provider value={clients}>
       <AppBar color="primary" position="static">
         <Toolbar>
-          <Link className={styles.image} component={RouterLink} to="/">
+          <Link
+            className={styles.image}
+            component={RouterLink}
+            to="/"
+            state={
+              location.state && {
+                state: location.state.state,
+                city: location.state.city,
+              }
+            }
+          >
             <img alt="site logo" className={styles.img} src={logo} />
             <img alt="site logo" className={styles.imgMobile} src={redondo} />
           </Link>
@@ -91,6 +108,12 @@ const Header = ({ children, location }) => {
             })}
             component={RouterLink}
             to="/"
+            state={
+              location.state && {
+                state: location.state.state,
+                city: location.state.city,
+              }
+            }
           >
             HOME
           </Link>

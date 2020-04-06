@@ -14,10 +14,15 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { Link as RouterLink } from '@reach/router'
 import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import PlaceIcon from '@material-ui/icons/Place'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+
+    [theme.breakpoints.up('md')]: {
+      position: 'relative',
+    },
   },
   icon: {
     height: 12,
@@ -37,11 +42,13 @@ const useStyles = makeStyles((theme) => ({
     top: 75,
     margin: 'auto 150px 0',
   },
-  obg: {
-    maxHeight: '28px',
-  },
   margin: {
-    marginBottom: 'auto',
+    [theme.breakpoints.up('md')]: {
+      position: 'absolute',
+      bottom: '0',
+      backgroundColor: '#fff',
+      width: '100%',
+    },
   },
 }))
 
@@ -58,7 +65,11 @@ const MainCard = ({ client }) => {
 
   return (
     <Card key={client.id} className={styles.root}>
-      <CardActionArea component={RouterLink} to={`/${client.instagram}`}>
+      <CardActionArea
+        component={RouterLink}
+        to={`/${client.instagram.trim()}`}
+        state={{ state: client.state, city: client.city }}
+      >
         <CardMedia
           component="img"
           alt="Foto da marca"
@@ -79,6 +90,18 @@ const MainCard = ({ client }) => {
               <StorefrontIcon item className={styles.icon} />
               <Typography className={styles.name} variant="h5" component="h2">
                 {client.name}
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
+              <PlaceIcon item className={styles.icon} />
+              <Typography className={styles.name} variant="h5" component="h2">
+                {client.city} - {client.neighborhood},{client.state}
               </Typography>
             </Grid>
             <Grid

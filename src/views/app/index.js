@@ -45,7 +45,7 @@ const BRAZILIAN_STATES = [
   'TO',
 ]
 
-const App = () => {
+const App = ({ location }) => {
   const styles = useStyles()
   const [state, setState] = useState('')
   const [city, setCity] = useState('')
@@ -66,6 +66,7 @@ const App = () => {
     return array
       .filter((item, pos) => array.indexOf(item) === pos)
       .filter((item) => item !== null)
+      .map((item) => item.trim())
   }, [state, clients])
 
   const selectedState = useMemo(
@@ -83,6 +84,24 @@ const App = () => {
     ReactGA.initialize(trackingId)
     ReactGA.pageview('/homepage')
   }, [])
+
+  const randomNumbers = useMemo(
+    () =>
+      Array.from({ length: 12 }, () => Math.floor(Math.random() * clients.length)),
+    [clients.length]
+  )
+
+  const randomClients = useMemo(() => randomNumbers.map((item) => clients[item]), [
+    clients,
+    randomNumbers,
+  ])
+
+  useEffect(() => {
+    if (location.state && location.state.state !== undefined) {
+      setState(location.state.state)
+      setCity(location.state.city)
+    }
+  }, [location.state])
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
@@ -162,7 +181,7 @@ const App = () => {
         </Typography>
       )}
       {clients.length === 0 && <CircularProgress />}
-      {selectedState.length === 0 && state !== '' && (
+      {randomNumbers[0] !== 0 && selectedState.length === 0 && state !== '' && (
         <Grid
           container
           justify="flex-start"
@@ -191,12 +210,12 @@ const App = () => {
             selectedState.map((client) => (
               <MainCard key={client.id} client={client} />
             ))}
-          {state === '' &&
+          {randomNumbers[0] !== 0 &&
+            state === '' &&
             city === '' &&
-            clients.map(
-              (client, index) =>
-                index < 12 && <MainCard key={client.id} client={client} />
-            )}
+            randomClients.map((client) => (
+              <MainCard key={client.id} client={client} />
+            ))}
         </Grid>
       )}
       <Typography className={styles.obs}>
