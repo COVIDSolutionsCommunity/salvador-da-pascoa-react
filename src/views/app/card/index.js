@@ -69,13 +69,25 @@ const MainCard = ({ client }) => {
         {isPictureLoading && <CircularProgress className={styles.loading} />}
         <CardContent>
           <Grid container spacing={1}>
-            <Grid container item direction="row" justify="start" alignItems="center">
+            <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
               <StorefrontIcon item className={styles.icon} />
               <Typography className={styles.name} variant="h5" component="h2">
                 {client.name}
               </Typography>
             </Grid>
-            <Grid container item direction="row" justify="start" alignItems="center">
+            <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
               <InstagramIcon item className={styles.icon} />
               <Typography className={styles.name} variant="h5" component="h2">
                 {client.instagram}

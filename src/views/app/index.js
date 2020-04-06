@@ -165,7 +165,7 @@ const App = () => {
       {selectedState.length === 0 && state !== '' && (
         <Grid
           container
-          justify="start"
+          justify="flex-start"
           alignItems="center"
           direction="column"
           className={styles.null}
@@ -188,15 +188,14 @@ const App = () => {
               <MainCard key={client.id} client={client} />
             ))}
           {selectedCity.length === 0 &&
-            selectedState.map(
-              (client, index) =>
-                index < 10 && <MainCard key={client.id} client={client} />
-            )}
+            selectedState.map((client) => (
+              <MainCard key={client.id} client={client} />
+            ))}
           {state === '' &&
             city === '' &&
             clients.map(
               (client, index) =>
-                index < 10 && <MainCard key={client.id} client={client} />
+                index < 12 && <MainCard key={client.id} client={client} />
             )}
         </Grid>
       )}
