@@ -69,8 +69,7 @@ const App = () => {
   }, [state, clients])
 
   const selectedState = useMemo(
-    () =>
-      state === '' ? clients : clients.filter((client) => client.state === state),
+    () => clients.filter((client) => client.state === state),
     [state, clients]
   )
 
@@ -189,10 +188,16 @@ const App = () => {
               <MainCard key={client.id} client={client} />
             ))}
           {selectedCity.length === 0 &&
-            state !== '' &&
-            selectedState.map((client) => (
-              <MainCard key={client.id} client={client} />
-            ))}
+            selectedState.map(
+              (client, index) =>
+                index < 10 && <MainCard key={client.id} client={client} />
+            )}
+          {state === '' &&
+            city === '' &&
+            clients.map(
+              (client, index) =>
+                index < 10 && <MainCard key={client.id} client={client} />
+            )}
         </Grid>
       )}
       <Typography className={styles.obs}>
