@@ -16,6 +16,8 @@ import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PlaceIcon from '@material-ui/icons/Place'
 
+import placeholder from '../../../assets/placeholder.jpeg'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -41,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 75,
     margin: 'auto 150px 0',
+  },
+  placeholder: {
+    height: '140px',
+    margin: '0 80px',
   },
   margin: {
     [theme.breakpoints.up('md')]: {
@@ -70,14 +76,24 @@ const MainCard = ({ client }) => {
         to={`/${client.instagram.trim()}`}
         state={{ state: client.state, city: client.city }}
       >
-        <CardMedia
-          component="img"
-          alt="Foto da marca"
-          height="140"
-          image={photos[0].replace('open', 'uc')}
-          onLoad={handleLoadingImage}
-        />
-        {isPictureLoading && <CircularProgress className={styles.loading} />}
+        {photos[0] ? (
+          <CardMedia
+            component="img"
+            alt="Foto da marca"
+            height="140"
+            image={photos[0].replace('open', 'uc')}
+            onLoad={handleLoadingImage}
+          />
+        ) : (
+          <img
+            alt="Foto da marca"
+            src={placeholder}
+            className={styles.placeholder}
+          />
+        )}
+        {photos[0] && isPictureLoading && (
+          <CircularProgress className={styles.loading} />
+        )}
         <CardContent>
           <Grid container spacing={1}>
             <Grid
@@ -144,7 +160,7 @@ const MainCard = ({ client }) => {
             size="small"
             color="primary"
             component={Link}
-            href={`tel:${client.phoneNumber}`}
+            href={`tel:${client.phoneNumber.match(/[0-9]/g).join('')}`}
           >
             Entrar em contato
           </Button>
