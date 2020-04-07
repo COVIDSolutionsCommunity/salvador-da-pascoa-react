@@ -74,7 +74,7 @@ const Client = ({ companyName }) => {
                 .match(/[0-9]/g)
                 .join(
                   ''
-                )}?text=Oi%20encontrei%20você%20no%20salvadordapascoa.com.br"`}
+                )}?text=Oi%20encontrei%20você%20no%20salvadordapascoa.com.br`}
               target="_blanck"
               rel="noreferer"
               color="primary"
@@ -269,7 +269,10 @@ const Client = ({ companyName }) => {
                     <PhoneIcon item className={styles.icon} />
                     <Link
                       className={styles.title}
-                      href={`tel:${currentClient.phoneNumber}`}
+                      href={`tel:${currentClient.phoneNumber
+                        .match(/[0-9]/g)
+                        .join('')
+                        .trim()}`}
                     >
                       {currentClient.phoneNumber}
                     </Link>

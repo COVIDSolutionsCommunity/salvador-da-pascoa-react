@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Link as RouterLink } from '@reach/router'
 import Tabletop from 'tabletop'
 import classnames from 'classnames'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 import logo from '../../assets/logo.png'
 import redondo from '../../assets/redondo.png'
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '84px',
   },
   img: {
-    height: '64px',
+    height: '54px',
     [theme.breakpoints.down(600)]: {
       display: 'none',
     },
@@ -58,13 +59,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   icon: {
-    height: '32px',
-    width: '32px',
-    marginBottom: '16px',
+    height: '24px',
+    width: '24px',
     color: '#fff',
   },
   image: {
     marginRight: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    [theme.breakpoints.down(500)]: {
+      display: 'none',
+    },
   },
 }))
 
@@ -78,6 +83,7 @@ const Header = ({ children, location }) => {
       key: '1tpn6dgeXt2NvAj37Z5PHVEsEV7D6LBd3HuRLDNk0u94',
       callback: (data, tabletop) => {
         setClients(data.filter((info) => info.accepted === 'TRUE'))
+        console.log('chameu')
       },
       simpleSheet: true,
     })
@@ -98,6 +104,7 @@ const Header = ({ children, location }) => {
               }
             }
           >
+            <ArrowBackIcon className={styles.icon} color="secondary" />
             <img alt="site logo" className={styles.img} src={logo} />
             <img alt="site logo" className={styles.imgMobile} src={redondo} />
           </Link>
