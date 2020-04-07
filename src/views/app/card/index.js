@@ -117,7 +117,7 @@ const MainCard = ({ client }) => {
             >
               <PlaceIcon item className={styles.icon} />
               <Typography className={styles.name} variant="h5" component="h2">
-                {client.city} - {client.neighborhood},{client.state}
+                {client.city} - {client.neighborhood.trim()}, {client.state}
               </Typography>
             </Grid>
             <Grid
