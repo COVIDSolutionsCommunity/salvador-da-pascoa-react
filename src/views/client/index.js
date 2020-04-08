@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, useCallback, useState, useEffect } from 'react'
+import React, { useMemo, useContext, useCallback, useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
@@ -13,6 +13,7 @@ import PhoneIcon from '@material-ui/icons/Phone'
 import WhatsAppIcon from '@material-ui/icons/WhatsApp'
 import LanguageIcon from '@material-ui/icons/Language'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import ReactGA from 'react-ga'
 
 import ClientContext from '../../context'
 import ifood from '../../assets/ifood.svg'
@@ -31,7 +32,6 @@ const Client = ({ companyName, location }) => {
     () => clients.find((client) => client.instagram === companyName),
     [clients, companyName]
   )
-  console.log('Client -> currentClient', currentClient)
 
   const wayofAsking = useMemo(
     () => currentClient && currentClient.delivery.split(','),
@@ -49,6 +49,16 @@ const Client = ({ companyName, location }) => {
     }
   }, [])
 
+  const loadLink = useCallback(
+    (type) => () => {
+      ReactGA.event({
+        category: type,
+        action: 'Clicou no botão',
+      })
+    },
+    []
+  )
+
   const setLinks = useCallback(
     (type) => {
       switch (type.trim()) {
@@ -58,13 +68,12 @@ const Client = ({ companyName, location }) => {
               color="primary"
               variant="outlined"
               size="small"
-              component={Link}
-              key={currentClient.phoneNumber}
+              className={styles.button}
+              onClick={loadLink(type)}
               href={`tel:+55${currentClient.phoneNumber
                 .replace('+55', '')
                 .match(/[0-9]/g)
                 .join('')}`}
-              className={styles.button}
             >
               <PhoneIcon className={styles.buttonIcon} />
               Telefone
@@ -73,6 +82,7 @@ const Client = ({ companyName, location }) => {
         case 'Whatsapp':
           return (
             <Button
+              onClick={loadLink(type)}
               href={`https://wa.me/55${currentClient.whatsapp
                 .match(/[0-9]/g)
                 .join(
@@ -94,6 +104,7 @@ const Client = ({ companyName, location }) => {
         case 'DM no Instagram':
           return (
             <Button
+              onClick={loadLink(type)}
               href={`https://www.instagram.com/${currentClient.instagram
                 .trim()
                 .replace('@', '')}`}
@@ -114,6 +125,7 @@ const Client = ({ companyName, location }) => {
           return (
             currentClient[type.replace(' ', '')] && (
               <Button
+                onClick={loadLink(type)}
                 href={currentClient[type.replace(' ', '')]}
                 target="_blanck"
                 rel="noreferer"
@@ -133,6 +145,7 @@ const Client = ({ companyName, location }) => {
           return (
             currentClient[type.trim()] && (
               <Button
+                onClick={loadLink(type)}
                 href={currentClient[type.replace(' ', '')]}
                 target="_blanck"
                 rel="noreferer"
@@ -156,6 +169,7 @@ const Client = ({ companyName, location }) => {
           return (
             currentClient[type.trim()] && (
               <Button
+                onClick={loadLink(type)}
                 href={currentClient[type.replace(' ', '')]}
                 target="_blanck"
                 rel="noreferer"
@@ -175,6 +189,7 @@ const Client = ({ companyName, location }) => {
           return (
             currentClient[type.replace(' ', '')] && (
               <Button
+                onClick={loadLink(type)}
                 href={currentClient[type.replace(' ', '')]}
                 color="primary"
                 variant="outlined"
@@ -193,7 +208,7 @@ const Client = ({ companyName, location }) => {
           )
       }
     },
-    [currentClient, styles.button, styles.buttonIcon]
+    [currentClient, loadLink, styles.button, styles.buttonIcon]
   )
 
   return (
@@ -266,6 +281,7 @@ const Client = ({ companyName, location }) => {
                   >
                     <InstagramIcon className={styles.icon} />
                     <Link
+                      onClick={loadLink('Instagram')}
                       href={`https://www.instagram.com/${currentClient.instagram
                         .replace('@', '')
                         .trim()}`}
@@ -283,6 +299,7 @@ const Client = ({ companyName, location }) => {
                   >
                     <PhoneIcon className={styles.icon} />
                     <Link
+                      onClick={loadLink('Telefone')}
                       className={styles.title}
                       href={`tel:${currentClient.phoneNumber
                         .match(/[0-9]/g)

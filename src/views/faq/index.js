@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import ReactGA from 'react-ga'
 
 import useStyles from './styles'
 
 const Faq = () => {
   const styles = useStyles()
+
+  useEffect(() => {
+    const trackingId = 'UA-162871245-1'
+    ReactGA.initialize(trackingId)
+    ReactGA.pageview('/faq')
+  }, [])
 
   return (
     <Grid

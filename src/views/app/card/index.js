@@ -15,6 +15,7 @@ import { Link as RouterLink } from '@reach/router'
 import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import PlaceIcon from '@material-ui/icons/Place'
+import ReactGA from 'react-ga'
 
 import placeholder from '../../../assets/placeholder.jpeg'
 
@@ -69,10 +70,18 @@ const MainCard = ({ client }) => {
     }
   }, [])
 
+  const setReactGA = useCallback(() => {
+    ReactGA.event({
+      category: client.instagram.replace('@', ''),
+      action: 'Clicou no card',
+    })
+  }, [client.instagram])
+
   return (
     <Card className={styles.root}>
       <CardActionArea
         component={RouterLink}
+        onClick={setReactGA}
         to={`/${client.instagram.trim()}`}
         state={{ state: client.state, city: client.city }}
       >

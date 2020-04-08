@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import GitHubIcon from '@material-ui/icons/GitHub'
+import ReactGA from 'react-ga'
 
 import paula from '../../assets/paula.png'
 import Martina from '../../assets/Martina.png'
@@ -55,6 +56,12 @@ const group = [
 
 const AboutUs = () => {
   const styles = useStyles()
+
+  useEffect(() => {
+    // const trackingId = 'UA-162871245-1'
+    // ReactGA.initialize(trackingId)
+    ReactGA.pageview('/sobre')
+  }, [])
 
   return (
     <Grid

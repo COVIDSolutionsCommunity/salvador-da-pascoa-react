@@ -16,16 +16,6 @@ import ClientContext from '../../context'
 import useStyles from './styles.js'
 
 const Header = ({ children, location }) => {
-  console.log(
-    'Header -> location',
-    location.pathname.includes('@'),
-    location.pathname.includes('sobre'),
-    location.pathname.includes('faq'),
-    location.pathname.includes('@') ||
-      location.pathname.includes('sobre') ||
-      location.pathname.includes('faq') ||
-      location.pathname === '/'
-  )
   const styles = useStyles()
   const [clients, setClients] = useState([])
 
@@ -34,7 +24,6 @@ const Header = ({ children, location }) => {
       key: '1tpn6dgeXt2NvAj37Z5PHVEsEV7D6LBd3HuRLDNk0u94',
       callback: (data, tabletop) => {
         setClients(data.filter((info) => info.accepted === 'TRUE'))
-        console.log('chameu')
       },
       simpleSheet: true,
     })
