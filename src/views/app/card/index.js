@@ -70,7 +70,7 @@ const MainCard = ({ client }) => {
   }, [])
 
   return (
-    <Card key={client.id} className={styles.root}>
+    <Card className={styles.root}>
       <CardActionArea
         component={RouterLink}
         to={`/${client.instagram.trim()}`}
@@ -103,7 +103,7 @@ const MainCard = ({ client }) => {
               justify="flex-start"
               alignItems="center"
             >
-              <StorefrontIcon item className={styles.icon} />
+              <StorefrontIcon className={styles.icon} />
               <Typography className={styles.name} variant="h5" component="h2">
                 {client.name}
               </Typography>
@@ -115,7 +115,7 @@ const MainCard = ({ client }) => {
               justify="flex-start"
               alignItems="center"
             >
-              <PlaceIcon item className={styles.icon} />
+              <PlaceIcon className={styles.icon} />
               <Typography className={styles.name} variant="h5" component="h2">
                 {client.city} - {client.neighborhood.trim()}, {client.state}
               </Typography>
@@ -127,7 +127,7 @@ const MainCard = ({ client }) => {
               justify="flex-start"
               alignItems="center"
             >
-              <InstagramIcon item className={styles.icon} />
+              <InstagramIcon className={styles.icon} />
               <Typography className={styles.name} variant="h5" component="h2">
                 {client.instagram}
               </Typography>
@@ -137,11 +137,11 @@ const MainCard = ({ client }) => {
                 container
                 item
                 direction="row"
-                justify="start"
+                justify="flex-start"
                 alignItems="center"
                 className={styles.obs}
               >
-                <AccountCircleIcon item className={styles.icon} />
+                <AccountCircleIcon className={styles.icon} />
                 <Typography
                   className={styles.description}
                   variant="h5"

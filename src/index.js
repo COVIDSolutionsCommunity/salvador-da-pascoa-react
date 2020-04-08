@@ -12,6 +12,7 @@ import Client from './views/client'
 import Header from './views/header'
 import Faq from './views/faq'
 import AboutUs from './views/about-us'
+import NotFound from './views/not-found'
 
 const theme = createMuiTheme({
   palette: {
@@ -120,6 +121,7 @@ ReactDOM.render(
           <Client path="/:companyName" />
           <Faq path="/faq" />
           <AboutUs path="/sobre" />
+          <NotFound path="/error" />
         </Header>
       </Router>
     </ThemeProvider>

@@ -66,6 +66,15 @@ const App = ({ location }) => {
     return array
       .filter((item, pos) => array.indexOf(item) === pos)
       .filter((item) => item !== null)
+      .sort((a, b) => {
+        if (a > b) {
+          return 1
+        }
+        if (b > a) {
+          return -1
+        }
+        return 0
+      })
   }, [state, clients])
 
   const selectedState = useMemo(

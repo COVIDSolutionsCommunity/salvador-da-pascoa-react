@@ -3,8 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Link from '@material-ui/core/Link'
-import { makeStyles } from '@material-ui/core/styles'
-import { Link as RouterLink } from '@reach/router'
+import { Link as RouterLink, navigate } from '@reach/router'
 import Tabletop from 'tabletop'
 import classnames from 'classnames'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -14,67 +13,19 @@ import redondo from '../../assets/redondo.png'
 
 import ClientContext from '../../context'
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'grid',
-    gridTemplateRows: '80px 1fr 80px',
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  footer: {
-    gridRow: '3',
-    padding: theme.spacing(2),
-    backgroundColor: theme.palette.primary.main,
-    display: 'table-row',
-    position: 'sticky',
-    bottom: 0,
-  },
-  link: {
-    fontFamily: 'Baloo Chettan',
-    marginLeft: theme.spacing(3),
-    fontWeight: '500',
-    color: theme.palette.secondary.main,
-  },
-  selected: {
-    color: theme.palette.custom.mandy,
-  },
-  children: {
-    gridArea: 'children',
-    marginBottom: '84px',
-  },
-  img: {
-    height: '54px',
-    [theme.breakpoints.down(600)]: {
-      display: 'none',
-    },
-  },
-  imgMobile: {
-    height: '64px',
-    [theme.breakpoints.up(601)]: {
-      display: 'none',
-    },
-  },
-  icon: {
-    height: '24px',
-    width: '24px',
-    color: '#fff',
-  },
-  image: {
-    marginRight: 'auto',
-    display: 'flex',
-    alignItems: 'center',
-    [theme.breakpoints.down(500)]: {
-      display: 'none',
-    },
-  },
-}))
+import useStyles from './styles.js'
 
 const Header = ({ children, location }) => {
-  console.log('Header -> location', location)
+  console.log(
+    'Header -> location',
+    location.pathname.includes('@'),
+    location.pathname.includes('sobre'),
+    location.pathname.includes('faq'),
+    location.pathname.includes('@') ||
+      location.pathname.includes('sobre') ||
+      location.pathname.includes('faq') ||
+      location.pathname === '/'
+  )
   const styles = useStyles()
   const [clients, setClients] = useState([])
 
@@ -89,9 +40,22 @@ const Header = ({ children, location }) => {
     })
   }, [])
 
+  useEffect(() => {
+    if (
+      !(
+        location.pathname.includes('@') ||
+        location.pathname.includes('sobre') ||
+        location.pathname.includes('faq') ||
+        location.pathname === '/'
+      )
+    ) {
+      navigate('/error')
+    }
+  }, [location.pathname])
+
   return (
     <ClientContext.Provider value={clients}>
-      <AppBar color="primary" position="static">
+      <AppBar color="primary" position="static" className={styles.padding}>
         <Toolbar>
           <Link
             className={styles.image}

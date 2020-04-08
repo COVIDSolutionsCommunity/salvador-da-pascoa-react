@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, useCallback, useState } from 'react'
+import React, { useMemo, useContext, useCallback, useState, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
@@ -18,10 +18,11 @@ import ClientContext from '../../context'
 import ifood from '../../assets/ifood.svg'
 import uberEats from '../../assets/uberEats.svg'
 import rappi from '../../assets/rappi.svg'
+import placeholder from '../../assets/placeholder.jpeg'
 
 import useStyles from './styles'
 
-const Client = ({ companyName }) => {
+const Client = ({ companyName, location }) => {
   const styles = useStyles()
   const clients = useContext(ClientContext)
   const [isPictureLoading, setLoadingImage] = useState(true)
@@ -30,6 +31,7 @@ const Client = ({ companyName }) => {
     () => clients.find((client) => client.instagram === companyName),
     [clients, companyName]
   )
+  console.log('Client -> currentClient', currentClient)
 
   const wayofAsking = useMemo(
     () => currentClient && currentClient.delivery.split(','),
@@ -57,6 +59,7 @@ const Client = ({ companyName }) => {
               variant="outlined"
               size="small"
               component={Link}
+              key={currentClient.phoneNumber}
               href={`tel:+55${currentClient.phoneNumber
                 .replace('+55', '')
                 .match(/[0-9]/g)
@@ -82,6 +85,7 @@ const Client = ({ companyName }) => {
               size="small"
               component={Link}
               className={styles.button}
+              key={`${currentClient.whatsapp} + 1`}
             >
               <WhatsAppIcon color="primary" className={styles.buttonIcon} />
               Whatsapp
@@ -100,6 +104,7 @@ const Client = ({ companyName }) => {
               size="small"
               component={Link}
               className={styles.button}
+              key={currentClient.instagram}
             >
               <InstagramIcon className={styles.buttonIcon} />
               Instagram
@@ -117,6 +122,7 @@ const Client = ({ companyName }) => {
                 size="small"
                 component={Link}
                 className={styles.button}
+                key={currentClient[type]}
               >
                 <img alt="icone ifood" src={ifood} className={styles.buttonIcon} />
                 Ifood
@@ -135,6 +141,7 @@ const Client = ({ companyName }) => {
                 size="small"
                 component={Link}
                 className={styles.button}
+                key={currentClient[type]}
               >
                 <img
                   alt="icone uber eats"
@@ -157,6 +164,7 @@ const Client = ({ companyName }) => {
                 size="small"
                 component={Link}
                 className={styles.button}
+                key={currentClient[type]}
               >
                 <img alt="icone rappi" src={rappi} className={styles.buttonIcon} />
                 Rappi
@@ -175,6 +183,7 @@ const Client = ({ companyName }) => {
                 target="_blanck"
                 rel="noreferer"
                 className={styles.button}
+                key={currentClient[type]}
               >
                 <LanguageIcon className={styles.buttonIcon} />
 
@@ -193,14 +202,20 @@ const Client = ({ companyName }) => {
         <Grid className={styles.content}>
           <Card className={styles.root}>
             <Grid className={styles.card}>
-              <CardMedia
-                component="img"
-                image={currentClient.photo.split(',')[0].replace('open', 'uc')}
-                title={`Imagem principal ${currentClient.companyName}`}
-                className={styles.size}
-                onLoad={handleLoadingImage}
-              />
-              {isPictureLoading && <CircularProgress className={styles.loading} />}
+              {currentClient.photo[0] ? (
+                <CardMedia
+                  component="img"
+                  image={currentClient.photo.split(',')[0].replace('open', 'uc')}
+                  title={`Imagem principal ${currentClient.companyName}`}
+                  className={styles.size}
+                  onLoad={handleLoadingImage}
+                />
+              ) : (
+                <img alt="Foto da marca" src={placeholder} className={styles.size} />
+              )}
+              {!!currentClient.photo[0] && isPictureLoading && (
+                <CircularProgress className={styles.loading} />
+              )}
               <Grid className={styles.info}>
                 <Grid container spacing={1}>
                   <Grid
@@ -210,7 +225,7 @@ const Client = ({ companyName }) => {
                     justify="flex-start"
                     alignItems="center"
                   >
-                    <StorefrontIcon item className={styles.mainIcon} />
+                    <StorefrontIcon className={styles.mainIcon} />
                     <Typography color="primary" variant="h1" component="h1">
                       {currentClient.name}
                     </Typography>
@@ -222,7 +237,7 @@ const Client = ({ companyName }) => {
                     justify="flex-start"
                     alignItems="center"
                   >
-                    <PlaceIcon item className={styles.icon} />
+                    <PlaceIcon className={styles.icon} />
                     <Typography className={styles.title}>
                       {currentClient.city} - {currentClient.neighborhood},
                       {currentClient.state}
@@ -236,7 +251,7 @@ const Client = ({ companyName }) => {
                       justify="flex-start"
                       alignItems="center"
                     >
-                      <AccountCircleIcon item className={styles.icon} />
+                      <AccountCircleIcon className={styles.icon} />
                       <Typography className={styles.description} component="p">
                         {currentClient.obs}
                       </Typography>
@@ -249,7 +264,7 @@ const Client = ({ companyName }) => {
                     justify="flex-start"
                     alignItems="center"
                   >
-                    <InstagramIcon item className={styles.icon} />
+                    <InstagramIcon className={styles.icon} />
                     <Link
                       href={`https://www.instagram.com/${currentClient.instagram
                         .replace('@', '')
@@ -266,7 +281,7 @@ const Client = ({ companyName }) => {
                     justify="flex-start"
                     alignItems="center"
                   >
-                    <PhoneIcon item className={styles.icon} />
+                    <PhoneIcon className={styles.icon} />
                     <Link
                       className={styles.title}
                       href={`tel:${currentClient.phoneNumber
@@ -280,12 +295,14 @@ const Client = ({ companyName }) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Card className={styles.delivery}>
-              <Typography className={styles.type} variant="h5" component="h2">
-                Clique para pedir: <br />
-                {wayofAsking.map((delivery) => setLinks(delivery))}
-              </Typography>
-            </Card>
+            {wayofAsking.length > 0 && (
+              <Card className={styles.delivery}>
+                <Typography className={styles.type} variant="h5" component="h2">
+                  Clique para pedir: <br />
+                  {wayofAsking.map((delivery) => setLinks(delivery))}
+                </Typography>
+              </Card>
+            )}
             <Card className={styles.delivery}>
               <Typography className={styles.type} variant="h5" component="h2">
                 Formas de entrega:{' '}
@@ -297,6 +314,7 @@ const Client = ({ companyName }) => {
                     color="primary"
                     variant="outlined"
                     size="small"
+                    key={delivery}
                     className={styles.newButton}
                   >
                     {delivery}
