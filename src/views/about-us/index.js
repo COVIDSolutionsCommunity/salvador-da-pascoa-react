@@ -55,7 +55,7 @@ const group = [
   },
   {
     id: 6,
-    name: 'Nícolas Vitor Yuki Obara Yamakoshi',
+    name: 'Nícolas Yamakoshi',
     description: 'Backend dev',
     linkedin:
       'https://www.linkedin.com/in/n%C3%ADcolas-vitor-yuki-obara-yamakoshi-05b44214b/',
