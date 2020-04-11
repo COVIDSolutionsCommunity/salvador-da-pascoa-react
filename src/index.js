@@ -6,6 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { Router } from '@reach/router'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import ReduxPromise from 'redux-promise'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
 
 import * as serviceWorker from './serviceWorker'
 import App from './views/app'
@@ -14,9 +16,7 @@ import Header from './views/header'
 import Faq from './views/faq'
 import AboutUs from './views/about-us'
 import NotFound from './views/not-found'
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
+import Register from './views/register'
 import rootReducer from './modules/reducers'
 
 const theme = createMuiTheme({
@@ -50,9 +50,11 @@ const theme = createMuiTheme({
       margin: '10px 0',
     },
     h3: {
+      margin: '24px',
       fontSize: '16px',
-      fontWeight: 'bold',
       lineHeight: '1.5',
+      color: '#F79C84',
+      textAlign: 'justify',
     },
     h4: {
       fontSize: '14px',
@@ -133,6 +135,7 @@ ReactDOM.render(
             <Faq path="/faq" />
             <AboutUs path="/sobre" />
             <NotFound path="/error" />
+            <Register path="/registrar" />
           </Header>
         </Router>
       </ThemeProvider>
