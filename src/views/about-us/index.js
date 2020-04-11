@@ -58,8 +58,6 @@ const AboutUs = () => {
   const styles = useStyles()
 
   useEffect(() => {
-    // const trackingId = 'UA-162871245-1'
-    // ReactGA.initialize(trackingId)
     ReactGA.pageview('/sobre')
   }, [])
 

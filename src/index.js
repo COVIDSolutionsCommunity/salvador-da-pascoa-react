@@ -17,6 +17,7 @@ import NotFound from './views/not-found'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import rootReducer from './modules/reducers'
 
 const theme = createMuiTheme({
   palette: {
@@ -115,18 +116,8 @@ const theme = createMuiTheme({
   },
 })
 
-const countReducer = (state = 0, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1
-    case 'DECREMENT':
-      return state - 1
-    default:
-      return state
-  }
-}
 const store = createStore(
-  countReducer,
+  rootReducer,
   composeWithDevTools(applyMiddleware(ReduxPromise))
 )
 

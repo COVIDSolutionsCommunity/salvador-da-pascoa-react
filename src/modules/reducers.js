@@ -1,15 +1,16 @@
 import { Map } from 'immutable'
+import { CREATE_SELLER } from './actions'
 
-export default (state = {}, action) => {
+const INITIAL_STATE = {
+  testando: 'oi',
+}
+
+export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'SIMPLE_ACTION':
+    case CREATE_SELLER:
       return {
         result: action.payload,
       }
-    case 'INCREMENT':
-      return state + 1
-    case 'DECREMENT':
-      return state - 1
     default:
       return state
   }
