@@ -7,6 +7,7 @@ import { Link as RouterLink, navigate } from '@reach/router'
 import Tabletop from 'tabletop'
 import classnames from 'classnames'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import { connect } from 'react-redux'
 
 import logo from '../../assets/logo.png'
 import redondo from '../../assets/redondo.png'
@@ -15,7 +16,14 @@ import ClientContext from '../../context'
 
 import useStyles from './styles.js'
 
-const Header = ({ children, location }) => {
+const mapStateToProps = (state) => {
+  return {
+    count: state,
+  }
+}
+
+const Header = ({ children, location, count }) => {
+  console.log('Header -> count', count)
   const styles = useStyles()
   const [clients, setClients] = useState([])
 
@@ -115,4 +123,4 @@ const Header = ({ children, location }) => {
   )
 }
 
-export default React.memo(Header)
+export default React.memo(connect(mapStateToProps)(Header))

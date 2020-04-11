@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { Router } from '@reach/router'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import ReduxPromise from 'redux-promise'
 
 import * as serviceWorker from './serviceWorker'
 import App from './views/app'
@@ -13,6 +14,9 @@ import Header from './views/header'
 import Faq from './views/faq'
 import AboutUs from './views/about-us'
 import NotFound from './views/not-found'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 
 const theme = createMuiTheme({
   palette: {
@@ -111,20 +115,37 @@ const theme = createMuiTheme({
   },
 })
 
+const countReducer = (state = 0, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1
+    case 'DECREMENT':
+      return state - 1
+    default:
+      return state
+  }
+}
+const store = createStore(
+  countReducer,
+  composeWithDevTools(applyMiddleware(ReduxPromise))
+)
+
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <Header path="/">
-          <App path="/" />
-          <Client path="/:companyName" />
-          <Faq path="/faq" />
-          <AboutUs path="/sobre" />
-          <NotFound path="/error" />
-        </Header>
-      </Router>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <Header path="/">
+            <App path="/" />
+            <Client path="/:companyName" />
+            <Faq path="/faq" />
+            <AboutUs path="/sobre" />
+            <NotFound path="/error" />
+          </Header>
+        </Router>
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )
