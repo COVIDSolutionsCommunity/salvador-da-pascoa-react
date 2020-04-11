@@ -11,6 +11,7 @@ import Martina from '../../assets/Martina.png'
 import matheus from '../../assets/matheus.png'
 import marina from '../../assets/marina.png'
 import maurici from '../../assets/maurici.png'
+import nicolas from '../../assets/nicolas.png'
 
 import useStyles from './styles'
 
@@ -52,14 +53,21 @@ const group = [
     linkedin: 'http://linkedin.com/in/maurici-meneghetti-de-souza-2a73ab161',
     photo: maurici,
   },
+  {
+    id: 6,
+    name: 'Nícolas Vitor Yuki Obara Yamakoshi',
+    description: 'Backend dev',
+    linkedin:
+      'https://www.linkedin.com/in/n%C3%ADcolas-vitor-yuki-obara-yamakoshi-05b44214b/',
+    github: 'https://github.com/nyamak',
+    photo: nicolas,
+  },
 ]
 
 const AboutUs = () => {
   const styles = useStyles()
 
   useEffect(() => {
-    // const trackingId = 'UA-162871245-1'
-    // ReactGA.initialize(trackingId)
     ReactGA.pageview('/sobre')
   }, [])
 
