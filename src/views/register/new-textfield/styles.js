@@ -2,9 +2,13 @@ import { makeStyles } from '@material-ui/styles'
 
 export default makeStyles((theme) => ({
   container: {
+    padding: '20px 250px',
     width: '100vw',
     height: '100%',
     textAlign: 'center',
+    [theme.breakpoints.down('md')]: {
+      padding: '20px 20px',
+    },
   },
   description: {
     textAlign: 'justify',
@@ -13,28 +17,21 @@ export default makeStyles((theme) => ({
     margin: theme.spacing(3),
   },
   form: {
-    width: '100%',
+    width: '300px',
     display: 'grid',
     gridTemplateRows: 'auto',
     gridGap: theme.spacing(2),
-    padding: '0 50px',
+  },
+  dropdown: {
+    color: '#F79C84',
+    '&:before': {
+      borderColor: '#F79C84',
+    },
+    '&:after': {
+      borderColor: '#F79C84',
+    },
   },
   multilineColor: {
     color: '#F79C84',
-  },
-  header: {
-    marginBottom: '30px',
-    backgroundColor: theme.palette.custom.mandy,
-    padding: '30px',
-    width: '100vw',
-  },
-  formControl: {
-    fontSize: '14px',
-    textAlign: 'left',
-  },
-  checkbox: {
-    display: 'grid',
-    gridTemplateColumns: '120px auto',
-    alignItems: 'center',
   },
 }))

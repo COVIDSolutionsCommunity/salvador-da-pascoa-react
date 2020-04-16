@@ -44,6 +44,7 @@ const Header = ({ children, location, count }) => {
         location.pathname.includes('sobre') ||
         location.pathname.includes('faq') ||
         location.pathname.includes('registrar') ||
+        location.pathname.includes('login') ||
         location.pathname === '/'
       )
     ) {

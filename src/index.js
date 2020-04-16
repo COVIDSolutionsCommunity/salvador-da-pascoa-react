@@ -8,6 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import ReduxPromise from 'redux-promise'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 
 import * as serviceWorker from './serviceWorker'
 import App from './views/app'
@@ -17,6 +18,7 @@ import Faq from './views/faq'
 import AboutUs from './views/about-us'
 import NotFound from './views/not-found'
 import Register from './views/register'
+import Login from './views/login'
 import rootReducer from './modules/reducers'
 
 const theme = createMuiTheme({
@@ -47,13 +49,11 @@ const theme = createMuiTheme({
       fontWeight: '500',
       fontFamily: 'Baloo Chettan',
       color: '#F79C84',
-      margin: '10px 0',
     },
     h3: {
-      margin: '24px',
-      fontSize: '16px',
+      fontSize: '14px',
       lineHeight: '1.5',
-      color: '#F79C84',
+      color: '#BA6D45',
       textAlign: 'justify',
     },
     h4: {
@@ -118,29 +118,25 @@ const theme = createMuiTheme({
   },
 })
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(ReduxPromise))
-)
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <Header path="/">
-            <App path="/" />
-            <Client path="/:companyName" />
-            <Faq path="/faq" />
-            <AboutUs path="/sobre" />
-            <NotFound path="/error" />
-            <Register path="/registrar" />
-          </Header>
-        </Router>
-      </ThemeProvider>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Header path="/">
+          <App path="/" />
+          <Client path="/:companyName" />
+          <Faq path="/faq" />
+          <AboutUs path="/sobre" />
+          <NotFound path="/error" />
+          <Register path="/registrar" />
+        </Header>
+        <Login path="/login" />
+      </Router>
+    </ThemeProvider>
+  </Provider>,
   document.getElementById('root')
 )
 
