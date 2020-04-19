@@ -23,7 +23,6 @@ const mapStateToProps = (state) => {
 }
 
 const Header = ({ children, location, count }) => {
-  console.log('Header -> count', count)
   const styles = useStyles()
   const [clients, setClients] = useState([])
 

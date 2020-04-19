@@ -131,9 +131,9 @@ ReactDOM.render(
           <Faq path="/faq" />
           <AboutUs path="/sobre" />
           <NotFound path="/error" />
-          <Register path="/registrar" />
         </Header>
         <Login path="/login" />
+        <Register path="/registrar" />
       </Router>
     </ThemeProvider>
   </Provider>,

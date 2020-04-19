@@ -36,7 +36,6 @@ const Login = () => {
     initialValues: INITIAL_STATE,
     validate: validate,
     onSubmit: () => {
-      console.log('cheguei')
       if (!isLogin) {
         dispatch(login(values))
         return

@@ -8,6 +8,8 @@ import InputLabel from '@material-ui/core/InputLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Link from '@material-ui/core/Link'
 import ReactGA from 'react-ga'
+import { useDispatch, useSelector } from 'react-redux'
+import { getSellers } from '../../modules/actions'
 
 import MainCard from './card'
 import ClientContext from '../../context'
@@ -50,6 +52,12 @@ const App = ({ location }) => {
   const [state, setState] = useState('')
   const [city, setCity] = useState('')
   const clients = useContext(ClientContext)
+  const dispatch = useDispatch()
+  const allSellers = useSelector((state) => state.allSellers)
+
+  useEffect(() => {
+    dispatch(getSellers())
+  }, [dispatch])
 
   const handleChange = useCallback((event) => {
     setState(event.target.value)

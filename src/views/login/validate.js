@@ -1,7 +1,6 @@
 export const validate = (values) => {
   const errors = {}
   const { name, email, password1, password2, password, isLogin } = values
-  console.log('validate -> isLogin', isLogin)
 
   if (!isLogin) {
     if (!password) {
