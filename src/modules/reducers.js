@@ -7,6 +7,8 @@ import {
   LOGIN,
   LOGIN_ERROR,
   GET_SELLERS,
+  GET_SELLER,
+  GET_SELLERS_LOCATION,
 } from './actions'
 
 const INITIAL_STATE = {
@@ -14,7 +16,12 @@ const INITIAL_STATE = {
     pk: cookies.load('pk'),
   },
   key: cookies.load('key'),
-  allSellers: [],
+  currentSeller: {},
+  allSellers: {
+    next: 0,
+    result: [],
+  },
+  stateSellers: [],
   loading: false,
   error: '',
 }
@@ -27,13 +34,11 @@ const getPage = (query) =>
 const getSellerPage = (page) => (page ? getPage(page) : undefined)
 
 const returnAllSellers = (state, payload) => {
-  console.log('returnAllSellers -> payload', payload)
   const newCollectList = payload.results
 
   const newCollectState = getSellerPage(payload.next)
-    ? state.allSellers.concat(newCollectList)
+    ? state.allSellers.result.concat(newCollectList)
     : newCollectList
-  console.log('returnAllSellers -> newCollectState', newCollectState)
 
   const newState = {
     ...state,
@@ -42,7 +47,6 @@ const returnAllSellers = (state, payload) => {
       result: newCollectState,
     },
   }
-  console.log('returnAllSellers -> newState', newState)
   return newState
 }
 
@@ -78,6 +82,13 @@ export default (state = INITIAL_STATE, action) => {
       }
     case GET_SELLERS:
       return returnAllSellers(state, humps.camelizeKeys(payload))
+    case GET_SELLERS_LOCATION:
+      return returnAllSellers(state, humps.camelizeKeys(payload))
+    case GET_SELLER:
+      return {
+        ...state,
+        currentSeller: humps.camelizeKeys(payload),
+      }
     default:
       return state
   }

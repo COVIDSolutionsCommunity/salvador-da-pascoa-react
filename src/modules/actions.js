@@ -8,15 +8,15 @@ export const CREATE_SELLER_ERROR = 'CREATE_SELLER_ERROR'
 export const LOGIN = 'LOGIN'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
 export const GET_SELLERS = 'GET_SELLERS'
+export const GET_SELLER = 'GET_SELLER'
+export const GET_SELLERS_LOCATION = 'GET_SELLERS_LOCATION'
 
 const apiUrl = 'https://api-salvadordapascoa.herokuapp.com/api/v1'
 
 const createFormData = (data) => {
-  console.log('createFormData -> data', data)
   const formData = new FormData()
 
   Object.keys(data).forEach((field) => {
-    console.log('createFormData -> field', field)
     const fieldValue = data[field]
     const formDataValue = (() => {
       if (!fieldValue) {
@@ -30,32 +30,12 @@ const createFormData = (data) => {
       ) {
         return fieldValue
       }
-      console.log(
-        'formDataValue -> JSON.stringify(fieldValue)',
-        fieldValue,
-        JSON.stringify(fieldValue)
-      )
       return JSON.stringify(fieldValue)
     })()
 
-    // if (field === 'product_images') {
-    //   data.product_images.map(
-    //     (image) =>
-    //       console.log(JSON.stringify(image.image)) ||
-    //       formData.append('product_images', {
-    //         image: image.image,
-    //         order: image.order,
-    //       })
-    //   )
-    //   return
-    // }
-
     formData.append(field, formDataValue)
-    console.log('createFormData -> formDataValue', formDataValue)
-    console.log('createFormData -> field', field)
   })
 
-  console.log('createFormData -> formData', formData)
   return formData
 }
 
@@ -109,7 +89,6 @@ export const login = (payload) => {
     return axios
       .post(`${apiUrl}/login/`, humps.decamelizeKeys({ ...payload }))
       .then((response) => {
-        console.log('login -> response', response)
         dispatch(loginSuccess(response.data))
       })
       .catch((error) => {
@@ -127,8 +106,47 @@ export const getSellers = () => {
     return axios
       .get(`${apiUrl}/sellers`)
       .then((response) => {
-        console.log('login -> response', response)
         dispatch(getSellersSuccess(response.data))
+      })
+      .catch((error) => {
+        const payload = {
+          error: 'Tente novamente mais tarde',
+        }
+        dispatch(loginError(payload))
+        throw error
+      })
+  }
+}
+
+export const getSeller = (payload) => {
+  return (dispatch) => {
+    return axios
+      .get(`${apiUrl}/sellers/${payload.instagramProfile}`)
+      .then((response) => {
+        dispatch(getSellerSuccess(response.data))
+      })
+      .catch((error) => {
+        const payload = {
+          error: 'Tente novamente mais tarde',
+        }
+        dispatch(loginError(payload))
+        throw error
+      })
+  }
+}
+
+export const getSellersLocation = (payload) => {
+  return (dispatch) => {
+    return axios
+      .get(`${apiUrl}/sellers/`, {
+        params: {
+          city: payload.city,
+          state: payload.state,
+          page_size: 50,
+        },
+      })
+      .then((response) => {
+        dispatch(getSellersLocationSuccess(response.data))
       })
       .catch((error) => {
         const payload = {
@@ -171,6 +189,20 @@ export const createSellerLoading = (payload) => {
 export const getSellersSuccess = (payload) => {
   return {
     type: GET_SELLERS,
+    payload,
+  }
+}
+
+export const getSellerSuccess = (payload) => {
+  return {
+    type: GET_SELLER,
+    payload,
+  }
+}
+
+export const getSellersLocationSuccess = (payload) => {
+  return {
+    type: GET_SELLERS_LOCATION,
     payload,
   }
 }

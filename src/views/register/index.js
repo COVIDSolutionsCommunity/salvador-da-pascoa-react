@@ -117,7 +117,6 @@ const Register = () => {
   const styles = useStyles()
   const [coverImagePreview, setCoverImagePreview] = useState('')
   const [productImagesPreview, setProductImagesPreview] = useState([])
-  console.log('Register -> productImagesPreview', productImagesPreview)
   const dispatch = useDispatch()
 
   const formik = useFormik({

@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MainCard = ({ client }) => {
   const styles = useStyles()
-  const photos = client.photo.split(',')
+  const photos = client.coverImage
   const [isPictureLoading, setLoadingImage] = useState(true)
 
   const handleLoadingImage = useCallback((event) => {
@@ -82,15 +82,15 @@ const MainCard = ({ client }) => {
       <CardActionArea
         component={RouterLink}
         onClick={setReactGA}
-        to={`/${client.instagram.trim()}`}
+        to={`/${client.instagramProfile}`}
         state={{ state: client.state, city: client.city }}
       >
-        {photos[0] ? (
+        {photos ? (
           <CardMedia
             component="img"
             alt="Foto da marca"
             height="140"
-            image={photos[0].replace('open', 'uc')}
+            image={photos.replace('open', 'uc')}
             onLoad={handleLoadingImage}
           />
         ) : (
@@ -100,7 +100,7 @@ const MainCard = ({ client }) => {
             className={styles.placeholder}
           />
         )}
-        {photos[0] && isPictureLoading && (
+        {photos && isPictureLoading && (
           <CircularProgress className={styles.loading} />
         )}
         <CardContent>
@@ -126,7 +126,7 @@ const MainCard = ({ client }) => {
             >
               <PlaceIcon className={styles.icon} />
               <Typography className={styles.name} variant="h5" component="h2">
-                {client.city} - {client.neighborhood.trim()}, {client.state}
+                {client.city} - {client.neighborhood}, {client.state}
               </Typography>
             </Grid>
             <Grid
@@ -138,10 +138,10 @@ const MainCard = ({ client }) => {
             >
               <InstagramIcon className={styles.icon} />
               <Typography className={styles.name} variant="h5" component="h2">
-                {client.instagram}
+                {client.instagramProfile}
               </Typography>
             </Grid>
-            {client.obs && (
+            {client.description && (
               <Grid
                 container
                 item
@@ -156,7 +156,7 @@ const MainCard = ({ client }) => {
                   variant="h5"
                   component="h2"
                 >
-                  {client.obs}
+                  {client.description}
                 </Typography>
               </Grid>
             )}
@@ -169,13 +169,13 @@ const MainCard = ({ client }) => {
             size="small"
             color="primary"
             component={Link}
-            href={`tel:${client.phoneNumber.match(/[0-9]/g).join('')}`}
+            href={`tel:${client.telephoneNumber.match(/[0-9]/g).join('')}`}
           >
             Entrar em contato
           </Button>
           <Button
             component={RouterLink}
-            to={`/${client.instagram}`}
+            to={`/${client.instagramProfile}`}
             size="small"
             color="primary"
           >

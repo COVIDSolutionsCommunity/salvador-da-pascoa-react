@@ -111,4 +111,8 @@ export default makeStyles((theme) => ({
     flexDirection: 'column',
     padding: '0 10px',
   },
+  width: {
+    height: '100vh',
+    width: '100vw',
+  },
 }))

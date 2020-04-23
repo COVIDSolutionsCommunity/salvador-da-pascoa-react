@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useContext, useEffect } from 'react'
+import React, { useState, useCallback, useMemo, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -9,10 +9,9 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Link from '@material-ui/core/Link'
 import ReactGA from 'react-ga'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSellers } from '../../modules/actions'
+import { getSellers, getSellersLocation } from '../../modules/actions'
 
 import MainCard from './card'
-import ClientContext from '../../context'
 import sadBunny from '../../assets/sadBunny.png'
 
 import useStyles from './styles'
@@ -51,48 +50,49 @@ const App = ({ location }) => {
   const styles = useStyles()
   const [state, setState] = useState('')
   const [city, setCity] = useState('')
-  const clients = useContext(ClientContext)
   const dispatch = useDispatch()
-  const allSellers = useSelector((state) => state.allSellers)
+  const allSellers = useSelector((state) => state.allSellers.result)
 
   useEffect(() => {
     dispatch(getSellers())
   }, [dispatch])
 
-  const handleChange = useCallback((event) => {
-    setState(event.target.value)
-  }, [])
+  const handleChange = useCallback(
+    (event) => {
+      setState(event.target.value)
+      dispatch(getSellersLocation({ state: event.target.value }))
+      setCity('')
+    },
+    [dispatch]
+  )
 
   const handleCityChange = useCallback((event) => {
     setCity(event.target.value)
   }, [])
 
   const stateCities = useMemo(() => {
-    const array = clients.map((client) =>
-      client.state === state ? client.city : null
-    )
-    return array
-      .filter((item, pos) => array.indexOf(item) === pos)
-      .filter((item) => item !== null)
-      .sort((a, b) => {
-        if (a > b) {
-          return 1
-        }
-        if (b > a) {
-          return -1
-        }
-        return 0
-      })
-  }, [state, clients])
-
-  const selectedState = useMemo(
-    () => clients.filter((client) => client.state === state),
-    [state, clients]
-  )
+    const array =
+      allSellers &&
+      allSellers.map((client) => (client.state === state ? client.city : null))
+    if (allSellers !== undefined) {
+      return array
+        .filter((item, pos) => array.indexOf(item) === pos)
+        .filter((item) => item !== null)
+        .sort((a, b) => {
+          if (a > b) {
+            return 1
+          }
+          if (b > a) {
+            return -1
+          }
+          return 0
+        })
+    }
+  }, [state, allSellers])
 
   const selectedCity = useMemo(
-    () => selectedState.filter((client) => client.city === city),
-    [city, selectedState]
+    () => allSellers && allSellers.filter((client) => client.city === city),
+    [allSellers, city]
   )
 
   useEffect(() => {
@@ -103,14 +103,17 @@ const App = ({ location }) => {
 
   const randomNumbers = useMemo(
     () =>
-      Array.from({ length: 12 }, () => Math.floor(Math.random() * clients.length)),
-    [clients.length]
+      allSellers &&
+      Array.from({ length: allSellers.length }, () =>
+        Math.floor(Math.random() * allSellers.length)
+      ),
+    [allSellers]
   )
 
-  const randomClients = useMemo(() => randomNumbers.map((item) => clients[item]), [
-    clients,
-    randomNumbers,
-  ])
+  const randomClients = useMemo(
+    () => allSellers && randomNumbers.map((item) => allSellers[item]),
+    [allSellers, randomNumbers]
+  )
 
   useEffect(() => {
     if (location.state && location.state.state !== undefined) {
@@ -159,7 +162,7 @@ const App = ({ location }) => {
               ))}
             </Select>
           </FormControl>
-          {state !== '' && selectedState.length > 1 && (
+          {state !== '' && allSellers && (
             <FormControl className={styles.formControl}>
               <InputLabel className={styles.label} htmlFor="state-native-simple">
                 Selecione a sua Cidade
@@ -185,7 +188,8 @@ const App = ({ location }) => {
           )}
         </Grid>
       </Grid>
-      {selectedCity.length > 0 && (
+      {allSellers && allSellers.length === 0 && state === '' && <CircularProgress />}
+      {allSellers && city !== '' && (
         <Typography
           className={styles.total}
           component="h1"
@@ -196,8 +200,7 @@ const App = ({ location }) => {
           encontrados
         </Typography>
       )}
-      {clients.length === 0 && <CircularProgress />}
-      {randomNumbers[0] !== 0 && selectedState.length === 0 && state !== '' && (
+      {allSellers && allSellers.length === 0 && state !== '' && (
         <Grid
           container
           justify="flex-start"
@@ -216,19 +219,14 @@ const App = ({ location }) => {
           <img alt="Coelhinho triste" src={sadBunny} className={styles.bunny} />
         </Grid>
       )}
-      {clients && (
+      {allSellers && (
         <Grid className={styles.cards}>
           {selectedCity.length > 0 &&
             selectedCity.map((client) => (
               <MainCard key={client.id} client={client} />
             ))}
-          {selectedCity.length === 0 &&
-            selectedState.map((client) => (
-              <MainCard key={client.id} client={client} />
-            ))}
-          {randomNumbers[0] !== 0 &&
-            state === '' &&
-            city === '' &&
+          {allSellers &&
+            selectedCity.length === 0 &&
             randomClients.map((client) => (
               <MainCard key={client.id} client={client} />
             ))}

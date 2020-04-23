@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
@@ -14,8 +14,9 @@ import WhatsAppIcon from '@material-ui/icons/WhatsApp'
 import LanguageIcon from '@material-ui/icons/Language'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ReactGA from 'react-ga'
+import { useDispatch, useSelector } from 'react-redux'
+import { getSeller } from '../../modules/actions'
 
-import ClientContext from '../../context'
 import ifood from '../../assets/ifood.svg'
 import uberEats from '../../assets/uberEats.svg'
 import rappi from '../../assets/rappi.svg'
@@ -25,23 +26,15 @@ import useStyles from './styles'
 
 const Client = ({ companyName, location }) => {
   const styles = useStyles()
-  const clients = useContext(ClientContext)
   const [isPictureLoading, setLoadingImage] = useState(true)
+  const dispatch = useDispatch()
+  const { currentSeller } = useSelector((state) => state)
 
-  const currentClient = useMemo(
-    () => clients.find((client) => client.instagram === companyName),
-    [clients, companyName]
-  )
-
-  const wayofAsking = useMemo(
-    () => currentClient && currentClient.delivery.split(','),
-    [currentClient]
-  )
-
-  const wayOfDelivery = useMemo(
-    () => currentClient && currentClient.howToReceive.split(','),
-    [currentClient]
-  )
+  useEffect(() => {
+    if (!currentSeller.instagramProfile) {
+      dispatch(getSeller({ instagramProfile: companyName }))
+    }
+  }, [companyName, currentSeller, dispatch])
 
   const handleLoadingImage = useCallback((event) => {
     if (event.type === 'load') {
@@ -70,7 +63,7 @@ const Client = ({ companyName, location }) => {
               size="small"
               className={styles.button}
               onClick={loadLink(type)}
-              href={`tel:+55${currentClient.phoneNumber
+              href={`tel:+55${currentSeller.telephoneNumber
                 .replace('+55', '')
                 .match(/[0-9]/g)
                 .join('')}`}
@@ -83,7 +76,7 @@ const Client = ({ companyName, location }) => {
           return (
             <Button
               onClick={loadLink(type)}
-              href={`https://wa.me/55${currentClient.whatsapp
+              href={`https://wa.me/55${currentSeller.whatsappNumber
                 .match(/[0-9]/g)
                 .join(
                   ''
@@ -95,7 +88,7 @@ const Client = ({ companyName, location }) => {
               size="small"
               component={Link}
               className={styles.button}
-              key={`${currentClient.whatsapp} + 1`}
+              key={`${currentSeller.whatsappNumber} + 1`}
             >
               <WhatsAppIcon color="primary" className={styles.buttonIcon} />
               Whatsapp
@@ -105,7 +98,7 @@ const Client = ({ companyName, location }) => {
           return (
             <Button
               onClick={loadLink(type)}
-              href={`https://www.instagram.com/${currentClient.instagram
+              href={`https://www.instagram.com/${currentSeller.instagramProfile
                 .trim()
                 .replace('@', '')}`}
               target="_blanck"
@@ -115,7 +108,7 @@ const Client = ({ companyName, location }) => {
               size="small"
               component={Link}
               className={styles.button}
-              key={currentClient.instagram}
+              key={currentSeller.instagramProfile}
             >
               <InstagramIcon className={styles.buttonIcon} />
               Instagram
@@ -123,10 +116,10 @@ const Client = ({ companyName, location }) => {
           )
         case 'Ifood':
           return (
-            currentClient[type.replace(' ', '')] && (
+            currentSeller.ifoodUrl && (
               <Button
                 onClick={loadLink(type)}
-                href={currentClient[type.replace(' ', '')]}
+                href={currentSeller.ifoodUrl}
                 target="_blanck"
                 rel="noreferer"
                 color="primary"
@@ -134,7 +127,7 @@ const Client = ({ companyName, location }) => {
                 size="small"
                 component={Link}
                 className={styles.button}
-                key={currentClient[type]}
+                key={currentSeller.ifoodUrl}
               >
                 <img alt="icone ifood" src={ifood} className={styles.buttonIcon} />
                 Ifood
@@ -143,10 +136,10 @@ const Client = ({ companyName, location }) => {
           )
         case 'Uber Eats':
           return (
-            currentClient[type.trim()] && (
+            currentSeller.uberEatsUrl && (
               <Button
                 onClick={loadLink(type)}
-                href={currentClient[type.replace(' ', '')]}
+                href={currentSeller.uberEatsUrl}
                 target="_blanck"
                 rel="noreferer"
                 color="primary"
@@ -154,7 +147,7 @@ const Client = ({ companyName, location }) => {
                 size="small"
                 component={Link}
                 className={styles.button}
-                key={currentClient[type]}
+                key={currentSeller[type]}
               >
                 <img
                   alt="icone uber eats"
@@ -167,10 +160,10 @@ const Client = ({ companyName, location }) => {
           )
         case 'Rappi':
           return (
-            currentClient[type.trim()] && (
+            currentSeller.rappiUrl && (
               <Button
                 onClick={loadLink(type)}
-                href={currentClient[type.replace(' ', '')]}
+                href={currentSeller.rappiUrl}
                 target="_blanck"
                 rel="noreferer"
                 color="primary"
@@ -178,7 +171,7 @@ const Client = ({ companyName, location }) => {
                 size="small"
                 component={Link}
                 className={styles.button}
-                key={currentClient[type]}
+                key={currentSeller.rappiUrl}
               >
                 <img alt="icone rappi" src={rappi} className={styles.buttonIcon} />
                 Rappi
@@ -187,10 +180,10 @@ const Client = ({ companyName, location }) => {
           )
         default:
           return (
-            currentClient[type.replace(' ', '')] && (
+            currentSeller.siteUrl && (
               <Button
                 onClick={loadLink(type)}
-                href={currentClient[type.replace(' ', '')]}
+                href={currentSeller.siteUrl}
                 color="primary"
                 variant="outlined"
                 size="small"
@@ -198,37 +191,44 @@ const Client = ({ companyName, location }) => {
                 target="_blanck"
                 rel="noreferer"
                 className={styles.button}
-                key={currentClient[type]}
+                key={currentSeller.siteUrl}
               >
                 <LanguageIcon className={styles.buttonIcon} />
-
                 {type}
               </Button>
             )
           )
       }
     },
-    [currentClient, loadLink, styles.button, styles.buttonIcon]
+    [currentSeller, loadLink, styles.button, styles.buttonIcon]
   )
+
+  if (!currentSeller.instagramProfile) {
+    return (
+      <Grid container justify="center" alignItems="center" className={styles.width}>
+        <CircularProgress />
+      </Grid>
+    )
+  }
 
   return (
     <Grid className={styles.container}>
-      {currentClient && (
+      {currentSeller.instagramProfile && (
         <Grid className={styles.content}>
           <Card className={styles.root}>
             <Grid className={styles.card}>
-              {currentClient.photo[0] ? (
+              {currentSeller.coverImage ? (
                 <CardMedia
                   component="img"
-                  image={currentClient.photo.split(',')[0].replace('open', 'uc')}
-                  title={`Imagem principal ${currentClient.companyName}`}
+                  image={currentSeller.coverImage.replace('open', 'uc')}
+                  title={`Imagem principal ${currentSeller.name}`}
                   className={styles.size}
                   onLoad={handleLoadingImage}
                 />
               ) : (
                 <img alt="Foto da marca" src={placeholder} className={styles.size} />
               )}
-              {!!currentClient.photo[0] && isPictureLoading && (
+              {!!currentSeller.coverImage && isPictureLoading && (
                 <CircularProgress className={styles.loading} />
               )}
               <Grid className={styles.info}>
@@ -242,7 +242,7 @@ const Client = ({ companyName, location }) => {
                   >
                     <StorefrontIcon className={styles.mainIcon} />
                     <Typography color="primary" variant="h1" component="h1">
-                      {currentClient.name}
+                      {currentSeller.name}
                     </Typography>
                   </Grid>
                   <Grid
@@ -254,11 +254,11 @@ const Client = ({ companyName, location }) => {
                   >
                     <PlaceIcon className={styles.icon} />
                     <Typography className={styles.title}>
-                      {currentClient.city} - {currentClient.neighborhood},
-                      {currentClient.state}
+                      {currentSeller.city} - {currentSeller.neighborhood},
+                      {currentSeller.state}
                     </Typography>
                   </Grid>
-                  {currentClient.obs && (
+                  {currentSeller.description && (
                     <Grid
                       container
                       item
@@ -268,7 +268,7 @@ const Client = ({ companyName, location }) => {
                     >
                       <AccountCircleIcon className={styles.icon} />
                       <Typography className={styles.description} component="p">
-                        {currentClient.obs}
+                        {currentSeller.description}
                       </Typography>
                     </Grid>
                   )}
@@ -282,12 +282,12 @@ const Client = ({ companyName, location }) => {
                     <InstagramIcon className={styles.icon} />
                     <Link
                       onClick={loadLink('Instagram')}
-                      href={`https://www.instagram.com/${currentClient.instagram
+                      href={`https://www.instagram.com/${currentSeller.instagramProfile
                         .replace('@', '')
                         .trim()}`}
                       className={styles.title}
                     >
-                      {currentClient.instagram}
+                      {currentSeller.instagramProfile}
                     </Link>
                   </Grid>
                   <Grid
@@ -301,22 +301,22 @@ const Client = ({ companyName, location }) => {
                     <Link
                       onClick={loadLink('Telefone')}
                       className={styles.title}
-                      href={`tel:${currentClient.phoneNumber
+                      href={`tel:${currentSeller.telephoneNumber
                         .match(/[0-9]/g)
                         .join('')
                         .trim()}`}
                     >
-                      {currentClient.phoneNumber}
+                      {currentSeller.telephoneNumber}
                     </Link>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
-            {wayofAsking.length > 0 && (
+            {currentSeller.orderMeans.length > 0 && (
               <Card className={styles.delivery}>
                 <Typography className={styles.type} variant="h5" component="h2">
                   Clique para pedir: <br />
-                  {wayofAsking.map((delivery) => setLinks(delivery))}
+                  {currentSeller.orderMeans.map((delivery) => setLinks(delivery))}
                 </Typography>
               </Card>
             )}
@@ -325,9 +325,8 @@ const Client = ({ companyName, location }) => {
                 Formas de entrega:{' '}
               </Typography>
               <Typography className={styles.title} variant="h5" component="h2">
-                {wayOfDelivery.map((delivery) => (
+                {currentSeller.deliveryMeans.map((delivery) => (
                   <Button
-                    href={currentClient[delivery.replace(' ', '')]}
                     color="primary"
                     variant="outlined"
                     size="small"
@@ -339,7 +338,7 @@ const Client = ({ companyName, location }) => {
                 ))}
               </Typography>
             </Card>
-            {currentClient.allPhotos && (
+            {currentSeller.productImages && (
               <Card className={styles.photos}>
                 <Typography className={styles.name}>Produtos:</Typography>
                 <br />
@@ -349,11 +348,11 @@ const Client = ({ companyName, location }) => {
                   direction="column"
                   alignItems="center"
                 >
-                  {currentClient.allPhotos.split(',').map((photo) => (
+                  {currentSeller.productImages.map((photo) => (
                     <>
                       <img
-                        key={photo}
-                        src={photo.replace('open', 'uc')}
+                        key={photo.id}
+                        src={photo.image.replace('open', 'uc')}
                         alt="cardapio"
                         className={styles.image}
                       />
