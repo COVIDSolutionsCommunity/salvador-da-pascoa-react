@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useState } from 'react'
+import React, { useMemo, useCallback, useState, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
@@ -15,16 +15,16 @@ import InputMask from 'react-input-mask'
 import Button from '@material-ui/core/Button'
 import PublishIcon from '@material-ui/icons/Publish'
 import { createSeller } from '../../modules/actions'
-import axios from 'axios'
 import { Link as RouterLink, navigate } from '@reach/router'
-import loadImage from 'blueimp-load-image'
 import { useDispatch, useSelector } from 'react-redux'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import useStyles from './styles'
 import NewTextfield from './new-textfield'
 import ImageButton from './image-button'
 import redondo from '../../assets/redondo.png'
 import { validate } from './validate'
+import { usePrevious } from '../../utils/hooks'
 
 const INITIAL_STATE = {
   name: '',
@@ -42,7 +42,6 @@ const INITIAL_STATE = {
   rappiUrl: '',
   siteUrl: '',
   referrals: '',
-  productImages: '',
   coverImage: '',
 }
 
@@ -77,28 +76,29 @@ const BRAZILIAN_STATES = [
 ]
 
 const howToOrder = [
-  'telephoneNumber',
-  'instagramProfile',
-  'whatsappNumber',
-  'ifoodUrl',
-  'uberEatsUrl',
-  'rappiUrl',
-  'siteUrl',
+  'telephone',
+  'rappi',
+  'whatsapp',
+  'uber_eats',
+  'ifood',
+  'instagram',
+  'facebook',
+  'website',
 ]
 
 const translateValues = (value) => {
   switch (value) {
-    case 'telephoneNumber':
+    case 'telephone':
       return 'Telefone'
-    case 'instagramProfile':
+    case 'instagram':
       return 'Instagram'
-    case 'whatsappNumber':
+    case 'whatsapp':
       return 'Whatsapp'
-    case 'ifoodUrl':
+    case 'ifood':
       return 'Ifood'
-    case 'uberEatsUrl':
+    case 'uber_eats':
       return 'Uber Eats'
-    case 'rappiUrl':
+    case 'rappi':
       return 'Rappi'
     case 'dispatch':
       return 'Envio'
@@ -106,9 +106,19 @@ const translateValues = (value) => {
       return 'Retirada'
     case 'delivery':
       return 'Delivery'
+    case 'facebook':
+      return 'Facebook'
     default:
       return 'Site'
   }
+}
+
+const selectOrder = {
+  whatsapp: 'whatsappNumber',
+  ifood: 'ifoodUrl',
+  uberEats: 'uberEatsUrl',
+  rappi: 'rappiUrl',
+  website: 'siteUrl',
 }
 
 const howToDeliver = ['dispatch', 'takeout', 'delivery']
@@ -118,16 +128,17 @@ const Register = () => {
   const [coverImagePreview, setCoverImagePreview] = useState('')
   const [productImagesPreview, setProductImagesPreview] = useState([])
   const dispatch = useDispatch()
+  const isLoading = useSelector((state) => state.loading)
+  const error = useSelector((state) => state.error)
+  const wasLoading = usePrevious(isLoading)
 
   const formik = useFormik({
     initialValues: INITIAL_STATE,
-    // validate,
+    validate,
     onSubmit: () => {
-      const productImages = productImagesPreview.map((image, index) => image.id)
       const payload = {
         ...values,
         coverImage: coverImagePreview.id,
-        productImages,
       }
       dispatch(createSeller(payload))
     },
@@ -152,44 +163,12 @@ const Register = () => {
     (event) => {
       const file = event.currentTarget.files[0]
       setFieldValue('coverImage', file)
-      loadImage(
-        file,
-        (canvas) =>
-          canvas.toBlob((blob) =>
-            setCoverImagePreview({
-              url: URL.createObjectURL(
-                new File([blob], file.name, { type: file.type })
-              ),
-              id: file,
-            })
-          ),
-        { orientation: true }
-      )
+      setCoverImagePreview({
+        url: URL.createObjectURL(event.target.files[0]),
+        id: file,
+      })
     },
     [setFieldValue]
-  )
-  const onChangeProductImages = useCallback(
-    (event) => {
-      const file = event.currentTarget.files[0]
-      setFieldValue('productImages', [...values.productImages, file])
-      loadImage(
-        file,
-        (canvas) =>
-          canvas.toBlob((blob) =>
-            setProductImagesPreview((prevState) => [
-              ...prevState,
-              {
-                url: URL.createObjectURL(
-                  new File([blob], file.name, { type: file.type })
-                ),
-                id: file,
-              },
-            ])
-          ),
-        { orientation: true }
-      )
-    },
-    [setFieldValue, values.productImages]
   )
 
   const onDeleteClick = useCallback(
@@ -225,6 +204,12 @@ const Register = () => {
     }),
     [styles.dropdown, styles.multilineColor]
   )
+
+  useEffect(() => {
+    if (!isLoading && wasLoading && !error) {
+      navigate('/imagens')
+    }
+  }, [error, isLoading, wasLoading])
 
   return (
     <Grid
@@ -313,11 +298,11 @@ const Register = () => {
                     label={translateValues(order)}
                   />
                   {values.orderMeans.includes(order) &&
-                    order !== 'telephoneNumber' &&
-                    order !== 'instagramProfile' && (
+                    order !== 'telephone' &&
+                    order !== 'instagram' && (
                       <NewTextfield
                         label={`Digite seu ${translateValues(order)}`}
-                        name={order}
+                        name={selectOrder[order]}
                         {...props}
                       />
                     )}
@@ -374,7 +359,6 @@ const Register = () => {
             </Typography>
           </label>
         </FormControl>
-
         {coverImagePreview && (
           <ImageButton
             onDeleteClick={onDeleteClick}
@@ -382,56 +366,17 @@ const Register = () => {
             value="coverImage"
           />
         )}
-        <>
-          <input
-            accept="image/*"
-            type="file"
-            onChange={onChangeProductImages}
-            id="icon-button-file-2"
-            style={{ display: 'none' }}
-          />
-
-          <FormControl component="fieldset">
-            <FormLabel component="legend" className={styles.formControl}>
-              Insira imagens dos seus produtos
-            </FormLabel>
-            <label
-              name="coverImage"
-              htmlFor="icon-button-file-2"
-              className={styles.fullWidth}
-            >
-              <Button
-                className={styles.uploadButton}
-                variant="outlined"
-                component="span"
-                size="large"
-                color="primary"
-                name="coverImage"
-                fullWidth
-              >
-                <PublishIcon color="primary" />
-                IMAGENS DOS PRODUTOS
-              </Button>
-            </label>
-            <Typography component="p" className={styles.errors}>
-              {errors.productImages}
-            </Typography>
-          </FormControl>
-        </>
-        <Grid container>
-          {productImagesPreview &&
-            productImagesPreview.map((picture) => (
-              <ImageButton
-                key={picture.url}
-                onDeleteClick={onDeleteClick}
-                picture={picture.url}
-              />
-            ))}
-        </Grid>
-
-        <Button variant="contained" color="primary" type="submit">
-          REGISTRAR
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? <CircularProgress size={24} color="primary" /> : 'REGISTRAR'}
         </Button>
+        <Typography component="p" className={styles.errors}>
+          {error}
+        </Typography>
       </form>
     </Grid>
   )

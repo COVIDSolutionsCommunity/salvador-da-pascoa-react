@@ -1,8 +1,9 @@
 export const validate = (values) => {
   const errors = {}
   const { name, email, password1, password2, password, isLogin } = values
+  console.log('validate -> isLogin', isLogin)
 
-  if (!isLogin) {
+  if (isLogin) {
     if (!password) {
       errors.password = 'Campo obrigatório'
     }
@@ -20,7 +21,7 @@ export const validate = (values) => {
     errors.email = 'E-mail inválido'
   }
 
-  if (isLogin) {
+  if (!isLogin) {
     if (!name) {
       errors.name = 'Campo obrigatório'
     }

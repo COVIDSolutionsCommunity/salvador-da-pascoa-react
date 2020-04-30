@@ -9,6 +9,7 @@ import {
   GET_SELLERS,
   GET_SELLER,
   GET_SELLERS_LOCATION,
+  CREATE_SELLER_ERROR,
 } from './actions'
 
 const INITIAL_STATE = {
@@ -55,26 +56,34 @@ export default (state = INITIAL_STATE, action) => {
   switch (type) {
     case CREATE_SELLER:
       cookies.save('key', payload.key)
+      const { user, ...currentSeller } = humps.camelizeKeys(payload)
       return {
         ...state,
-        ...payload,
+        currentSeller,
+        loading: false,
       }
     case LOGIN:
       cookies.save('key', payload.key)
       cookies.save('pk', payload.user.pk)
-      const { user } = humps.camelizeKeys(payload)
+      const newPayload = humps.camelizeKeys(payload)
       return {
         ...state,
-        mainUser: user,
+        mainUser: newPayload.user,
         key: payload.key,
         loading: false,
       }
     case CREATE_SELLER_LOADING:
       return {
         ...state,
-        loading: true,
+        loading: payload,
       }
     case LOGIN_ERROR:
+      return {
+        ...state,
+        error: payload.error,
+        loading: false,
+      }
+    case CREATE_SELLER_ERROR:
       return {
         ...state,
         error: payload.error,

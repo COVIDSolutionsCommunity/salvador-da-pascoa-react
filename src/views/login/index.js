@@ -21,7 +21,7 @@ const INITIAL_STATE = {
   password: '',
   password1: '',
   password2: '',
-  isLogin: false,
+  isLogin: true,
 }
 
 const Login = () => {
@@ -60,7 +60,7 @@ const Login = () => {
 
   const onClick = useCallback(() => {
     setLogin((prevState) => !prevState)
-    setFieldValue('isLogin', values.isLogin)
+    setFieldValue('isLogin', !values.isLogin)
   }, [setFieldValue, values.isLogin])
 
   const props = {
@@ -158,7 +158,7 @@ const Login = () => {
             color="primary"
             onClick={onClick}
           >
-            aqui para realizar o {isLogin ? 'registro' : 'login'}
+            aqui para realizar o {!isLogin ? 'registro' : 'login'}
           </Link>
         </Typography>
       </form>

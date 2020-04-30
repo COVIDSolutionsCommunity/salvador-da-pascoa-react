@@ -18,6 +18,7 @@ import AboutUs from './views/about-us'
 import NotFound from './views/not-found'
 import Register from './views/register'
 import Login from './views/login'
+import UploadImage from './views/upload-images'
 import rootReducer from './modules/reducers'
 
 const theme = createMuiTheme({
@@ -133,6 +134,7 @@ ReactDOM.render(
         </Header>
         <Login path="/login" />
         <Register path="/registrar" />
+        <UploadImage path="/imagens" />
       </Router>
     </ThemeProvider>
   </Provider>,

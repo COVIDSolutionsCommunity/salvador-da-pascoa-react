@@ -22,16 +22,26 @@ const createFormData = (data) => {
       if (!fieldValue) {
         return ''
       }
+      console.log(
+        'formDataValue -> Array.isArray(fieldValue)',
+        Array.isArray(fieldValue)
+      )
 
       if (
         fieldValue instanceof Blob ||
         typeof fieldValue !== 'object' ||
-        field === 'product_images'
+        Array.isArray(fieldValue)
       ) {
         return fieldValue
       }
       return JSON.stringify(fieldValue)
     })()
+
+    if (Array.isArray(formDataValue)) {
+      return formDataValue.forEach((value) => {
+        formData.append(field, value)
+      })
+    }
 
     formData.append(field, formDataValue)
   })
@@ -56,14 +66,13 @@ export const createUser = (payload) => {
 }
 
 export const createSeller = (payload) => {
-  const { coverImage, productImages } = payload
+  const { coverImage } = payload
   return (dispatch, getState) => {
     dispatch(createSellerLoading(true))
     const convert = humps.decamelizeKeys(payload)
     const newPayload = createFormData({
       ...convert,
       cover_image: coverImage,
-      product_images: productImages,
     })
     return axios
       .post(`${apiUrl}/my-seller/`, newPayload, {
@@ -77,7 +86,10 @@ export const createSeller = (payload) => {
         dispatch(createSellerLoading(false))
       })
       .catch((error) => {
-        dispatch(createSellerLoading(false))
+        const payload = {
+          error: 'Alguma coisa deu errado! Tente novamente mais tarde.',
+        }
+        dispatch(createSellerError(payload))
         throw error
       })
   }
@@ -92,6 +104,7 @@ export const login = (payload) => {
         dispatch(loginSuccess(response.data))
       })
       .catch((error) => {
+        dispatch(createSellerLoading(false))
         const payload = {
           error: 'Verifique se o seu e-mail e a sua senha estão corretos',
         }
@@ -182,6 +195,13 @@ export const loginError = (payload) => {
 export const createSellerLoading = (payload) => {
   return {
     type: CREATE_SELLER_LOADING,
+    payload,
+  }
+}
+
+export const createSellerError = (payload) => {
+  return {
+    type: CREATE_SELLER_ERROR,
     payload,
   }
 }
