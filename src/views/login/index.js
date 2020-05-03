@@ -150,7 +150,7 @@ const Login = () => {
         </Button>
         <Typography className={styles.obs}>
           {' '}
-          Caso {isLogin ? 'não' : 'já'} tenha um usuário, clique{' '}
+          Caso {!isLogin ? 'não' : 'já'} tenha um usuário, clique{' '}
           <Link
             className={styles.link}
             component="button"

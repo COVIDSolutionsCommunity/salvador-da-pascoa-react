@@ -55,22 +55,25 @@ export default (state = INITIAL_STATE, action) => {
   const { type, payload } = action
   switch (type) {
     case CREATE_SELLER:
-      cookies.save('key', payload.key)
+      if (payload?.key) {
+        cookies.save('key', payload.key)
+      }
       const { user, ...currentSeller } = humps.camelizeKeys(payload)
       return {
         ...state,
         currentSeller,
         loading: false,
+        error: '',
       }
     case LOGIN:
       cookies.save('key', payload.key)
-      cookies.save('pk', payload.user.pk)
       const newPayload = humps.camelizeKeys(payload)
       return {
         ...state,
         mainUser: newPayload.user,
         key: payload.key,
         loading: false,
+        error: '',
       }
     case CREATE_SELLER_LOADING:
       return {

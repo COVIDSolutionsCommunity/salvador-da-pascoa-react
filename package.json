@@ -65,6 +65,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
+    "customize-cra": "^0.9.1",
     "cz-conventional-changelog": "3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
@@ -72,7 +74,8 @@
     "husky": "^4.2.3",
     "lint-staged": "^10.1.1",
     "prettier": "^2.0.2",
-    "pretty-quick": "^2.0.1"
+    "pretty-quick": "^2.0.1",
+    "react-app-rewired": "^2.1.6"
   },
   "config": {
     "commitizen": {

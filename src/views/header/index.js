@@ -8,6 +8,7 @@ import Tabletop from 'tabletop'
 import classnames from 'classnames'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import logo from '../../assets/logo.png'
 import redondo from '../../assets/redondo.png'
@@ -24,17 +25,8 @@ const mapStateToProps = (state) => {
 
 const Header = ({ children, location, count }) => {
   const styles = useStyles()
-  const [clients, setClients] = useState([])
-
-  useEffect(() => {
-    Tabletop.init({
-      key: '1tpn6dgeXt2NvAj37Z5PHVEsEV7D6LBd3HuRLDNk0u94',
-      callback: (data, tabletop) => {
-        setClients(data.filter((info) => info.accepted === 'TRUE'))
-      },
-      simpleSheet: true,
-    })
-  }, [])
+  const isLoggedIn = useSelector((state) => state.key)
+  console.log('Header -> isLoggedIn', isLoggedIn)
 
   useEffect(() => {
     if (
@@ -52,7 +44,7 @@ const Header = ({ children, location, count }) => {
   }, [location.pathname])
 
   return (
-    <ClientContext.Provider value={clients}>
+    <>
       <AppBar color="primary" position="static" className={styles.padding}>
         <Toolbar>
           <Link
@@ -106,21 +98,41 @@ const Header = ({ children, location, count }) => {
           >
             FAQ
           </Link>
-          <Link
-            href="https://forms.gle/G3KSh6u2WEtRzDwf9"
-            el="noreferrer"
-            target="_blank"
-            color="primary"
-            className={styles.link}
-          >
-            CADASTRAR
-          </Link>
+          {isLoggedIn ? (
+            <Link
+              color="primary"
+              className={styles.link}
+              component={RouterLink}
+              to="/registrar"
+            >
+              EDITAR
+            </Link>
+          ) : (
+            <Link
+              color="primary"
+              className={styles.link}
+              component={RouterLink}
+              to="/login"
+            >
+              CADASTRAR
+            </Link>
+          )}
+          {isLoggedIn && (
+            <Link
+              color="primary"
+              className={styles.link}
+              component={RouterLink}
+              to="/faq"
+            >
+              LOG OUT
+            </Link>
+          )}
         </Toolbar>
       </AppBar>
       <Grid container item xs={12} className={styles.children}>
         {children}
       </Grid>
-    </ClientContext.Provider>
+    </>
   )
 }
 

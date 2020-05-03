@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import Button from '@material-ui/core/Button'
 import PublishIcon from '@material-ui/icons/Publish'
-import { createSeller } from '../../modules/actions'
+import { postImage } from '../../modules/actions'
 import { Link as RouterLink, navigate } from '@reach/router'
 import { useDispatch, useSelector } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -41,11 +41,20 @@ const UploadImage = () => {
     )
   }, [])
 
-  const handleSubmit = useCallback((event) => {
-    setProductImagesPreview((prevState) =>
-      prevState.filter((picture) => picture.url !== event.currentTarget.name)
-    )
-  }, [])
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault()
+      productImagesPreview.map((image, index) =>
+        dispatch(
+          postImage({
+            order: index,
+            image: image.id,
+          })
+        )
+      )
+    },
+    [dispatch, productImagesPreview]
+  )
 
   useEffect(() => {
     if (!isLoading && wasLoading && !error) {
@@ -112,6 +121,7 @@ const UploadImage = () => {
           {productImagesPreview &&
             productImagesPreview.map((image) => (
               <ImageButton
+                key={image.url}
                 onDeleteClick={onDeleteClick}
                 picture={image.url}
                 value="coverImage"
@@ -122,7 +132,7 @@ const UploadImage = () => {
           variant="contained"
           color="primary"
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || productImagesPreview.length === 0}
         >
           {isLoading ? <CircularProgress size={24} color="primary" /> : 'REGISTRAR'}
         </Button>

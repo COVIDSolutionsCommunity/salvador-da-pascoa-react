@@ -10,6 +10,8 @@ export const LOGIN_ERROR = 'LOGIN_ERROR'
 export const GET_SELLERS = 'GET_SELLERS'
 export const GET_SELLER = 'GET_SELLER'
 export const GET_SELLERS_LOCATION = 'GET_SELLERS_LOCATION'
+export const EDIT_SELLER = 'EDIT_SELLER'
+export const LOGOUT = 'LOGOUT'
 
 const apiUrl = 'https://api-salvadordapascoa.herokuapp.com/api/v1'
 
@@ -95,6 +97,68 @@ export const createSeller = (payload) => {
   }
 }
 
+export const editSeller = (payload) => {
+  const { coverImage } = payload
+  return (dispatch, getState) => {
+    dispatch(createSellerLoading(true))
+    const convert = humps.decamelizeKeys(payload)
+    const newPayload = createFormData({
+      ...convert,
+      cover_image: coverImage,
+    })
+    return axios
+      .patch(`${apiUrl}/my-seller/`, newPayload, {
+        headers: {
+          Authorization: 'Token ' + getState().key,
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        dispatch(createSellerSuccess(response.data))
+        dispatch(createSellerLoading(false))
+        return axios.post(`${apiUrl}/my-product-images/`, newPayload, {
+          headers: {
+            Authorization: 'Token ' + getState().key,
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+      })
+      .catch((error) => {
+        const payload = {
+          error: 'Alguma coisa deu errado! Tente novamente mais tarde.',
+        }
+        dispatch(createSellerError(payload))
+        throw error
+      })
+  }
+}
+
+export const postImage = (payload) => {
+  return (dispatch, getState) => {
+    dispatch(createSellerLoading(true))
+    const newPayload = createFormData(payload)
+    return axios
+      .post(`${apiUrl}/my-product-images/`, newPayload, {
+        headers: {
+          'Access-Control-Allow-Origin': 'http://localhost:3000',
+          Authorization: 'Token ' + getState().key,
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((response) => {
+        dispatch(createSellerSuccess(response.data))
+        dispatch(createSellerLoading(false))
+      })
+      .catch((error) => {
+        const payload = {
+          error: 'Alguma coisa deu errado! Tente novamente mais tarde.',
+        }
+        dispatch(createSellerError(payload))
+        throw error
+      })
+  }
+}
+
 export const login = (payload) => {
   return (dispatch) => {
     dispatch(createSellerLoading(true))
@@ -102,6 +166,15 @@ export const login = (payload) => {
       .post(`${apiUrl}/login/`, humps.decamelizeKeys({ ...payload }))
       .then((response) => {
         dispatch(loginSuccess(response.data))
+        return axios
+          .get(`${apiUrl}/my-seller/`, {
+            headers: {
+              Authorization: 'Token ' + response.data.key,
+            },
+          })
+          .then((response) => {
+            dispatch(createSellerSuccess(response.data))
+          })
       })
       .catch((error) => {
         dispatch(createSellerLoading(false))

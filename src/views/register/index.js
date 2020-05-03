@@ -14,7 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import InputMask from 'react-input-mask'
 import Button from '@material-ui/core/Button'
 import PublishIcon from '@material-ui/icons/Publish'
-import { createSeller } from '../../modules/actions'
+import { createSeller, editSeller } from '../../modules/actions'
 import { Link as RouterLink, navigate } from '@reach/router'
 import { useDispatch, useSelector } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -130,6 +130,7 @@ const Register = () => {
   const dispatch = useDispatch()
   const isLoading = useSelector((state) => state.loading)
   const error = useSelector((state) => state.error)
+  const isUser = useSelector((state) => state.currentSeller)
   const wasLoading = usePrevious(isLoading)
 
   const formik = useFormik({
@@ -139,6 +140,10 @@ const Register = () => {
       const payload = {
         ...values,
         coverImage: coverImagePreview.id,
+      }
+      if (!!isUser?.name) {
+        dispatch(editSeller(payload))
+        return
       }
       dispatch(createSeller(payload))
     },
@@ -150,6 +155,7 @@ const Register = () => {
     errors,
     setFieldValue,
     handleSubmit,
+    setValues,
   } = formik
 
   const props = {
@@ -173,23 +179,10 @@ const Register = () => {
 
   const onDeleteClick = useCallback(
     (event) => {
-      if (event.currentTarget.value === 'coverImage') {
-        setFieldValue('coverImage', [])
-        setCoverImagePreview('')
-        return
-      }
-      const findPicture = productImagesPreview.find(
-        (image) => image.url === event.currentTarget.name
-      )
-      setProductImagesPreview((prevState) =>
-        prevState.filter((picture) => picture.url !== event.currentTarget.name)
-      )
-      setFieldValue(
-        'productImages',
-        values.productImages.filter((image) => image.name !== findPicture.id.name)
-      )
+      setFieldValue('coverImage', [])
+      setCoverImagePreview('')
     },
-    [productImagesPreview, setFieldValue, values.productImages]
+    [setFieldValue]
   )
 
   const allProps = useMemo(
@@ -210,6 +203,16 @@ const Register = () => {
       navigate('/imagens')
     }
   }, [error, isLoading, wasLoading])
+
+  useEffect(() => {
+    if (!!isUser?.name) {
+      const initialValue = Object.keys(INITIAL_STATE).reduce(
+        (obj, item) => Object.assign(obj, { [item]: isUser[item] }),
+        {}
+      )
+      setValues(initialValue)
+    }
+  }, [isUser, setValues])
 
   return (
     <Grid
