@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import useStyles from './styles'
 import trash from '../../../assets/trash.png'
 
-const ImageButton = ({ picture, onDeleteClick, value }) => {
+const ImageButton = ({ picture, onDeleteClick, value, id }) => {
   const styles = useStyles()
   const [mouse, setMouse] = useState(false)
   const [isPictureLoading, setLoadingImage] = useState(true)
@@ -32,6 +32,7 @@ const ImageButton = ({ picture, onDeleteClick, value }) => {
       className={styles.button}
       name={picture}
       value={value}
+      id={id}
     >
       {isPictureLoading && <CircularProgress color="primary" />}
       {mouse ? (

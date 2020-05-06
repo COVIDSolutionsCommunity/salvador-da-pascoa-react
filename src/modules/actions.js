@@ -12,6 +12,8 @@ export const GET_SELLER = 'GET_SELLER'
 export const GET_SELLERS_LOCATION = 'GET_SELLERS_LOCATION'
 export const EDIT_SELLER = 'EDIT_SELLER'
 export const LOGOUT = 'LOGOUT'
+export const GET_PHOTOS = 'GET_PHOTOS'
+export const DELETE_PHOTOS = 'DELETE_PHOTOS'
 
 const apiUrl = 'https://api-salvadordapascoa.herokuapp.com/api/v1'
 
@@ -140,9 +142,8 @@ export const postImage = (payload) => {
     return axios
       .post(`${apiUrl}/my-product-images/`, newPayload, {
         headers: {
-          'Access-Control-Allow-Origin': 'http://localhost:3000',
           Authorization: 'Token ' + getState().key,
-          'Content-Type': 'multipart/form-data',
+          'Content-type': 'application/json; charset=UTF-8',
         },
       })
       .then((response) => {
@@ -199,6 +200,57 @@ export const getSellers = () => {
           error: 'Tente novamente mais tarde',
         }
         dispatch(loginError(payload))
+        throw error
+      })
+  }
+}
+
+export const getCurrentSellers = () => {
+  return (dispatch, getState) => {
+    return axios
+      .get(`${apiUrl}/my-seller/`, {
+        headers: {
+          Authorization: 'Token ' + getState().key,
+        },
+      })
+      .then((response) => {
+        dispatch(createSellerSuccess(response.data))
+      })
+      .catch((error) => {
+        throw error
+      })
+  }
+}
+
+export const getCurrentPhoto = () => {
+  return (dispatch, getState) => {
+    return axios
+      .get(`${apiUrl}/my-product-images/`, {
+        headers: {
+          Authorization: 'Token ' + getState().key,
+        },
+      })
+      .then((response) => {
+        dispatch(getPhotos(response.data))
+      })
+      .catch((error) => {
+        throw error
+      })
+  }
+}
+
+export const deletePhoto = (id) => {
+  return (dispatch, getState) => {
+    return axios
+      .delete(`${apiUrl}/my-product-images/${id}`, {
+        headers: {
+          Authorization: 'Token ' + getState().key,
+        },
+      })
+      .then((response) => {
+        dispatch(deleteCurrentPhoto(id))
+      })
+      .catch((error) => {
         throw error
       })
   }
@@ -297,5 +349,25 @@ export const getSellersLocationSuccess = (payload) => {
   return {
     type: GET_SELLERS_LOCATION,
     payload,
+  }
+}
+
+export const getPhotos = (payload) => {
+  return {
+    type: GET_PHOTOS,
+    payload,
+  }
+}
+
+export const deleteCurrentPhoto = (payload) => {
+  return {
+    type: DELETE_PHOTOS,
+    payload,
+  }
+}
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
   }
 }

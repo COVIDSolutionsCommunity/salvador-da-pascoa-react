@@ -8,6 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import logger from 'redux-logger'
 
 import * as serviceWorker from './serviceWorker'
 import App from './views/app'
@@ -19,6 +20,7 @@ import NotFound from './views/not-found'
 import Register from './views/register'
 import Login from './views/login'
 import UploadImage from './views/upload-images'
+import Thanks from './views/thanks'
 import rootReducer from './modules/reducers'
 
 const theme = createMuiTheme({
@@ -118,7 +120,10 @@ const theme = createMuiTheme({
   },
 })
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk, logger))
+)
 
 ReactDOM.render(
   <Provider store={store}>
@@ -135,6 +140,7 @@ ReactDOM.render(
         <Login path="/login" />
         <Register path="/registrar" />
         <UploadImage path="/imagens" />
+        <Thanks path="/obrigada" />
       </Router>
     </ThemeProvider>
   </Provider>,

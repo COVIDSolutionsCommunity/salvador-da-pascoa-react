@@ -1,32 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Link from '@material-ui/core/Link'
 import { Link as RouterLink, navigate } from '@reach/router'
-import Tabletop from 'tabletop'
 import classnames from 'classnames'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import { connect } from 'react-redux'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import Button from '@material-ui/core/Button'
+import { logout } from '../../modules/actions'
 
 import logo from '../../assets/logo.png'
 import redondo from '../../assets/redondo.png'
 
-import ClientContext from '../../context'
-
 import useStyles from './styles.js'
-
-const mapStateToProps = (state) => {
-  return {
-    count: state,
-  }
-}
 
 const Header = ({ children, location, count }) => {
   const styles = useStyles()
+  const dispatch = useDispatch()
   const isLoggedIn = useSelector((state) => state.key)
-  console.log('Header -> isLoggedIn', isLoggedIn)
+
+  const onLogout = useCallback(() => {
+    dispatch(logout())
+  }, [dispatch])
 
   useEffect(() => {
     if (
@@ -121,8 +117,8 @@ const Header = ({ children, location, count }) => {
             <Link
               color="primary"
               className={styles.link}
-              component={RouterLink}
-              to="/faq"
+              component={Button}
+              onClick={onLogout}
             >
               LOG OUT
             </Link>
@@ -136,4 +132,4 @@ const Header = ({ children, location, count }) => {
   )
 }
 
-export default React.memo(connect(mapStateToProps)(Header))
+export default React.memo(Header)

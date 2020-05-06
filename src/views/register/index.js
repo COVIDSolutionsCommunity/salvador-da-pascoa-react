@@ -14,7 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import InputMask from 'react-input-mask'
 import Button from '@material-ui/core/Button'
 import PublishIcon from '@material-ui/icons/Publish'
-import { createSeller, editSeller } from '../../modules/actions'
+import { createSeller, editSeller, getCurrentSellers } from '../../modules/actions'
 import { Link as RouterLink, navigate } from '@reach/router'
 import { useDispatch, useSelector } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -126,7 +126,6 @@ const howToDeliver = ['dispatch', 'takeout', 'delivery']
 const Register = () => {
   const styles = useStyles()
   const [coverImagePreview, setCoverImagePreview] = useState('')
-  const [productImagesPreview, setProductImagesPreview] = useState([])
   const dispatch = useDispatch()
   const isLoading = useSelector((state) => state.loading)
   const error = useSelector((state) => state.error)
@@ -142,6 +141,7 @@ const Register = () => {
         coverImage: coverImagePreview.id,
       }
       if (!!isUser?.name) {
+        console.log('aqui')
         dispatch(editSeller(payload))
         return
       }
@@ -197,6 +197,10 @@ const Register = () => {
     }),
     [styles.dropdown, styles.multilineColor]
   )
+
+  useEffect(() => {
+    dispatch(getCurrentSellers())
+  }, [dispatch])
 
   useEffect(() => {
     if (!isLoading && wasLoading && !error) {

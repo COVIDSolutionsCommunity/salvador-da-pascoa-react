@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import Button from '@material-ui/core/Button'
 import PublishIcon from '@material-ui/icons/Publish'
-import { postImage } from '../../modules/actions'
+import { postImage, getCurrentPhoto, deletePhoto } from '../../modules/actions'
 import { Link as RouterLink, navigate } from '@reach/router'
 import { useDispatch, useSelector } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -21,6 +21,7 @@ const UploadImage = () => {
   const dispatch = useDispatch()
   const isLoading = useSelector((state) => state.loading)
   const error = useSelector((state) => state.error)
+  const photos = useSelector((state) => state.currentSeller.result)
   const wasLoading = usePrevious(isLoading)
 
   const onChangeCoverImage = useCallback((event) => {
@@ -41,13 +42,20 @@ const UploadImage = () => {
     )
   }, [])
 
+  const onRemoveClick = useCallback(
+    (event) => {
+      dispatch(deletePhoto(event.currentTarget.id))
+    },
+    [dispatch]
+  )
+
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault()
       productImagesPreview.map((image, index) =>
         dispatch(
           postImage({
-            order: index,
+            order: 0 + index,
             image: image.id,
           })
         )
@@ -58,9 +66,13 @@ const UploadImage = () => {
 
   useEffect(() => {
     if (!isLoading && wasLoading && !error) {
-      navigate('/imagens')
+      navigate('/obrigada')
     }
   }, [error, isLoading, wasLoading])
+
+  useEffect(() => {
+    dispatch(getCurrentPhoto())
+  }, [dispatch])
 
   return (
     <Grid
@@ -118,15 +130,25 @@ const UploadImage = () => {
           </label>
         </FormControl>
         <Grid container>
-          {productImagesPreview &&
-            productImagesPreview.map((image) => (
-              <ImageButton
-                key={image.url}
-                onDeleteClick={onDeleteClick}
-                picture={image.url}
-                value="coverImage"
-              />
-            ))}
+          {photos?.map(
+            (image) =>
+              console.log('image', image) || (
+                <ImageButton
+                  key={image.order}
+                  onDeleteClick={onRemoveClick}
+                  picture={image.image}
+                  id={image.id}
+                />
+              )
+          )}
+          {productImagesPreview?.map((image) => (
+            <ImageButton
+              key={image.url}
+              onDeleteClick={onDeleteClick}
+              picture={image.url}
+              value="coverImage"
+            />
+          ))}
         </Grid>
         <Button
           variant="contained"

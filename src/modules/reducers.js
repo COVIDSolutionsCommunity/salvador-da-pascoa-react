@@ -10,6 +10,9 @@ import {
   GET_SELLER,
   GET_SELLERS_LOCATION,
   CREATE_SELLER_ERROR,
+  GET_PHOTOS,
+  DELETE_PHOTOS,
+  LOGOUT,
 } from './actions'
 
 const INITIAL_STATE = {
@@ -44,6 +47,24 @@ const returnAllSellers = (state, payload) => {
   const newState = {
     ...state,
     allSellers: {
+      next: getSellerPage(payload.next),
+      result: newCollectState,
+    },
+  }
+  return newState
+}
+
+const returnAllPhotos = (state, payload) => {
+  const newCollectList = payload.results
+
+  const newCollectState = getSellerPage(payload.next)
+    ? state.currentSeller.result.concat(newCollectList)
+    : newCollectList
+
+  const newState = {
+    ...state,
+    currentSeller: {
+      ...state.currentSeller,
       next: getSellerPage(payload.next),
       result: newCollectState,
     },
@@ -100,6 +121,24 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentSeller: humps.camelizeKeys(payload),
+      }
+    case DELETE_PHOTOS:
+      const result = state.currentSeller.result.filter((img) => img.id === payload)
+      return {
+        ...state,
+        currentSeller: {
+          ...state.currentSeller,
+          result,
+        },
+      }
+    case GET_PHOTOS:
+      return returnAllPhotos(state, humps.camelizeKeys(payload))
+    case LOGOUT:
+      cookies.remove('key')
+      return {
+        ...state,
+        key: '',
+        currentSeller: {},
       }
     default:
       return state
